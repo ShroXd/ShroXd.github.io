@@ -1,50 +1,1161 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content=""><meta name="keywords" content=""><meta name="author" content="ShroXd"><meta name="copyright" content="ShroXd"><title>生死去来 棚头傀儡 一线断时 落落磊磊 | Space Cowboy</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
-  },
-  hexoVersion: '5.3.0'
-} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png"></div><div class="author-info__name text-center">ShroXd</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">49</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">99</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">8</span></a></div></div></div><nav id="nav" style="background-image: url(https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-10-18-WIuOpc.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Space Cowboy</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="site-info"><div id="site-title">Space Cowboy</div><div id="site-sub-title">生死去来 棚头傀儡 一线断时 落落磊磊</div><div id="site-social-icons"><a class="social-icon" href="https://github.com/ShroXd" target="_blank" rel="noreferrer noopener nofollow"><i class="fa-github fab"></i></a></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2020/03/12/Javascript%E7%9A%84%E9%97%AD%E5%8C%85/">JavaScript 闭包行状录——从一道面试题开始说起</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-12</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/">语言特性</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1/">变量对象</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/">作用域链</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E9%97%AD%E5%8C%85/">闭包</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%B4%BB%E5%8A%A8%E5%AF%B9%E8%B1%A1/">活动对象</a></span><div class="content">注意，在阅读这篇文章之前，你应该已经理解了 JavaScript 的 执行上下文、变量对象、作用域链 等概念。如果还有疑问的话，你可以阅读 这篇文章 的前三节。另外的，你也应该知道 JavaScript 是词法作用域。
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-本文的例子来源于 这篇文章，而他参考了 这篇文章 。你可以对比着看。
+<link rel="stylesheet" href="/css/main.css">
 
- 概述 ...</div><a class="more" href="/2020/03/12/Javascript%E7%9A%84%E9%97%AD%E5%8C%85/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/03/11/Javascript%E5%8E%9F%E7%94%9F%E9%94%99%E8%AF%AF/">7 种你应该知道的 Javascript 原生错误（翻译）</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-11</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BF%BB%E8%AF%91/">翻译</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E9%94%99%E8%AF%AF/">错误</a></span><div class="content">
-原文：https://blog.bitsrc.io/types-of-native-errors-in-javascript-you-must-know-b8238d40e492
 
-我们在各处都能看到错误，从浏览器控制台到运行着 Node.js 的设备终端。
-这篇博客将主要列举一下我们在 JS 开 ...</div><a class="more" href="/2020/03/11/Javascript%E5%8E%9F%E7%94%9F%E9%94%99%E8%AF%AF/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/03/11/JavaScript%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/">无比芜杂的 JavaScript 执行上下文——变量对象、作用域链和 this</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-11</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/">语言特性</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/">执行上下文</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1/">变量对象</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/">作用域链</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/this/">this</a></span><div class="content">
-这篇文章是对JavaScript深入之从ECMAScript规范解读this的一个总结和补充。意在对JavaScript执行上下文的来龙去脉做一个基本的梳理。
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-在开始谈论执行上下文之前，我们必须对 JavaScript 的作用域有一定的了解，才能清楚的理解执行上下文的设计思路。你可以阅读这篇文章 ...</div><a class="more" href="/2020/03/11/JavaScript%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/03/10/%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/">宝刀般的抽象基类——从协议说起</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-10</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/">语言特性</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B/">鸭子类型</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/">抽象基类</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E8%99%9A%E6%8B%9F%E5%AD%90%E7%B1%BB/">虚拟子类</a></span><div class="content"> 鸭子类型
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
-在 Python 中，创建功能完善的序列并不需要使用继承，而只需要实现符合序列协议的方法。
-Python 中的协议是一种动态的，非正式的协议。它仅仅在文档中定义，因此也不能像真正的接口一样，对代码作出限制。这种约定可能会让使用惯了 Java 或是 C# 的程序员感到新奇。
-Python ...</div><a class="more" href="/2020/03/10/%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/03/10/4%E4%B8%AA%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8Fjavascript%E6%A8%A1%E5%9D%97%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">4个编写高质量 JavaScript 模块的最佳实践（翻译）</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-10</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E7%BF%BB%E8%AF%91/">翻译</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%A8%A1%E5%9D%97/">模块</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/JavaScript/">JavaScript</a></span><div class="content">
-原文：https://dmitripavlutin.com/javascript-modules-best-practices/
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Space Cowboy">
+<meta property="og:url" content="http://www.bebopser.com/page/5/index.html">
+<meta property="og:site_name" content="Space Cowboy">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="ShroXd">
+<meta name="twitter:card" content="summary">
 
-借助 ES2015 的模块化方案，你可以将应用拆分为可复用的，封装的，仅专注于单一功能的模块。
-这确实是个好想法，但随之而来的问题是，你究竟该如何组织这些模块呢？一个 ...</div><a class="more" href="/2020/03/10/4%E4%B8%AA%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8Fjavascript%E6%A8%A1%E5%9D%97%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/03/09/%E6%A8%A1%E5%9D%97/">构建大厦的基础——模块化</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-09</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/">语言特性</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%A8%A1%E5%9D%97/">模块</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/ES6/">ES6</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/CommonJS/">CommonJS</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/Node-js/">Node.js</a></span><div class="content"> 概述
+<link rel="canonical" href="http://www.bebopser.com/page/5/">
 
-模块化是构建大型应用的基础手段，它可以让代码变得更加易读，易于调试。很多框架作者鼓励用户编写插件来扩展框架功能，这些工作所依赖的，就是一个语言的模块化功能。
-相较于 Python 清晰的模块化方案，JavaScript 则显得较为混乱。这主要是由于 JavaScript 早期“浏览器脚本” ...</div><a class="more" href="/2020/03/09/%E6%A8%A1%E5%9D%97/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/03/08/%E5%8D%8F%E7%A8%8B/">从生成器进化为协程——以列表推导为引子</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-08</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/">语言特性</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/iterable/">iterable</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8/">迭代器</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E7%94%9F%E6%88%90%E5%99%A8/">生成器</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%8D%8F%E7%A8%8B/">协程</a></span><div class="content"> 从列表推导开始
 
-Python 有一种被称为 列表推导 的特性，它可以用来快速的构建列表（list）。下面是一个简单的例子：
-12l = [1, 2, 3][str(i) for i in l]	# [&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;]
-这个概 ...</div><a class="more" href="/2020/03/08/%E5%8D%8F%E7%A8%8B/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/">闭包与装饰器——从变量的作用域说起</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-07</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/">语言特性</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E9%97%AD%E5%8C%85/">闭包</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E4%BD%9C%E7%94%A8%E5%9F%9F/">作用域</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E8%A3%85%E9%A5%B0%E5%99%A8/">装饰器</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E4%B8%80%E7%AD%89%E5%87%BD%E6%95%B0/">一等函数</a></span><div class="content"> 变量与变量的作用域
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
 
-计算机语言中的变量（Variable）这一概念来源于数学，它是一个存储地址的映射。这个存储地址中通常包含了一段数据或一些抽象信息。你可以使用变量名来方便的引用存储值。
-提到变量，就不得不提到 作用域 这个概念了。
-实际上，作用域指的是一段计算机程序。在这段程序代码中，变量名与 ...</div><a class="more" href="/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/01/17/%E5%BD%93%E6%88%91%E4%BB%AC%E8%B0%88%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%97%B6%E5%80%99-%E6%88%91%E4%BB%AC%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%88/">当我们谈跨域的时候,我们谈些什么</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-17</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/">核心概念</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5/">同源策略</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/proxyTable/">proxyTable</a></span><div class="content">关于域名和请求
-客户端在加载资源时，会从服务端请求资源。而具体请求的是哪个资源，则是由域名 指示的。
+  <title>Space Cowboy</title>
+  
 
-一个域名主要是由三部分组成的，即——协议，域名，端口号（这三者合起来被称为域）。这三者将指示出一个唯一的服务器主机。换句话说，如果协议，域名，端口号一致，那么我们称其为同域
- 关于跨域请求
-其定义 ...</div><a class="more" href="/2020/01/17/%E5%BD%93%E6%88%91%E4%BB%AC%E8%B0%88%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%97%B6%E5%80%99-%E6%88%91%E4%BB%AC%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%88/#more" style="margin-top: 14px">Read more</a><hr></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-chevron-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-10-18-WIuOpc.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By ShroXd</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="icp"><a><span>鲁ICP备19050480号-1</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fa fa-user"></i><span id="busuanzi_value_site_uv"></span><span></span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_site_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
-  $('#nav').addClass('is-mobile')
-  $('footer').addClass('is-mobile')
-  $('#top-container').addClass('is-mobile')
-}</script></body></html>
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Space Cowboy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生死去来 棚头傀儡 一线断时 落落磊磊</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/12/Javascript%E7%9A%84%E9%97%AD%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/12/Javascript%E7%9A%84%E9%97%AD%E5%8C%85/" class="post-title-link" itemprop="url">JavaScript 闭包行状录——从一道面试题开始说起</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-12 10:08:20" itemprop="dateCreated datePublished" datetime="2020-03-12T10:08:20+08:00">2020-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:33:40" itemprop="dateModified" datetime="2020-12-28T22:33:40+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>注意，在阅读这篇文章之前，你应该已经理解了 JavaScript 的 <code>执行上下文</code>、<code>变量对象</code>、<code>作用域链</code> 等概念。如果还有疑问的话，你可以阅读 <a href="%5Bhttps://www.bebopser.com/2020/03/11/JavaScript%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/%5D(https://www.bebopser.com/2020/03/11/JavaScript%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/)">这篇文章</a> 的前三节。另外的，你也应该知道 JavaScript 是词法作用域。</strong></p>
+<blockquote>
+<p>本文的例子来源于 <a target="_blank" rel="noopener" href="https://github.com/mqyqingfeng/Blog/issues/8">这篇文章</a>，而他参考了 <a target="_blank" rel="noopener" href="https://github.com/kuitos/kuitos.github.io/issues/18">这篇文章</a> 。你可以对比着看。</p>
+</blockquote>
+<h1 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h1>
+<hr />
+<p>总的来说，<code>闭包</code> 是 <code>词法作用域</code> 的体现。你可以通过 <a href="%5Bhttps://www.bebopser.com/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/#%E9%97%AD%E5%8C%85%5D(https://www.bebopser.com/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/#%E9%97%AD%E5%8C%85)">这篇文章</a> 的第二节来了解其基本用法。在这篇文章章，我们将通过几个例子，来详细分析闭包。</p>
+<p>在阅读完本文章后，你应该能发现，<code>闭包</code> 实际上不是什么新概念，它指的就是函数的 <code>[[scope]]</code> ，即作用域链。**作用域链并不会随着执行上下文从栈从弹出而被销毁。**这就是 <code>闭包</code> 的全部解释了。</p>
+<p>接下来，我们通过一个例子来详细分析一下。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/12/Javascript%E7%9A%84%E9%97%AD%E5%8C%85/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/11/Javascript%E5%8E%9F%E7%94%9F%E9%94%99%E8%AF%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/11/Javascript%E5%8E%9F%E7%94%9F%E9%94%99%E8%AF%AF/" class="post-title-link" itemprop="url">7 种你应该知道的 Javascript 原生错误（翻译）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-11 20:51:51" itemprop="dateCreated datePublished" datetime="2020-03-11T20:51:51+08:00">2020-03-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:33:14" itemprop="dateModified" datetime="2020-12-28T22:33:14+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BF%BB%E8%AF%91/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>原文：<a target="_blank" rel="noopener" href="https://blog.bitsrc.io/types-of-native-errors-in-javascript-you-must-know-b8238d40e492">https://blog.bitsrc.io/types-of-native-errors-in-javascript-you-must-know-b8238d40e492</a></p>
+</blockquote>
+<p>我们在各处都能看到错误，从浏览器控制台到运行着 <code>Node.js</code> 的设备终端。</p>
+<p>这篇博客将主要列举一下我们在 <code>JS</code> 开发中可能邂逅的错误类型。</p>
+<p><strong>Tip</strong>：更好的使用错误类型，可以让我们从缓慢而地狱般的开发体验中解放出来，享受快速而无痛的编程。当你编写可复用的代码时，请确保你编写的错误清晰而易懂。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/11/Javascript%E5%8E%9F%E7%94%9F%E9%94%99%E8%AF%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/11/JavaScript%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/11/JavaScript%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/" class="post-title-link" itemprop="url">无比芜杂的 JavaScript 执行上下文——变量对象、作用域链和 this</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-11 10:54:12" itemprop="dateCreated datePublished" datetime="2020-03-11T10:54:12+08:00">2020-03-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:33:32" itemprop="dateModified" datetime="2020-12-28T22:33:32+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>这篇文章是对<a target="_blank" rel="noopener" href="https://github.com/mqyqingfeng/Blog/issues/7">JavaScript 深入之从 ECMAScript 规范解读 this</a>的一个总结和补充。意在对 JavaScript 执行上下文的来龙去脉做一个基本的梳理。</p>
+</blockquote>
+<p>在开始谈论执行上下文之前，我们必须对 JavaScript 的作用域有一定的了解，才能清楚的理解执行上下文的设计思路。你可以阅读<a href="%5Bhttps://www.bebopser.com/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/%5D(https://www.bebopser.com/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/)">这篇文章</a>的第一部分<strong>变量与变量的作用域</strong>。</p>
+<h1 id="执行上下文"><a class="markdownIt-Anchor" href="#执行上下文"></a> 执行上下文</h1>
+<hr />
+<p>关于执行上下文的解释，我们采用 <a target="_blank" rel="noopener" href="http://es5.github.io/#x10.3">ECMAScript 5.1 规范</a> 的定义。你需要注意的是，在 ES6 开始，对执行上下文的内涵进行了延伸，但它们依旧包含 ES5 的定义。</p>
+<h2 id="可执行代码"><a class="markdownIt-Anchor" href="#可执行代码"></a> 可执行代码</h2>
+<p>在讲解执行上下文之前，我们需要了解一下 ES 对于可执行代码的定义。ECMAScript 的可执行代码有三种类型：<code>Global code</code>，<code>Eval code</code>，<code>Function code</code>。你可以通过 <a target="_blank" rel="noopener" href="http://es5.github.io/#x10.1">ECMAScript 5.1 规范</a> 来详细了解可执行代码。你需要注意的是规范中关于 <code>Function code</code> 的这句话：</p>
+<blockquote>
+<p>The <em>function code</em> of a paticular <strong>FunctionBody</strong> does not include any source text that is parsed as part of a nested <strong>FunctionBody</strong></p>
+</blockquote>
+<p>简单来说，就是一个函数和函数内的嵌套函数，并不属于同一个函数。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/11/JavaScript%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/10/%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/10/%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" class="post-title-link" itemprop="url">宝刀般的抽象基类——从协议说起</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-10 14:16:32" itemprop="dateCreated datePublished" datetime="2020-03-10T14:16:32+08:00">2020-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:36:05" itemprop="dateModified" datetime="2020-12-28T22:36:05+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="鸭子类型"><a class="markdownIt-Anchor" href="#鸭子类型"></a> 鸭子类型</h1>
+<hr />
+<p>在 Python 中，创建功能完善的序列并不需要使用继承，而只需要实现符合序列协议的方法。</p>
+<p>Python 中的协议是一种动态的，非正式的协议。它仅仅在文档中定义，因此也不能像真正的接口一样，对代码作出限制。这种约定可能会让使用惯了 <code>Java</code> 或是 <code>C#</code> 的程序员感到新奇。</p>
+<p>Python 会尽可能的支持基本协议。例如如果你在类中实现了 <code>__getitem__</code> 方法，那么解释器就会将其当做一个序列来执行，尽管序列协议要求实现的是 <code>__iter__</code> 方法。</p>
+<p>另外的，一个类也可以实现多个接口以扮演不同的角色。</p>
+<p>进一步的，你甚至可以在运行时使用 <code>猴子补丁</code> 来事先协议。例如，你可以在运行时为一个类增加 <code>__setitem__</code> 方法，从而可以使用 <code>random.shuffle</code> 函数打乱序列：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_card</span>(<span class="params">instance, position, card</span>):</span></span><br><span class="line">  instance.__cards[position] = card</span><br><span class="line"></span><br><span class="line">&gt;&gt; FrenchDeck.__setitem__ = set_card</span><br><span class="line">&gt;&gt; shuffle(deck)</span><br></pre></td></tr></table></figure>
+<p>总的来说，这也就是 <code>鸭子类型</code> 的代表特征——动态协议。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/10/%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/10/4%E4%B8%AA%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8Fjavascript%E6%A8%A1%E5%9D%97%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/10/4%E4%B8%AA%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8Fjavascript%E6%A8%A1%E5%9D%97%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">4个编写高质量 JavaScript 模块的最佳实践（翻译）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-10 09:34:57" itemprop="dateCreated datePublished" datetime="2020-03-10T09:34:57+08:00">2020-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:31:38" itemprop="dateModified" datetime="2020-12-28T22:31:38+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BF%BB%E8%AF%91/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>原文：<a target="_blank" rel="noopener" href="https://dmitripavlutin.com/javascript-modules-best-practices/">https://dmitripavlutin.com/javascript-modules-best-practices/</a></p>
+</blockquote>
+<p>借助 ES2015 的模块化方案，你可以将应用拆分为可复用的，封装的，仅专注于单一功能的模块。</p>
+<p>这确实是个好想法，但随之而来的问题是，你究竟该如何组织这些模块呢？一个模块中应该包含多少个类或函数呢？</p>
+<p>这篇文章展示了 4 种如何更好地组织你的 JavaScript 模块的最佳实践。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/10/4%E4%B8%AA%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8Fjavascript%E6%A8%A1%E5%9D%97%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/09/%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/09/%E6%A8%A1%E5%9D%97/" class="post-title-link" itemprop="url">构建大厦的基础——模块化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-09 11:32:29" itemprop="dateCreated datePublished" datetime="2020-03-09T11:32:29+08:00">2020-03-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:36:11" itemprop="dateModified" datetime="2020-12-28T22:36:11+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h1>
+<hr />
+<p>模块化是构建大型应用的基础手段，它可以让代码变得更加易读，易于调试。很多框架作者鼓励用户编写插件来扩展框架功能，这些工作所依赖的，就是一个语言的模块化功能。</p>
+<p>相较于 Python 清晰的模块化方案，JavaScript 则显得较为混乱。这主要是由于 JavaScript 早期“浏览器脚本”的定位导致的。社区等不及官方的解决方案，所以自己折腾了几套模块化方案。不过这个问题在 <code>ES6</code> 版本已经改善了很多。</p>
+<h2 id="javascript"><a class="markdownIt-Anchor" href="#javascript"></a> JavaScript</h2>
+<p>在 ES6 之前，JS 社区为了解决这个问题，提出了很多的模块加载方案。主要有 <code>CommonJS</code> 和 <code>AMD</code> 两种，前者使用与服务器，后者则用于浏览器。另外的，这两种模块都是 <code>运行时加载</code> 的，是非静态的。例如，一个典型的 <code>CommonJS</code> 标准的模块引入是这样写的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> &#123; hello, goodbye &#125; = <span class="built_in">require</span>(<span class="string">&quot;base&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="keyword">let</span> _base = <span class="built_in">require</span>(<span class="string">&quot;base&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> hello = _base.hello;</span><br><span class="line"><span class="keyword">let</span> goodbye = _base.goodbye;</span><br></pre></td></tr></table></figure>
+<p>从运行的逻辑上来说，这实际上是先整体加载了一个 <code>base</code> 模块，生成一个对象，然后再从这个对象上读取 2 个方法，赋值给 <code>hello</code> 和 <code>goodbye</code> 。</p>
+<p>这样做其实就是先把所有东西都拿过来，再挑出来有用的。与之相对的，<code>ES6</code> 提出的模块实现则是静态的。也就是说，你可以按需加载。一个典型的 <code>ES6</code> 加载是这样写的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; hello, goodbye &#125; <span class="keyword">from</span> <span class="string">&quot;base&quot;</span>;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/09/%E6%A8%A1%E5%9D%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/08/%E5%8D%8F%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/08/%E5%8D%8F%E7%A8%8B/" class="post-title-link" itemprop="url">从生成器进化为协程——以列表推导为引子</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-08 10:15:04" itemprop="dateCreated datePublished" datetime="2020-03-08T10:15:04+08:00">2020-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:35:31" itemprop="dateModified" datetime="2020-12-28T22:35:31+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="从列表推导开始"><a class="markdownIt-Anchor" href="#从列表推导开始"></a> 从列表推导开始</h1>
+<hr />
+<p>Python 有一种被称为 <code>列表推导</code> 的特性，它可以用来快速的构建列表（list）。下面是一个简单的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">l = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">[<span class="built_in">str</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> l]	<span class="comment"># [&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;]</span></span><br></pre></td></tr></table></figure>
+<p>这个概念叫做<code>推导式</code>。它的作用是以一个数据序列为基础，来构建另一个新的数据序列。</p>
+<p>在 Python 中，除了列表推导，你还可以使用 <code>字典（dict）推导</code> 和 <code>集合（set）推导</code> 。下面是一些示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">names = [<span class="string">&#x27;Dutch&#x27;</span>, <span class="string">&#x27;Hosea&#x27;</span>, <span class="string">&#x27;Arthur&#x27;</span>, <span class="string">&#x27;John&#x27;</span>]</span><br><span class="line">suits = [<span class="string">&#x27;Spade&#x27;</span>, <span class="string">&#x27;Heart&#x27;</span>, <span class="string">&#x27;Diamond&#x27;</span>, <span class="string">&#x27;Club&#x27;</span>]</span><br><span class="line"></span><br><span class="line">[(name, suit) <span class="keyword">for</span> name <span class="keyword">in</span> names <span class="keyword">for</span> suit <span class="keyword">in</span> suits]</span><br><span class="line"></span><br><span class="line">[(name, suit) <span class="keyword">for</span> name, suit <span class="keyword">in</span> <span class="built_in">zip</span>(names, suits)]</span><br><span class="line"><span class="comment"># [(&#x27;Dutch&#x27;, &#x27;Spade&#x27;), (&#x27;Hosea&#x27;, &#x27;Heart&#x27;), (&#x27;Arthur&#x27;, &#x27;Diamond&#x27;), (&#x27;John&#x27;, &#x27;Club&#x27;)]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>第一种列表推导，会使用 <code>names</code> 中的每一个元素去依次和 <code>suits</code> 中的每一个元素相对应。因为产出元素过多，所以就不详细写出了。</p>
+<p>第二种列表推导使用了 <code>zip</code> 函数。这个函数接收可迭代对象为参数，将对象中对应的元素打包成元组。如果你期望从多个数据序列中一一对应的构造新数据序列时，你将会经常的用到这个函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[(name, suit) <span class="keyword">for</span> name <span class="keyword">in</span> names <span class="keyword">for</span> suit <span class="keyword">in</span> suits <span class="keyword">if</span> name == <span class="string">&#x27;Arthur&#x27;</span>]</span><br><span class="line"><span class="comment"># [(&#x27;Arthur&#x27;, &#x27;Spade&#x27;), (&#x27;Arthur&#x27;, &#x27;Heart&#x27;), (&#x27;Arthur&#x27;, &#x27;Diamond&#x27;), (&#x27;Arthur&#x27;, &#x27;Club&#x27;)]</span></span><br></pre></td></tr></table></figure>
+<p>上面这个例子是在列表推导中使用了 <code>if</code> 语句。这样可以在构建列表前根据需要，剔除部分数据。</p>
+<p>你也可以将这个例子改写为使用高阶函数来实现，但可读性绝壁比不上列表推导。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/08/%E5%8D%8F%E7%A8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/" class="post-title-link" itemprop="url">闭包与装饰器——从变量的作用域说起</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-07 17:02:12" itemprop="dateCreated datePublished" datetime="2020-03-07T17:02:12+08:00">2020-03-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:36:23" itemprop="dateModified" datetime="2020-12-28T22:36:23+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="变量与变量的作用域"><a class="markdownIt-Anchor" href="#变量与变量的作用域"></a> 变量与变量的作用域</h1>
+<hr />
+<p>计算机语言中的变量（Variable）这一概念来源于数学，它是一个存储地址的映射。这个存储地址中通常包含了一段数据或一些抽象信息。你可以使用变量名来方便的引用存储值。</p>
+<p>提到变量，就不得不提到 <code>作用域</code> 这个概念了。</p>
+<p>实际上，作用域指的是一段计算机程序。在这段程序代码中，变量名与存储地址的映射关系一直保持有效。换句话说，作用域决定了当前程序是否能够访问到某个变量的值。</p>
+<p>作用域的解析规则在不同的编程语言中都可能不相同。</p>
+<p>作用域分为 <code>静态作用域</code> 和 <code>动态作用域</code> 。前者也叫做 <code>词法作用域</code> 。下面分析一下这两种作用域的区别。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/01/17/%E5%BD%93%E6%88%91%E4%BB%AC%E8%B0%88%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%97%B6%E5%80%99-%E6%88%91%E4%BB%AC%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/17/%E5%BD%93%E6%88%91%E4%BB%AC%E8%B0%88%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%97%B6%E5%80%99-%E6%88%91%E4%BB%AC%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%88/" class="post-title-link" itemprop="url">当我们谈跨域的时候,我们谈些什么</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-17 17:50:36" itemprop="dateCreated datePublished" datetime="2020-01-17T17:50:36+08:00">2020-01-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:35:58" itemprop="dateModified" datetime="2020-12-28T22:35:58+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/" itemprop="url" rel="index"><span itemprop="name">核心概念</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>跨域，和Vue配置</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/17/%E5%BD%93%E6%88%91%E4%BB%AC%E8%B0%88%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%97%B6%E5%80%99-%E6%88%91%E4%BB%AC%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%88/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ShroXd"
+      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+  <p class="site-author-name" itemprop="name">ShroXd</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ShroXd" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ShroXd" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:shroxdf@gmail.com" title="E-Mail → mailto:shroxdf@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShroXd</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>

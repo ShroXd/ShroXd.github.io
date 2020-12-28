@@ -1,63 +1,1283 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content=""><meta name="keywords" content=""><meta name="author" content="ShroXd"><meta name="copyright" content="ShroXd"><title>生死去来 棚头傀儡 一线断时 落落磊磊 | Space Cowboy</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
-  },
-  hexoVersion: '5.3.0'
-} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="false"><div class="author-info"><div class="author-info__avatar text-center"><img src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png"></div><div class="author-info__name text-center">ShroXd</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">49</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">99</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">8</span></a></div></div></div><nav id="nav" style="background-image: url(https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-10-18-WIuOpc.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Space Cowboy</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="site-info"><div id="site-title">Space Cowboy</div><div id="site-sub-title">生死去来 棚头傀儡 一线断时 落落磊磊</div><div id="site-social-icons"><a class="social-icon" href="https://github.com/ShroXd" target="_blank" rel="noreferrer noopener nofollow"><i class="fa-github fab"></i></a></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2020/09/29/NodejsStream/">Nodejs（二）—— Stream</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-09-29</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/stream/">stream</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/pipe/">pipe</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E4%BA%8B%E4%BB%B6/">事件</a></span><div class="content">
-本文是 Node.js Streams: Everything you need to know 一文的笔记
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
-流是 Nodejs 中最棒的，同时也是最被人误解的想法。
-—— Dominic Tarr
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-如果想要学习 Nodejs，那么 流 这个概念就是无法绕过的重点。在 Nodejs 中，很多 ...</div><a class="more" href="/2020/09/29/NodejsStream/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/09/29/NodejsBuffer/">Nodejs（一）—— Buffer</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-09-29</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/buffer/">buffer</a></span><div class="content">
-参考：深入学习 Node.js Buffer
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
- 关于 Buffer
-Buffer 是 Node.js 的核心模块，它使得开发者可以在 TCP 流或是文件系统操作等场景中处理二进制数据。
-Buffer 的大小是固定的，且无法调整。它在 V8 堆外分配物理内存。
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Space Cowboy">
+<meta property="og:url" content="http://www.bebopser.com/page/2/index.html">
+<meta property="og:site_name" content="Space Cowboy">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="ShroXd">
+<meta name="twitter:card" content="summary">
 
-V8是一个由Google开发的开源 ...</div><a class="more" href="/2020/09/29/NodejsBuffer/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/08/30/state/">SwiftUI 中的属性包装器</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-30</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/IOS/">IOS</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/SwiftUI/">SwiftUI</a></span><div class="content">
-本文翻译自 SwiftUI: @State vs @StateObject vs @ObservedObject vs @EnvironmentObject
+<link rel="canonical" href="http://www.bebopser.com/page/2/">
 
-SwiftUI 开发者们需要做的第一个决定就是，应该选择哪个有效的属性包装器来存储数据。特别是在 IOS 14 中，整个应用的生命周期 都 ...</div><a class="more" href="/2020/08/30/state/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/08/29/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine4/">响应式编程与Combine（四）</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-29</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%BC%82%E6%AD%A5/">异步</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/IOS/">IOS</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/">响应式编程</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/combine/">combine</a></span><div class="content">
-本文翻译自 Error Handling in Swift Combine Framework，稍作修改
 
- 错误处理策略
-在计算机编程中，错误是不可避免的。我们不可能要求一段程序永远不出错，但我们需要一些手段来让程序可以尽快的从错误中恢复过来。让我们看看在 Combine 框架中该怎么处理。
-  ...</div><a class="more" href="/2020/08/29/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine4/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine3/">响应式编程与Combine（三）</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-28</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%BC%82%E6%AD%A5/">异步</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/IOS/">IOS</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/">响应式编程</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/combine/">combine</a></span><div class="content">
-这篇文章基本翻译自 Swift Combine Framework Tutorial: Getting Started，删除了一些重复的内容
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
 
- Combine 的使用
-前面两篇文章已经系统的介绍了 Combine 框架的主要组件。在这篇文章中，我们将会介绍一下它们的基本用法。如何将各种内建组件组 ...</div><a class="more" href="/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine3/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine2/">响应式编程与Combine（二）</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-28</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%BC%82%E6%AD%A5/">异步</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/IOS/">IOS</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/">响应式编程</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/combine/">combine</a></span><div class="content">
-本文翻译自 Understanding Schedulers in Swift Combine Framework 。你可以阅读原文或者是原作者的 Combine 框架系列以了解更多内容。
-另外的，上一篇文章介绍了 Publisher，Subscriber，Subject。这篇关于 Schedul ...</div><a class="more" href="/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine2/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/08/27/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine/">响应式编程与Combine（一）</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-27</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%BC%82%E6%AD%A5/">异步</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/IOS/">IOS</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/">响应式编程</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/combine/">combine</a></span><div class="content"> 响应式编程
-借用维基百科的定义：
+  <title>Space Cowboy</title>
+  
 
-在计算中，响应式编程或反应式编程（英语：Reactive programming）是一种面向数据流和变化传播的声明式编程范式。这意味着可以在编程语言中很方便地表达静态或动态的数据流，而相关的计算模型会自动将变化的值通过数据流进行传播。
 
-从定义中可以看出，响应式 ...</div><a class="more" href="/2020/08/27/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/08/25/%E4%BB%8E%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%9D%A5%E8%AE%A8%E8%AE%BA%E9%80%92%E5%BD%92/">从计算的本质来讨论递归</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-25</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E6%A0%88/">栈</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E9%80%92%E5%BD%92/">递归</a></span><div class="content">
-本文的核心思想来自于 SICP 第一章与第二章的内容，你可以同时阅读以深刻理解
 
- 关于递归
-事实上，递归一直是一个很难懂但却应用广泛的概念。例如在树的深度优先遍历中，我们就经常使用递归来简化代码。
-在维基百科中，关于递归的定义是这样的：
 
-递归（英语：Recursion），又译为递回，在数学与计 ...</div><a class="more" href="/2020/08/25/%E4%BB%8E%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%9D%A5%E8%AE%A8%E8%AE%BA%E9%80%92%E5%BD%92/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/08/22/doublepointer/">从合并排序数组谈谈指针遍历</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-22</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a></span><div class="content"> leetcode 原题
-你可以在这里找到原题。
-给定两个排序后的数组，其中一个数组末端有足够的空间容纳另一个数组，同时给出两个数组的元素数量。将两个数组合并并排序。
-一个很容易想到的思路就是 双指针遍历。
-也就是说，我们可以创建一个缓存的新数组 res，然后同时遍历两个给定数组。可能有以下几种情况 ...</div><a class="more" href="/2020/08/22/doublepointer/#more" style="margin-top: 14px">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2020/08/21/reverseList/">从反转链表谈谈递归</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-21</time><span class="article-meta"><span class="article-meta__separator">|</span><i class="fa fa-inbox article-meta__icon" aria-hidden="true"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E9%93%BE%E8%A1%A8/">链表</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/%E9%80%92%E5%BD%92/">递归</a></span><div class="content"> 反转链表
-关于反转链表的题目已经是老生常谈了。主要的解法有双指针迭代和递归两种。这里仅仅谈谈递归。
-你可以在 这里 找到原题。
-下面是题解：
-1234567891011class Solution:    def reverseList(self, head: ListNode) -&gt; Li ...</div><a class="more" href="/2020/08/21/reverseList/#more" style="margin-top: 14px">Read more</a><hr></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fa fa-chevron-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-10-18-WIuOpc.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By ShroXd</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="icp"><a><span>鲁ICP备19050480号-1</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fa fa-user"></i><span id="busuanzi_value_site_uv"></span><span></span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_site_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
-  $('#nav').addClass('is-mobile')
-  $('footer').addClass('is-mobile')
-  $('#top-container').addClass('is-mobile')
-}</script></body></html>
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Space Cowboy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生死去来 棚头傀儡 一线断时 落落磊磊</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/09/29/NodejsStream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/29/NodejsStream/" class="post-title-link" itemprop="url">Nodejs（二）—— Stream</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-29 10:07:03" itemprop="dateCreated datePublished" datetime="2020-09-29T10:07:03+08:00">2020-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:34:06" itemprop="dateModified" datetime="2020-12-28T22:34:06+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>本文是 <a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/node-js-streams-everything-you-need-to-know-c9141306be93/">Node.js Streams: Everything you need to know</a> 一文的笔记</p>
+</blockquote>
+<blockquote>
+<p>流是 Nodejs 中最棒的，同时也是最被人误解的想法。<br />
+—— Dominic Tarr</p>
+</blockquote>
+<p>如果想要学习 <code>Nodejs</code>，那么 <em>流</em> 这个概念就是无法绕过的重点。在 <code>Nodejs</code> 中，很多内建模块都实现了流接口。例如常见的 <code>request</code>、<code>zlib</code> 等。<br />
+那么，<em>流</em> 到底是什么呢？<br />
+简单来说，流是一组数据的集合。但在使用它时，程序并不会一次性的将其载入内存中使用，而是逐端使用数据。显然，这种数据类型有助于处理大体积数据，或是从外部来源逐段发来的数据。对于后者，一个常见的例子就是处理 <code>WebStocket</code> 接口的时候。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/29/NodejsStream/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/09/29/NodejsBuffer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/29/NodejsBuffer/" class="post-title-link" itemprop="url">Nodejs（一）—— Buffer</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-29 09:54:41" itemprop="dateCreated datePublished" datetime="2020-09-29T09:54:41+08:00">2020-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:34:02" itemprop="dateModified" datetime="2020-12-28T22:34:02+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="http://www.semlinker.com/node-buffer/#Node-js-Buffer">深入学习 Node.js Buffer</a></p>
+</blockquote>
+<h1 id="关于-buffer"><a class="markdownIt-Anchor" href="#关于-buffer"></a> 关于 Buffer</h1>
+<p><code>Buffer</code> 是 <code>Node.js</code> 的核心模块，它使得开发者可以在 <code>TCP</code> 流或是文件系统操作等场景中处理二进制数据。<br />
+<code>Buffer</code> 的大小是固定的，且无法调整。它在 <code>V8</code> 堆外分配物理内存。</p>
+<blockquote>
+<p>V8 是一个由 Google 开发的开源 JavaScript 引擎，用于 Google Chrome 及 Chromium 中。</p>
+</blockquote>
+<p>常见的应用是在 <code>流</code> 中使用。流是一组数据的集合。在一般情况下，流的生产者和消费者的速度是不一致的，所以我们需要 <code>Buffer</code> 来缓存数据。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/29/NodejsBuffer/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/30/state/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/30/state/" class="post-title-link" itemprop="url">SwiftUI 中的属性包装器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-30 11:08:05" itemprop="dateCreated datePublished" datetime="2020-08-30T11:08:05+08:00">2020-08-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:34:24" itemprop="dateModified" datetime="2020-12-28T22:34:24+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>本文翻译自 <a target="_blank" rel="noopener" href="https://levelup.gitconnected.com/state-vs-stateobject-vs-observedobject-vs-environmentobject-in-swiftui-81e2913d63f9">SwiftUI: @State vs @StateObject vs @ObservedObject vs @EnvironmentObject</a></p>
+</blockquote>
+<p><code>SwiftUI</code> 开发者们需要做的第一个决定就是，应该选择哪个有效的属性包装器来存储数据。特别是在 IOS 14 中，<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/swiftui/app">整个应用的生命周期</a> 都可以使用 <code>SwiftUI</code> 来开发，用正确的方式存储应用的数据是确保应用正常运行，避免 bug 的前提。</p>
+<p>在使用 <code>SwiftUI</code> 制作 app 时，一个坑就是 <code>@State</code>，<code>@StateObject</code>，<code>@ObservedObject</code>，<code>@EnvironmentObject</code> 这几个属性包装器从表面上来看，都是能够运行的。应用程序会被正常编译，甚至还能得到你想要的行为，即使你用错了属性包装器。<s>又不是不能用</s></p>
+<p>但是，假如用错了，你可能会发现当你更新数据时，UI 却不会随之正常更新。</p>
+<p>那么在这篇文章里，我们就来解决这些问题。我们先从 <code>@State</code> 开始。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/30/state/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/29/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/29/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine4/" class="post-title-link" itemprop="url">响应式编程与Combine（四）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-29 16:15:14" itemprop="dateCreated datePublished" datetime="2020-08-29T16:15:14+08:00">2020-08-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:35:53" itemprop="dateModified" datetime="2020-12-28T22:35:53+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>本文翻译自 <a target="_blank" rel="noopener" href="https://www.vadimbulavin.com/error-handling-in-swift-combine-framework/">Error Handling in Swift Combine Framework</a>，稍作修改</p>
+</blockquote>
+<h1 id="错误处理策略"><a class="markdownIt-Anchor" href="#错误处理策略"></a> 错误处理策略</h1>
+<p>在计算机编程中，错误是不可避免的。我们不可能要求一段程序永远不出错，但我们需要一些手段来让程序可以尽快的从错误中恢复过来。让我们看看在 <code>Combine</code> 框架中该怎么处理。</p>
+<h2 id="终止-app"><a class="markdownIt-Anchor" href="#终止-app"></a> 终止 APP</h2>
+<p>最直接的错误处理就是不处理错误。当然了，我们不可能将这样的代码直接交付给客户。不过在开发过程中，这个策略是很有用的。我们希望在开发中应用越早崩溃越好，这样我们才能发现代码中的错误。<br />
+另外，这里还有两个不需要担心错误处理的场景：</p>
+<ul>
+<li>在编写实验代码时</li>
+<li>在教授或者学习时</li>
+</ul>
+<p><code>Combine</code> 为这个目的提供了 <code>assertNoFailure(_ : file : line :)</code> 方法。它会在前一个 <code>Publisher</code> 发出错误前停止 app，通知打印调试信息帮助你解决问题。</p>
+<blockquote>
+<p>如果你确定在你的流中不会出现出错，你可以把发布者的 <code>Failure</code> 类型设置为 <code>Never</code>。它在语法上禁止错误，它比 <code>assertNoFailure(_ : file : line :)</code> 安全得多，后者可能会使你的 app 崩溃</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/29/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine4/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine3/" class="post-title-link" itemprop="url">响应式编程与Combine（三）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-28 14:59:56" itemprop="dateCreated datePublished" datetime="2020-08-28T14:59:56+08:00">2020-08-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:35:46" itemprop="dateModified" datetime="2020-12-28T22:35:46+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>这篇文章基本翻译自 <a target="_blank" rel="noopener" href="https://www.vadimbulavin.com/swift-combine-framework-tutorial-getting-started/">Swift Combine Framework Tutorial: Getting Started</a>，删除了一些重复的内容</p>
+</blockquote>
+<h1 id="combine-的使用"><a class="markdownIt-Anchor" href="#combine-的使用"></a> Combine 的使用</h1>
+<p>前面两篇文章已经系统的介绍了 <code>Combine</code> 框架的主要组件。在这篇文章中，我们将会介绍一下它们的基本用法。如何将各种内建组件组合起来形成一套逻辑链。</p>
+<h1 id="publisher-与-subscriber-的连接"><a class="markdownIt-Anchor" href="#publisher-与-subscriber-的连接"></a> Publisher 与 Subscriber 的连接</h1>
+<p><code>Combine</code> 有两个内建的 <code>Subscriber</code>：<code>Subscribers.Sink</code> 和 <code>Subscribers.Assign</code>。你可以通过调用 <code>Publisher</code> 上任何一个方法来连接它们：</p>
+<ul>
+<li><code>sink(receiveCompletion: receiveValue:)</code> 在闭包中处理新元素或是完成事件</li>
+<li><code>assign(to: on:)</code> 将新元素写入属性</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> publisher <span class="operator">=</span> <span class="type">Just</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">publisher.sink(</span><br><span class="line">    receiveCompletion: &#123; <span class="keyword">_</span> <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;finished&quot;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    receiveValue: &#123; value <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(value)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>创建一个 <code>Just</code> 发布者，仅发送一个值，然后完成。<code>Combine</code> 有一堆内建的 Publisher，包括 <code>Just</code></li>
+<li>连接到 <code>Subscribers.Sink</code> 订阅者</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine2/" class="post-title-link" itemprop="url">响应式编程与Combine（二）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-28 09:28:17" itemprop="dateCreated datePublished" datetime="2020-08-28T09:28:17+08:00">2020-08-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:35:39" itemprop="dateModified" datetime="2020-12-28T22:35:39+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>本文翻译自 <a target="_blank" rel="noopener" href="https://www.vadimbulavin.com/understanding-schedulers-in-swift-combine-framework/">Understanding Schedulers in Swift Combine Framework</a> 。你可以阅读原文或者是原作者的 Combine 框架系列以了解更多内容。<br />
+另外的，上一篇文章介绍了 <code>Publisher</code>，<code>Subscriber</code>，<code>Subject</code>。这篇关于 <code>Scheduler</code> 的文章算是一个补充。在日常的开发中，真实的 <code>Publisher</code> 需要借助 <code>Scheduler</code> 基于时序进行产出——译者注</p>
+</blockquote>
+<p>现在，我们已经了解了 <code>Combine</code> 框架的 <a target="_blank" rel="noopener" href="https://www.vadimbulavin.com/swift-combine-framework-tutorial-getting-started/">全景</a>。现在是时候学习 <code>scheduler</code> 的知识了。</p>
+<ol>
+<li><code>Combine</code> 里内置了哪些 <code>Scheduler</code>？</li>
+<li>怎么开关 <code>Scheduler</code>？</li>
+<li>如何使用 <code>Combine</code> 来执行异步工作？</li>
+<li><code>receive(on:)</code> 和 <code>subscribe(on:)</code> 的区别是什么？</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/27/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/27/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine/" class="post-title-link" itemprop="url">响应式编程与Combine（一）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-27 16:13:17" itemprop="dateCreated datePublished" datetime="2020-08-27T16:13:17+08:00">2020-08-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:35:35" itemprop="dateModified" datetime="2020-12-28T22:35:35+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="响应式编程"><a class="markdownIt-Anchor" href="#响应式编程"></a> 响应式编程</h1>
+<p>借用维基百科的定义：</p>
+<blockquote>
+<p>在计算中，响应式编程或反应式编程（英语：Reactive programming）是一种面向数据流和变化传播的声明式编程范式。这意味着可以在编程语言中很方便地表达静态或动态的数据流，而相关的计算模型会自动将变化的值通过数据流进行传播。</p>
+</blockquote>
+<p>从定义中可以看出，响应式编程的核心就是：数据流和数据流的变化。<br />
+数据流自不必说，很多实际的应用场景都会产生数据流。如果仅限于 <code>IOS</code> 客户端开发的话，网络请求就是一个常见的应用场景了。很多语言都给出了自己的响应式编程的解决方案，但本篇文章只谈谈苹果给出的解决方案——<code>Combine</code> 框架。</p>
+<p>另外的，基于响应式编程的特点，我们很容易想到可以把函数式编程与响应式编程结合起来。而函数式编程的核心就是“模糊数据与过程的界限”。函数式编程的这一特点可以让我们更加清楚的处理数据流，明确其输入和输出。</p>
+<p>而这一套范式可以用来很轻松的解决异步编程的种种问题。而提到异步编程，对于前端开发的程序员来说应该不会陌生。在过去，前端工程师依赖于 <code>闭包回调</code> 这一方案来解决异步编程的问题。简单来说，就是在调用需要耗时的方法时，同时提供一个回调函数来处理方法的结果。先不说这样很容易导致回调地狱的问题，当多个异步函数同时工作的时候，你很难搞清楚在任一情况下数据到底变成了什么样子，而这也就是大多数 bug 的来源。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/27/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/25/%E4%BB%8E%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%9D%A5%E8%AE%A8%E8%AE%BA%E9%80%92%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/25/%E4%BB%8E%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%9D%A5%E8%AE%A8%E8%AE%BA%E9%80%92%E5%BD%92/" class="post-title-link" itemprop="url">从计算的本质来讨论递归</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-25 16:48:31" itemprop="dateCreated datePublished" datetime="2020-08-25T16:48:31+08:00">2020-08-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:35:24" itemprop="dateModified" datetime="2020-12-28T22:35:24+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>本文的核心思想来自于 SICP 第一章与第二章的内容，你可以同时阅读以深刻理解</p>
+</blockquote>
+<h1 id="关于递归"><a class="markdownIt-Anchor" href="#关于递归"></a> 关于递归</h1>
+<p>事实上，递归一直是一个很难懂但却应用广泛的概念。例如在树的深度优先遍历中，我们就经常使用递归来简化代码。<br />
+在维基百科中，关于递归的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%80%92%E5%BD%92">定义</a>是这样的：</p>
+<blockquote>
+<p>递归（英语：Recursion），又译为递回，在数学与计算机科学中，是指在函数的定义中使用函数自身的方法。</p>
+</blockquote>
+<p>在很多关于递归的文章中，都趋向于从这三个方面来解释递归。或者说。教授读者从这三个方面来理解递归：</p>
+<ul>
+<li>明确递归函数的作用</li>
+<li>寻找递归结束的条件</li>
+<li>寻找函数的等价关系式</li>
+</ul>
+<p>但这种理解本质上是用常规的迭代思维来理解递归过程，自然很容易导致对递归相关的题目或者工程场景的代码，一看就会，一做就废。</p>
+<p>事实上，理解递归的核心要点是，要理解下面这句话：</p>
+<ul>
+<li>即，递归是一个 <strong>推迟执行</strong> 的计算过程</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/25/%E4%BB%8E%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%9D%A5%E8%AE%A8%E8%AE%BA%E9%80%92%E5%BD%92/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/22/doublepointer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/22/doublepointer/" class="post-title-link" itemprop="url">从合并排序数组谈谈指针遍历</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-22 12:09:42" itemprop="dateCreated datePublished" datetime="2020-08-22T12:09:42+08:00">2020-08-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:32:31" itemprop="dateModified" datetime="2020-12-28T22:32:31+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="leetcode-原题"><a class="markdownIt-Anchor" href="#leetcode-原题"></a> leetcode 原题</h1>
+<p>你可以在<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sorted-merge-lcci/">这里</a>找到原题。<br />
+给定两个排序后的数组，其中一个数组末端有足够的空间容纳另一个数组，同时给出两个数组的元素数量。将两个数组合并并排序。</p>
+<p>一个很容易想到的思路就是 <strong>双指针遍历</strong>。<br />
+也就是说，我们可以创建一个缓存的新数组 <code>res</code>，然后同时遍历两个给定数组。可能有以下几种情况：</p>
+<ol>
+<li>A 的元素比 B 的大 —— 将 B 的元素推入 res</li>
+<li>B 的元素比 A 的大 —— 将 A 的元素推入 res</li>
+<li>A 的元素遍历完了 —— 直接将 B 的元素推入 res</li>
+<li>B 的元素遍历完了 —— 直接将 A 的元素推入 res</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/22/doublepointer/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/21/reverseList/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/21/reverseList/" class="post-title-link" itemprop="url">从反转链表谈谈递归</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-21 18:46:25" itemprop="dateCreated datePublished" datetime="2020-08-21T18:46:25+08:00">2020-08-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:34:15" itemprop="dateModified" datetime="2020-12-28T22:34:15+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="反转链表"><a class="markdownIt-Anchor" href="#反转链表"></a> 反转链表</h1>
+<p>关于反转链表的题目已经是老生常谈了。主要的解法有双指针迭代和递归两种。这里仅仅谈谈递归。<br />
+你可以在 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-linked-list/">这里</a> 找到原题。</p>
+<p>下面是题解：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverseList</span>(<span class="params">self, head: ListNode</span>) -&gt; ListNode:</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> head <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> head.<span class="built_in">next</span> <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> head</span><br><span class="line"></span><br><span class="line">        next_node = self.reverseList(head.<span class="built_in">next</span>)</span><br><span class="line">        head.<span class="built_in">next</span>.<span class="built_in">next</span> = head</span><br><span class="line">        head.<span class="built_in">next</span> = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> next_node</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/21/reverseList/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ShroXd"
+      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+  <p class="site-author-name" itemprop="name">ShroXd</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ShroXd" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ShroXd" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:shroxdf@gmail.com" title="E-Mail → mailto:shroxdf@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShroXd</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>

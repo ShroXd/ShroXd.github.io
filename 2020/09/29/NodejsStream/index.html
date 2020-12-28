@@ -1,14 +1,254 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Nodejs（二）—— Stream"><meta name="keywords" content="stream,pipe,事件"><meta name="author" content="ShroXd"><meta name="copyright" content="ShroXd"><title>Nodejs（二）—— Stream | Space Cowboy</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  copy: {
-    success: 'Copy successfully',
-    error: 'Copy error',
-    noSupport: 'The browser does not support'
-  },
-  hexoVersion: '5.3.0'
-} </script><meta name="generator" content="Hexo 5.3.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text"> 流的分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text"> 流的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pipe"><span class="toc-number">2.1.</span> <span class="toc-text"> pipe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E4%BA%8B%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text"> 流事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%AF%BB%E6%B5%81%E7%9A%84%E6%9A%82%E5%81%9C%E4%B8%8E%E6%B5%81%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text"> 可读流的暂停与流动模式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text"> 流的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%8F%AF%E5%86%99%E6%B5%81"><span class="toc-number">3.1.</span> <span class="toc-text"> 实现一个可写流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%AF%BB%E6%B5%81"><span class="toc-number">3.2.</span> <span class="toc-text"> 实现一个可读流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8F%8C%E5%90%91%E6%B5%81"><span class="toc-number">3.3.</span> <span class="toc-text"> 实现双向流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8F%98%E6%8D%A2%E6%B5%81"><span class="toc-number">3.4.</span> <span class="toc-text"> 实现变换流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text"> 流对象模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E6%B5%81%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text"> 内置流的使用</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png"></div><div class="author-info__name text-center">ShroXd</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">49</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">99</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">8</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-10-18-WIuOpc.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Space Cowboy</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Nodejs（二）—— Stream</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-09-29</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/%E6%A1%86%E6%9E%B6/">框架</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">2k</span><span class="post-meta__separator">|</span><span>Reading time: 7 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><blockquote>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文是 Node.js Streams: Everything you need to know 一文的笔记   流是 Nodejs 中最棒的，同时也是最被人误解的想法。 —— Dominic Tarr  如果想要学习 Nodejs，那么 流 这个概念就是无法绕过的重点。在 Nodejs 中，很多内建模块都实现了流接口。例如常见的 request、zlib 等。 那么，流 到底是什么呢？ 简单来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs（二）—— Stream">
+<meta property="og:url" content="http://www.bebopser.com/2020/09/29/NodejsStream/index.html">
+<meta property="og:site_name" content="Space Cowboy">
+<meta property="og:description" content="本文是 Node.js Streams: Everything you need to know 一文的笔记   流是 Nodejs 中最棒的，同时也是最被人误解的想法。 —— Dominic Tarr  如果想要学习 Nodejs，那么 流 这个概念就是无法绕过的重点。在 Nodejs 中，很多内建模块都实现了流接口。例如常见的 request、zlib 等。 那么，流 到底是什么呢？ 简单来">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-09-28-F5slkK.png">
+<meta property="og:image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-09-28-EDzNtj.jpg">
+<meta property="article:published_time" content="2020-09-29T02:07:03.000Z">
+<meta property="article:modified_time" content="2020-12-28T14:34:06.633Z">
+<meta property="article:author" content="ShroXd">
+<meta property="article:tag" content="stream">
+<meta property="article:tag" content="pipe">
+<meta property="article:tag" content="事件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-09-28-F5slkK.png">
+
+<link rel="canonical" href="http://www.bebopser.com/2020/09/29/NodejsStream/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Nodejs（二）—— Stream | Space Cowboy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Space Cowboy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">生死去来 棚头傀儡 一线断时 落落磊磊</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/09/29/NodejsStream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nodejs（二）—— Stream
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-29 10:07:03" itemprop="dateCreated datePublished" datetime="2020-09-29T10:07:03+08:00">2020-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:34:06" itemprop="dateModified" datetime="2020-12-28T22:34:06+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">框架</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
 <p>本文是 <a target="_blank" rel="noopener" href="https://www.freecodecamp.org/news/node-js-streams-everything-you-need-to-know-c9141306be93/">Node.js Streams: Everything you need to know</a> 一文的笔记</p>
 </blockquote>
 <blockquote>
@@ -18,6 +258,7 @@
 <p>如果想要学习 <code>Nodejs</code>，那么 <em>流</em> 这个概念就是无法绕过的重点。在 <code>Nodejs</code> 中，很多内建模块都实现了流接口。例如常见的 <code>request</code>、<code>zlib</code> 等。<br />
 那么，<em>流</em> 到底是什么呢？<br />
 简单来说，流是一组数据的集合。但在使用它时，程序并不会一次性的将其载入内存中使用，而是逐端使用数据。显然，这种数据类型有助于处理大体积数据，或是从外部来源逐段发来的数据。对于后者，一个常见的例子就是处理 <code>WebStocket</code> 接口的时候。</p>
+<a id="more"></a>
 <h1 id="流的分类"><a class="markdownIt-Anchor" href="#流的分类"></a> 流的分类</h1>
 <p>总的来说，在 <code>Nodejs</code> 中，流被分为四种基本类型：</p>
 <ul>
@@ -34,7 +275,7 @@
 简单来说，这个方法是这样使用的：</p>
 <p>readableSource.pipe(writableDestination)</p>
 <p><code>pipe</code>，也就是管道的上游必须是一个可读流，而下游则必须是一个可写流。不过，如果在中间的流是<code>双向流</code>或<code>变换流</code>，我们也可以连接多个流：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">readableSource</span><br><span class="line">	.pipe(transformStream1)</span><br><span class="line">	.pipe(transformStream2)</span><br><span class="line">	.pipe(finalWrtitableDestination)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">readableSource</span><br><span class="line">  .pipe(transformStream1)</span><br><span class="line">  .pipe(transformStream2)</span><br><span class="line">  .pipe(finalWrtitableDestination);</span><br></pre></td></tr></table></figure>
 <h2 id="流事件"><a class="markdownIt-Anchor" href="#流事件"></a> 流事件</h2>
 <p>下面是一段简化的，使用事件来模拟 <code>pipe</code> 方法读取、写入数据的代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">readable.on(<span class="string">&quot;data&quot;</span>, <span class="function"><span class="params">chunk</span> =&gt;</span> &#123;</span><br><span class="line">	writable.write(chunk);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">readable.on(<span class="string">&quot;end&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">	writable.end()</span><br><span class="line">)&#125;;</span><br></pre></td></tr></table></figure>
@@ -63,37 +304,259 @@
 <p>在讨论了流的使用之后，我们就应当转向流的实现了。通常的，我们会借助 <code>stream</code> 和 <code>require</code> 模块。</p>
 <h2 id="实现一个可写流"><a class="markdownIt-Anchor" href="#实现一个可写流"></a> 实现一个可写流</h2>
 <p>我们可以直接继承 <code>Writable</code> 类来实现可写流，不过更简单的办法是向 <code>Writable</code> 构造函数传入配置项来创建一个对象。在配置项中你 <strong>必须</strong> 实现 <code>write</code> 函数，这作为暴露一个写入数据的接口。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Writable &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// chunk - 通常是是一个 Buffer，除非进行了特殊配置</span></span><br><span class="line"><span class="comment">// encoding - 如果 chunk 不被配置为 buffer，那么你需要在这里配置编码</span></span><br><span class="line"><span class="comment">// callback - 完成数据处理后要执行的回调函数</span></span><br><span class="line"><span class="keyword">const</span> outStream = <span class="keyword">new</span> Writable(&#123;</span><br><span class="line">    <span class="function"><span class="title">write</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;write: &quot;</span> + chunk.toString());</span><br><span class="line">        callback();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">process.stdin.pipe(outStream);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Writable &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// chunk - 通常是是一个 Buffer，除非进行了特殊配置</span></span><br><span class="line"><span class="comment">// encoding - 如果 chunk 不被配置为 buffer，那么你需要在这里配置编码</span></span><br><span class="line"><span class="comment">// callback - 完成数据处理后要执行的回调函数</span></span><br><span class="line"><span class="keyword">const</span> outStream = <span class="keyword">new</span> Writable(&#123;</span><br><span class="line">  <span class="function"><span class="title">write</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;write: &quot;</span> + chunk.toString());</span><br><span class="line">    callback();</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">process.stdin.pipe(outStream);</span><br></pre></td></tr></table></figure>
 <h2 id="实现一个可读流"><a class="markdownIt-Anchor" href="#实现一个可读流"></a> 实现一个可读流</h2>
 <p>和可写流一样，我们需要借助 <code>Readable</code> 类来实现。向构造函数传入配置项是一个很简单的构造方式。在这里，你需要实现 <code>read</code> 方法。这样可以在下游使用者要求时才 <strong>按需</strong> 推送信息。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Readable &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inStream = <span class="keyword">new</span> Readable(&#123;</span><br><span class="line">    <span class="function"><span class="title">read</span>(<span class="params">size</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.push(<span class="built_in">String</span>.fromCharCode(<span class="built_in">this</span>.currentCharCode++));</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.currentCharCode &gt; <span class="number">90</span>) &#123;</span><br><span class="line">            <span class="built_in">this</span>.push(<span class="literal">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">inStream.currentCharCode = <span class="number">65</span>;</span><br><span class="line">inStream.pipe(process.stdout);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Readable &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inStream = <span class="keyword">new</span> Readable(&#123;</span><br><span class="line">  <span class="function"><span class="title">read</span>(<span class="params">size</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.push(<span class="built_in">String</span>.fromCharCode(<span class="built_in">this</span>.currentCharCode++));</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.currentCharCode &gt; <span class="number">90</span>) &#123;</span><br><span class="line">      <span class="built_in">this</span>.push(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">inStream.currentCharCode = <span class="number">65</span>;</span><br><span class="line">inStream.pipe(process.stdout);</span><br></pre></td></tr></table></figure>
 <h2 id="实现双向流"><a class="markdownIt-Anchor" href="#实现双向流"></a> 实现双向流</h2>
 <p>对于双向流，我们需要在同一个对象上同时实现可读流和可写流的接口。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Duplex &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inoutStream = <span class="keyword">new</span> Duplex(&#123;</span><br><span class="line">    <span class="function"><span class="title">write</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;write: &quot;</span> + chunk.toString());</span><br><span class="line">        callback();</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="title">read</span>(<span class="params">size</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.push(<span class="built_in">String</span>.fromCharCode(<span class="built_in">this</span>.currentCharCode++));</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.currentCharCode &gt; <span class="number">90</span>) &#123;</span><br><span class="line">            <span class="built_in">this</span>.push(<span class="literal">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">inoutStream.currentCharCode = <span class="number">65</span>;</span><br><span class="line">process.stdin.pipe(inoutStream).pipe(process.stdout);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Duplex &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> inoutStream = <span class="keyword">new</span> Duplex(&#123;</span><br><span class="line">  <span class="function"><span class="title">write</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;write: &quot;</span> + chunk.toString());</span><br><span class="line">    callback();</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">read</span>(<span class="params">size</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.push(<span class="built_in">String</span>.fromCharCode(<span class="built_in">this</span>.currentCharCode++));</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.currentCharCode &gt; <span class="number">90</span>) &#123;</span><br><span class="line">      <span class="built_in">this</span>.push(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">inoutStream.currentCharCode = <span class="number">65</span>;</span><br><span class="line">process.stdin.pipe(inoutStream).pipe(process.stdout);</span><br></pre></td></tr></table></figure>
 <p>你需要注意，对于双向流，其读取和写入部分是完全独立的。它们只不过是同时实现在一个对象上罢了。</p>
 <h2 id="实现变换流"><a class="markdownIt-Anchor" href="#实现变换流"></a> 实现变换流</h2>
 <p>变换流需要我们实现 <code>transform</code> 方法，它结合了 <code>read</code> 和 <code>write</code> 方法的功能。其函数签名与 <code>write</code> 方法一致，所以我们也可以通过它 <code>push</code> 数据。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Transform &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> upperCaseTr = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">    <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.push(chunk.toString().toUpperCase());</span><br><span class="line">        callback();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">process.stdin.pipe(upperCaseTr).pipe(process.stdout);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Transform &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> upperCaseTr = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">  <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.push(chunk.toString().toUpperCase());</span><br><span class="line">    callback();</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">process.stdin.pipe(upperCaseTr).pipe(process.stdout);</span><br></pre></td></tr></table></figure>
 <p>代码很清晰，<code>upperCaseTr</code> 作为一个中间介质，将输入流的字符转化为大写，并传递给下游输出流。</p>
 <h1 id="流对象模式"><a class="markdownIt-Anchor" href="#流对象模式"></a> 流对象模式</h1>
 <p>默认情况下，流接收的参数类型为 <code>Buffer</code> 或 <code>String</code>。我们可以通过设置 <code>objectMode</code> 参数使流可以接收任何 <code>JavaScript</code> 对象。</p>
 <p>下面的例子用于把一个逗号分割的字符串转变成一个 <code>JavaScript</code> 对象。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Transfrom &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> commaSplitter = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">    readableObjectMode: <span class="literal">true</span>,</span><br><span class="line">    <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.push(chunk.toString().trim().split(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">        callback();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> arrayToObject = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">    readableObjectMode: <span class="literal">true</span>,</span><br><span class="line">    writableObjectMode: <span class="literal">true</span>,</span><br><span class="line">    <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> obj = &#123;&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;chunk.length; i+=<span class="number">2</span>) &#123;</span><br><span class="line">            obj[chunk[i]] = chunk[i+<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">this</span>.push(obj);</span><br><span class="line">        callback();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> objectToString = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">    writableObjectMode: <span class="literal">true</span>,</span><br><span class="line">    <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.push(<span class="built_in">JSON</span>.stringify(chunk) + <span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">        callback();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">process.stdin</span><br><span class="line">    .pipe(commaSplitter)</span><br><span class="line">    .pipe(arrayToObject)</span><br><span class="line">    .pipe(objectToString)</span><br><span class="line">    .pipe(process.stdout)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; Transfrom &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> commaSplitter = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">  readableObjectMode: <span class="literal">true</span>,</span><br><span class="line">  <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.push(chunk.toString().trim().split(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">    callback();</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> arrayToObject = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">  readableObjectMode: <span class="literal">true</span>,</span><br><span class="line">  writableObjectMode: <span class="literal">true</span>,</span><br><span class="line">  <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> obj = &#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; chunk.length; i += <span class="number">2</span>) &#123;</span><br><span class="line">      obj[chunk[i]] = chunk[i + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">this</span>.push(obj);</span><br><span class="line">    callback();</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> objectToString = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">  writableObjectMode: <span class="literal">true</span>,</span><br><span class="line">  <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callback</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.push(<span class="built_in">JSON</span>.stringify(chunk) + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    callback();</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">process.stdin</span><br><span class="line">  .pipe(commaSplitter)</span><br><span class="line">  .pipe(arrayToObject)</span><br><span class="line">  .pipe(objectToString)</span><br><span class="line">  .pipe(process.stdout);</span><br></pre></td></tr></table></figure>
 <h1 id="内置流的使用"><a class="markdownIt-Anchor" href="#内置流的使用"></a> 内置流的使用</h1>
 <p><code>Node.js</code> 内置了很多有用的变换流，例如 <code>zlib</code> 和 <code>crypto</code> 。你可以将管道和事件组合使用。因为 <code>pipe</code> 会返回下游流，所以我们可以把注册事件回调的操作级联在一起：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">&quot;zlib&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> file = process.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">fs.createReadStream(file)</span><br><span class="line">    .pipe(zlib.createGzip())</span><br><span class="line">    .on(<span class="string">&quot;data&quot;</span>, <span class="function">() =&gt;</span> process.stdout.write(<span class="string">&quot;.&quot;</span>))</span><br><span class="line">    .pipr(fs.createWriteStream(file + <span class="string">&#x27;.zz&#x27;</span>))</span><br><span class="line">    .on(<span class="string">&#x27;finish&#x27;</span>, <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Done&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">&quot;zlib&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> file = process.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">fs.createReadStream(file)</span><br><span class="line">  .pipe(zlib.createGzip())</span><br><span class="line">  .on(<span class="string">&quot;data&quot;</span>, <span class="function">() =&gt;</span> process.stdout.write(<span class="string">&quot;.&quot;</span>))</span><br><span class="line">  .pipr(fs.createWriteStream(file + <span class="string">&quot;.zz&quot;</span>))</span><br><span class="line">  .on(<span class="string">&quot;finish&quot;</span>, <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&quot;Done&quot;</span>));</span><br></pre></td></tr></table></figure>
 <p>你还可以创建一个变换流来显示进度，这样的代码更加具有可读性：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">&#x27;zlib&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> file = processs.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; Transform &#125; = <span class="built_in">require</span>(<span class="string">&#x27;stream&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reportProgress = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">    <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callbakc</span>)</span> &#123;</span><br><span class="line">        process.stdout.write(<span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">        <span class="comment">// 我们在这里使用 callback 传递数据</span></span><br><span class="line">        <span class="comment">// 这等效于 push 推送数据</span></span><br><span class="line">        callback(<span class="literal">null</span>, chunk);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">fs.createReadStream(file)</span><br><span class="line">    .pipe(zlib.createGzip())</span><br><span class="line">    .pipe(reportProgress)</span><br><span class="line">    .pipe(fs.createWriteStream(file + <span class="string">&#x27;.zz&#x27;</span>))</span><br><span class="line">    .on(<span class="string">&#x27;finish&#x27;</span>, <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&#x27;Done&#x27;</span>));</span><br></pre></td></tr></table></figure></div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">ShroXd</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://www.bebopser.com/2020/09/29/NodejsStream/">http://www.bebopser.com/2020/09/29/NodejsStream/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/stream/">stream</a><a class="post-meta__tags" href="/tags/pipe/">pipe</a><a class="post-meta__tags" href="/tags/%E4%BA%8B%E4%BB%B6/">事件</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/09/29/treeShaking/"><i class="fa fa-chevron-left">  </i><span>Tree Shaking</span></a></div><div class="next-post pull-right"><a href="/2020/09/29/NodejsBuffer/"><span>Nodejs（一）—— Buffer</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitalk-container"></div><script>var gitalk = new Gitalk({
-  clientID: 'ec5cfb9ea4555ffd29ce',
-  clientSecret: 'a0747147682b2ae812bb8aceb071ec64a6ddacf6',
-  repo: 'ShroXd.github.io',
-  owner: 'ShroXd',
-  admin: 'ShroXd',
-  id: md5(decodeURI(location.pathname)),
-  language: 'zh-CN'
-})
-gitalk.render('gitalk-container')</script></div></div><footer class="footer-bg" style="background-image: url(https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-10-18-WIuOpc.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By ShroXd</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="icp"><a><span>鲁ICP备19050480号-1</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
-  $('#nav').addClass('is-mobile')
-  $('footer').addClass('is-mobile')
-  $('#top-container').addClass('is-mobile')
-}</script></body></html>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">&quot;zlib&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> file = processs.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; Transform &#125; = <span class="built_in">require</span>(<span class="string">&quot;stream&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reportProgress = <span class="keyword">new</span> Transform(&#123;</span><br><span class="line">  <span class="function"><span class="title">transform</span>(<span class="params">chunk, encoding, callbakc</span>)</span> &#123;</span><br><span class="line">    process.stdout.write(<span class="string">&quot;.&quot;</span>);</span><br><span class="line">    <span class="comment">// 我们在这里使用 callback 传递数据</span></span><br><span class="line">    <span class="comment">// 这等效于 push 推送数据</span></span><br><span class="line">    callback(<span class="literal">null</span>, chunk);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">fs.createReadStream(file)</span><br><span class="line">  .pipe(zlib.createGzip())</span><br><span class="line">  .pipe(reportProgress)</span><br><span class="line">  .pipe(fs.createWriteStream(file + <span class="string">&quot;.zz&quot;</span>))</span><br><span class="line">  .on(<span class="string">&quot;finish&quot;</span>, <span class="function">() =&gt;</span> <span class="built_in">console</span>.log(<span class="string">&quot;Done&quot;</span>));</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/stream/" rel="tag"># stream</a>
+              <a href="/tags/pipe/" rel="tag"># pipe</a>
+              <a href="/tags/%E4%BA%8B%E4%BB%B6/" rel="tag"># 事件</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/29/NodejsBuffer/" rel="prev" title="Nodejs（一）—— Buffer">
+      <i class="fa fa-chevron-left"></i> Nodejs（一）—— Buffer
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/29/treeShaking/" rel="next" title="Tree Shaking">
+      Tree Shaking <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text"> 流的分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text"> 流的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pipe"><span class="nav-number">2.1.</span> <span class="nav-text"> pipe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E4%BA%8B%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text"> 流事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%AF%BB%E6%B5%81%E7%9A%84%E6%9A%82%E5%81%9C%E4%B8%8E%E6%B5%81%E5%8A%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text"> 可读流的暂停与流动模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text"> 流的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%8F%AF%E5%86%99%E6%B5%81"><span class="nav-number">3.1.</span> <span class="nav-text"> 实现一个可写流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%AF%BB%E6%B5%81"><span class="nav-number">3.2.</span> <span class="nav-text"> 实现一个可读流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%8F%8C%E5%90%91%E6%B5%81"><span class="nav-number">3.3.</span> <span class="nav-text"> 实现双向流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%8F%98%E6%8D%A2%E6%B5%81"><span class="nav-number">3.4.</span> <span class="nav-text"> 实现变换流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text"> 流对象模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E6%B5%81%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text"> 内置流的使用</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ShroXd"
+      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+  <p class="site-author-name" itemprop="name">ShroXd</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ShroXd" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ShroXd" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:shroxdf@gmail.com" title="E-Mail → mailto:shroxdf@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShroXd</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'ec5cfb9ea4555ffd29ce',
+      clientSecret: 'a0747147682b2ae812bb8aceb071ec64a6ddacf6',
+      repo        : 'ShroXd.github.io',
+      owner       : 'ShroXd',
+      admin       : ['ShroXd'],
+      id          : '461b35d48927ca44759e38eab62065d5',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
