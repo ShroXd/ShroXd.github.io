@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
@@ -187,7 +187,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/21/concurrency/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -241,9 +241,9 @@
           <p>并发应该是一个老生常谈的主题了，尽管它并不是那么好理解。我们这里从一道 leetcode 原题开始，详细阐述一下这个主题。<br />
 文中涉及的内容大部分是从各个地方找的，在文章结尾我会放上参考资料的链接。</p>
 <h2 id="按序打印"><a class="markdownIt-Anchor" href="#按序打印"></a> 按序打印</h2>
-<p>这是一道 leetcode 原题，你可以在 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/print-in-order/">这里</a> 读到原题。简单来说，就是我们需要设计一个类，从而实现方法的按序执行。</p>
+<p>这是一道 leetcode 原题，你可以在 <a href="https://leetcode-cn.com/problems/print-in-order/" target="_blank" rel="noopener">这里</a> 读到原题。简单来说，就是我们需要设计一个类，从而实现方法的按序执行。</p>
 <p>使用 <code>JAVA</code> 语言的 <code>volatile</code> 关键字可以很轻松的解决掉这道题。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">first</span><span class="params">(Runnable printFirst)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        printFirst.run();   <span class="comment">// this method output &quot;first&quot;</span></span><br><span class="line">        index++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">second</span><span class="params">(Runnable printSecond)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (index != <span class="number">2</span>);</span><br><span class="line">        printSecond.run();</span><br><span class="line">        index++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">third</span><span class="params">(Runnable printThird)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (index != <span class="number">3</span>);</span><br><span class="line">        printThird.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Foo</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">first</span><span class="params">(Runnable printFirst)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        printFirst.run();   <span class="comment">// this method output "first"</span></span><br><span class="line">        index++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">second</span><span class="params">(Runnable printSecond)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (index != <span class="number">2</span>);</span><br><span class="line">        printSecond.run();</span><br><span class="line">        index++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">third</span><span class="params">(Runnable printThird)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (index != <span class="number">3</span>);</span><br><span class="line">        printThird.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>题解的思路很好理解。我们实际上是构造了一道屏障，对于满足条件的方法就令其执行，不满足的就先等着。在这里 <code>volatile</code> 是一个核心。当只有一个变量，且同一时间只有一个线程执行写操作，而其他线程执行读操作时，可以考虑使用这个关键字。</p>
           <!--noindex-->
             <div class="post-button">
@@ -274,7 +274,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/19/Scalability/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -326,7 +326,7 @@
 
       
           <blockquote>
-<p>本文是 <a target="_blank" rel="noopener" href="https://www.lecloud.net/tagged/scalability/chrono">Scalability for Dummies</a> 的翻译。文中提及的具体技术可能过时，但思想依然很值得参考</p>
+<p>本文是 <a href="https://www.lecloud.net/tagged/scalability/chrono" target="_blank" rel="noopener">Scalability for Dummies</a> 的翻译。文中提及的具体技术可能过时，但思想依然很值得参考</p>
 </blockquote>
 <h2 id="克隆"><a class="markdownIt-Anchor" href="#克隆"></a> 克隆</h2>
 <p>最近有人问我，需要做点什么才能让 Web 服务器具有可伸缩性。我的回答很长，并且其他人可能会对这个主题感兴趣。所以写了这篇文章放在 Blog 里，并将其划分为几个主题，以确保容易阅读。祝您阅读愉快，欢迎评论，</p>
@@ -364,7 +364,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/17/binaryTree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -461,7 +461,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/17/encodedstring/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -553,7 +553,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/11/NGE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -607,7 +607,7 @@
           <h1 id="栈与单调栈"><a class="markdownIt-Anchor" href="#栈与单调栈"></a> 栈与单调栈</h1>
 <p>栈是一种非常常见的线性数据结构，其中的元素遵循 <code>First In Last Out</code> 的原则，并且仅能在一端，即栈顶操作数据。<br />
 以 <code>C++</code> 为例，栈一般提供以下几种操作：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s</span><br><span class="line"></span><br><span class="line">s.empty()       <span class="comment">// 栈是否为空</span></span><br><span class="line">s.size()        <span class="comment">// 栈中元素个数</span></span><br><span class="line">s.push(<span class="number">1</span>)       <span class="comment">// 向栈中压入元素</span></span><br><span class="line">s.top()         <span class="comment">// 返回栈顶元素</span></span><br><span class="line">s.pop()         <span class="comment">// 弹出栈顶元素</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s</span><br><span class="line"></span><br><span class="line">s.empty()       <span class="comment">// 栈是否为空</span></span><br><span class="line">s.<span class="built_in">size</span>()        <span class="comment">// 栈中元素个数</span></span><br><span class="line">s.push(<span class="number">1</span>)       <span class="comment">// 向栈中压入元素</span></span><br><span class="line">s.top()         <span class="comment">// 返回栈顶元素</span></span><br><span class="line">s.pop()         <span class="comment">// 弹出栈顶元素</span></span><br></pre></td></tr></table></figure>
 <p>不同语言，同一操作的细节可能不同，但大体思路都是一致的。</p>
 <p>单调栈是一种特殊的栈，通过一些逻辑处理，使得入栈后的元素都保持单调。这种数据结构算是处理 <code>Next Greater Number</code> 问题的银弹。</p>
           <!--noindex-->
@@ -639,7 +639,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/05/bem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -722,7 +722,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/07/24/vueData/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -809,7 +809,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/06/22/treeHandle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -899,7 +899,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/06/05/processAbstraction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -993,7 +993,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/05/26/virtualCPU/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -1139,7 +1139,7 @@ UNIX 系统提供了相关的 API，来轻松的完成这些任务：<code>fork(
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="ShroXd"
-      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
   <p class="site-author-name" itemprop="name">ShroXd</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -1202,7 +1202,7 @@ UNIX 系统提供了相关的 API，来轻松的完成这些任务：<code>fork(
   </span>
   <span class="author" itemprop="copyrightHolder">ShroXd</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
         

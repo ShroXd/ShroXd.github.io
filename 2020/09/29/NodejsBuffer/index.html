@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="参考：深入学习 Node.js Buffer   关于 Buffer Buffer 是 Node.js 的核心模块，它使得开发者可以在 TCP 流或是文件系统操作等场景中处理二进制数据。 Buffer 的大小是固定的，且无法调整。它在 V8 堆外分配物理内存。  V8 是一个由 Google 开发的开源 JavaScript 引擎，用于 Google Chrome 及 Chromium 中。">
@@ -193,7 +193,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/09/29/NodejsBuffer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -244,7 +244,7 @@
 
       
         <blockquote>
-<p>参考：<a target="_blank" rel="noopener" href="http://www.semlinker.com/node-buffer/#Node-js-Buffer">深入学习 Node.js Buffer</a></p>
+<p>参考：<a href="http://www.semlinker.com/node-buffer/#Node-js-Buffer" target="_blank" rel="noopener">深入学习 Node.js Buffer</a></p>
 </blockquote>
 <h1 id="关于-buffer"><a class="markdownIt-Anchor" href="#关于-buffer"></a> 关于 Buffer</h1>
 <p><code>Buffer</code> 是 <code>Node.js</code> 的核心模块，它使得开发者可以在 <code>TCP</code> 流或是文件系统操作等场景中处理二进制数据。<br />
@@ -256,13 +256,13 @@
 <a id="more"></a>
 <h1 id="buffer-的基本使用"><a class="markdownIt-Anchor" href="#buffer-的基本使用"></a> Buffer 的基本使用</h1>
 <p>下面的代码展示了一些 <code>Buffer</code> 的基本使用：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个长度为 10、且用 0x1 填充的 Buffer</span></span><br><span class="line"><span class="comment">// 若无填充参数，则填充数字为 0</span></span><br><span class="line"><span class="keyword">const</span> buf1 = Buffer.alloc(<span class="number">10</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个长度为 10，且未初始化的 Buffer</span></span><br><span class="line"><span class="keyword">const</span> buf2 = Buffer.allocUnsafe(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个包含 [0x1, 0x2, 0x3] 的 Buffer。</span></span><br><span class="line"><span class="keyword">const</span> buf4 = Buffer.from([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个包含 UTF-8 字节 [0x74, 0xc3, 0xa9, 0x73, 0x74] 的 Buffer。</span></span><br><span class="line"><span class="keyword">const</span> buf5 = Buffer.from(<span class="string">&quot;tést&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个包含 Latin-1 字节 [0x74, 0xe9, 0x73, 0x74] 的 Buffer。</span></span><br><span class="line"><span class="keyword">const</span> buf6 = Buffer.from(<span class="string">&quot;tést&quot;</span>, <span class="string">&quot;latin1&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个长度为 10、且用 0x1 填充的 Buffer</span></span><br><span class="line"><span class="comment">// 若无填充参数，则填充数字为 0</span></span><br><span class="line"><span class="keyword">const</span> buf1 = Buffer.alloc(<span class="number">10</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个长度为 10，且未初始化的 Buffer</span></span><br><span class="line"><span class="keyword">const</span> buf2 = Buffer.allocUnsafe(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个包含 [0x1, 0x2, 0x3] 的 Buffer。</span></span><br><span class="line"><span class="keyword">const</span> buf4 = Buffer.from([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个包含 UTF-8 字节 [0x74, 0xc3, 0xa9, 0x73, 0x74] 的 Buffer。</span></span><br><span class="line"><span class="keyword">const</span> buf5 = Buffer.from(<span class="string">"tést"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个包含 Latin-1 字节 [0x74, 0xe9, 0x73, 0x74] 的 Buffer。</span></span><br><span class="line"><span class="keyword">const</span> buf6 = Buffer.from(<span class="string">"tést"</span>, <span class="string">"latin1"</span>);</span><br></pre></td></tr></table></figure>
 <p>你可能会在一些教程中看到可以这样创建：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buf = <span class="keyword">new</span> Buffer(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
 <p>你需要注意，在 <code>Node.js</code> 8.0.0 之前，这种方式创建的 <code>Buffer</code> 实例持有的内存是 <strong>没有</strong> 初始化的，且 <strong>可能包含敏感数据</strong>。在 8.0.0 之后，这种方式将返回一个初始化后的 <code>Buffer</code>。</p>
 <p>当你调用 <code>Buffer.allocUnsafe()</code> 和 <code>Buffer.allocUnsafeSlow()</code> 方法，被分配的内存段是未初始化的，这可以加速分配内存的速度，具有明显的性能优势。<br />
 到底是创建一个快速但未初始化的 <code>Buffer</code>，还是创建一个慢点但更安全的 <code>Buffer</code>，这需要根据实际情况做出选择。</p>
-<p>关于更多的 <code>Buffer</code> 常用 api 的总结，你可以参考官方文档或是 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/chyingp/p/nodejs-learning-buffer.html">这篇文章</a></p>
+<p>关于更多的 <code>Buffer</code> 常用 api 的总结，你可以参考官方文档或是 <a href="https://www.cnblogs.com/chyingp/p/nodejs-learning-buffer.html" target="_blank" rel="noopener">这篇文章</a></p>
 <h1 id="typedarray"><a class="markdownIt-Anchor" href="#typedarray"></a> TypedArray</h1>
 <p>事实上，<code>Node.js</code> 中的 <code>Buffer</code> 和 <code>es6</code> 中的 <code>TypedArray</code> 是有很多联系的。<br />
 这种 <code>类型化数组(TypedArrya)</code> 描述了一个底层的二进制数据缓冲区的一个类数组视图。不过你需要注意，并没有 <code>TypedArray</code> 的全局属性，这指的是一组类型化数组。</p>
@@ -270,7 +270,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Int8Array</span>();</span><br><span class="line"><span class="built_in">Uint8Array</span>();</span><br><span class="line"><span class="built_in">Uint8ClampedArray</span>();</span><br><span class="line"><span class="built_in">Int16Array</span>();</span><br><span class="line"><span class="built_in">Uint16Array</span>();</span><br><span class="line"><span class="built_in">Int32Array</span>();</span><br><span class="line"><span class="built_in">Uint32Array</span>();</span><br><span class="line"><span class="built_in">Float32Array</span>();</span><br><span class="line"><span class="built_in">Float64Array</span>();</span><br></pre></td></tr></table></figure>
 <p>你可以这样使用 <code>TypeArray</code>：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> TypedArray();</span><br><span class="line"><span class="keyword">new</span> TypedArray(length);</span><br><span class="line"><span class="keyword">new</span> TypedArray(typedArray);</span><br><span class="line"><span class="keyword">new</span> TypedArray(object);</span><br><span class="line"><span class="keyword">new</span> TypedArray(buffer, [, byteOffset [, length]]);</span><br></pre></td></tr></table></figure>
-<p>你可以查阅 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">mozilla 文档</a> 了解更多相关内容。</p>
+<p>你可以查阅 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" target="_blank" rel="noopener">mozilla 文档</a> 了解更多相关内容。</p>
 <p>如果你期望从一个 <code>Buffer</code> 创建一个新的 <code>TypedArray</code> 实例，那么你需要注意以下两点：</p>
 <ul>
 <li><code>Buffer</code> 对象的内存是复制到 <code>TypedArray</code> 的，而非共享</li>
@@ -364,14 +364,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-buffer"><span class="nav-number">1.</span> <span class="nav-text"> 关于 Buffer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#buffer-%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text"> Buffer 的基本使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#typedarray"><span class="nav-number">3.</span> <span class="nav-text"> TypedArray</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于-buffer"><span class="nav-number">1.</span> <span class="nav-text"> 关于 Buffer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#buffer-的基本使用"><span class="nav-number">2.</span> <span class="nav-text"> Buffer 的基本使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#typedarray"><span class="nav-number">3.</span> <span class="nav-text"> TypedArray</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="ShroXd"
-      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
   <p class="site-author-name" itemprop="name">ShroXd</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -434,7 +434,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">ShroXd</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
         

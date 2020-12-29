@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="原文：https:&#x2F;&#x2F;blog.bitsrc.io&#x2F;types-of-native-errors-in-javascript-you-must-know-b8238d40e492  我们在各处都能看到错误，从浏览器控制台到运行着 Node.js 的设备终端。 这篇博客将主要列举一下我们在 JS 开发中可能邂逅的错误类型。 Tip：更好的使用错误类型，可以让我们从缓慢而地狱般的开发体验中解放出来，">
@@ -193,7 +193,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/11/Javascript%E5%8E%9F%E7%94%9F%E9%94%99%E8%AF%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -244,7 +244,7 @@
 
       
         <blockquote>
-<p>原文：<a target="_blank" rel="noopener" href="https://blog.bitsrc.io/types-of-native-errors-in-javascript-you-must-know-b8238d40e492">https://blog.bitsrc.io/types-of-native-errors-in-javascript-you-must-know-b8238d40e492</a></p>
+<p>原文：<a href="https://blog.bitsrc.io/types-of-native-errors-in-javascript-you-must-know-b8238d40e492" target="_blank" rel="noopener">https://blog.bitsrc.io/types-of-native-errors-in-javascript-you-must-know-b8238d40e492</a></p>
 </blockquote>
 <p>我们在各处都能看到错误，从浏览器控制台到运行着 <code>Node.js</code> 的设备终端。</p>
 <p>这篇博客将主要列举一下我们在 <code>JS</code> 开发中可能邂逅的错误类型。</p>
@@ -263,7 +263,7 @@
 <hr />
 <p>当变量/项的引用被破坏时，将会抛出此错误。即变量/项不存在。</p>
 <p>例如，</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> l = <span class="built_in">console</span>.log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cat = <span class="string">&quot;cat&quot;</span>;</span><br><span class="line">cat;</span><br><span class="line">dog;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> l = <span class="built_in">console</span>.log;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> cat = <span class="string">"cat"</span>;</span><br><span class="line">cat;</span><br><span class="line">dog;</span><br></pre></td></tr></table></figure>
 <p>我们有一个变量 <code>cat</code> 被初始化为 <code>&quot;cat&quot;</code>。接下来，我们引用了 <code>cat</code> 变量和 <code>dog</code> 变量。<code>cat</code> 变量存在，但是 <code>dog</code> 变量却不存在。</p>
 <p>将可以返回 <code>&quot;cat&quot;</code>，而 <code>dog</code> 将会抛出引用错误，因为 <code>dog</code> 的变量名在环境记录中查找不到。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ node errors</span><br><span class="line">errors.js:3</span><br><span class="line">dog</span><br><span class="line">^</span><br><span class="line"></span><br><span class="line">ReferenceError: dog is not defined</span><br></pre></td></tr></table></figure>
@@ -289,9 +289,9 @@
 <p><code>tokenization</code> 将源码分隔成独立的单元。在这个阶段中，数字、关键词、字符、操作符将被解析并单独标记。</p>
 <p>接下来，标记流生成后将进入解析阶段，这个阶段是解析器控制的。在这个阶段，将从标记流中生成 <code>AST</code> 。<code>AST</code> 是我们代码结构的抽象表示。</p>
 <p>在 <code>tokenization</code> 和 <code>parsing</code> 这两个阶段中，如果我们代码的语法不符合 <code>JS</code> 语法，将会导致响应的阶段失败，并且抛出 <code>SyntaxError</code> 。例如，</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> l = <span class="built_in">console</span>.log</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> cat h = <span class="string">&quot;cat&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> l = <span class="built_in">console</span>.log</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> cat h = <span class="string">"cat"</span></span><br></pre></td></tr></table></figure>
 <p>单独的一个 <code>h</code> 是干啥的？这导致了语法错误。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ node errors</span><br><span class="line">errors.js:3</span><br><span class="line"><span class="built_in">let</span> cat h = <span class="string">&quot;cat&quot;</span></span><br><span class="line"> ^</span><br><span class="line"></span><br><span class="line">SyntaxError: Unexpected identifier</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ node errors</span><br><span class="line">errors.js:3</span><br><span class="line"><span class="built_in">let</span> cat h = <span class="string">"cat"</span></span><br><span class="line"> ^</span><br><span class="line"></span><br><span class="line">SyntaxError: Unexpected identifier</span><br></pre></td></tr></table></figure>
 <p>看，<code>Node.js</code> 指出了错误。它说 <code>h</code> 是出乎意料的，这导致了声明 <code>cat</code> 变量的错误。</p>
 <p>所以我们可以说，语法错误出现在解析/编译阶段。</p>
 <h1 id="typeerror"><a class="markdownIt-Anchor" href="#typeerror"></a> TypeError</h1>
@@ -310,7 +310,7 @@
 <p>其表明了一个全局 <code>URI</code> 处理函数被以一种与其定义不兼容的方式调用。</p>
 <p>URI（Uniform Resource Indicator）在 <code>JS</code> 中有一些处理函数：<code>decodeURI</code>，<code>decodeURIComponent</code> 等。</p>
 <p>如果我们使用了错误的参数来调用他们，将会得到 <code>URIError</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">decodeURI(<span class="string">&quot;%&quot;</span>)</span><br><span class="line">^</span><br><span class="line"></span><br><span class="line">URIError: URI malformed</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">decodeURI(<span class="string">"%"</span>)</span><br><span class="line">^</span><br><span class="line"></span><br><span class="line">URIError: URI malformed</span><br></pre></td></tr></table></figure>
 <p><code>decodeURI</code> ，参数是未编码的 <code>URI</code> 。而 <code>%</code> 并不是一个正确的 <code>URI</code> ，所以会抛出 <code>URIError</code></p>
 <blockquote>
 <p>当编码或解码 <code>URI</code> 错误时，将会抛出 <code>URIError</code></p>
@@ -420,14 +420,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rangeerror"><span class="nav-number">1.</span> <span class="nav-text"> RangeError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#referenceerror"><span class="nav-number">2.</span> <span class="nav-text"> ReferenceError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#syntaxerror"><span class="nav-number">3.</span> <span class="nav-text"> SyntaxError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#typeerror"><span class="nav-number">4.</span> <span class="nav-text"> TypeError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#urierror"><span class="nav-number">5.</span> <span class="nav-text"> URIError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#evalerror"><span class="nav-number">6.</span> <span class="nav-text"> EvalError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#internalerror"><span class="nav-number">7.</span> <span class="nav-text"> InternalError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">8.</span> <span class="nav-text"> 结论</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#rangeerror"><span class="nav-number">1.</span> <span class="nav-text"> RangeError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#referenceerror"><span class="nav-number">2.</span> <span class="nav-text"> ReferenceError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#syntaxerror"><span class="nav-number">3.</span> <span class="nav-text"> SyntaxError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#typeerror"><span class="nav-number">4.</span> <span class="nav-text"> TypeError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#urierror"><span class="nav-number">5.</span> <span class="nav-text"> URIError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#evalerror"><span class="nav-number">6.</span> <span class="nav-text"> EvalError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#internalerror"><span class="nav-number">7.</span> <span class="nav-text"> InternalError</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结论"><span class="nav-number">8.</span> <span class="nav-text"> 结论</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="ShroXd"
-      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
   <p class="site-author-name" itemprop="name">ShroXd</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -490,7 +490,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">ShroXd</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
         

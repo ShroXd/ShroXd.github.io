@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="本文是 《计算机程序的构造与解释》 这本书的笔记   总述 理解复杂事物的关键是：避免不必要的观察、计算和思考。而这也正是构造复杂软件所必须的。通过一些软件设计技术，我们可以很好的将整体拆分为细小的、具有独立功能的、可描述的模块。而在这一行为中，抽象 就是必不可少的魔法。为了理解这一行为，我们在这里引用原书：  心智的活动，除了尽力产生各种简单的认识之外，主要表现在如下三个方面：  将若干简单认">
@@ -198,7 +198,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/06/05/processAbstraction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -303,7 +303,7 @@
 <p>更进一步的，究竟做哪件事？各个函数之间究竟该有怎样的关系？<br />
 相信这个问题，SICP 已经给出了解释：做逻辑的层面抽象。<br />
 每一个函数都应当在自己的一个逻辑层面工作。比如下面这段爬虫代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spider</span>(<span class="params">url</span>):</span></span><br><span class="line">    html = fetchHTML(url)</span><br><span class="line">    result = handleHTML(html)</span><br><span class="line">    writeResultIntoDatabase(result)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">spider</span><span class="params">(url)</span>:</span></span><br><span class="line">    html = fetchHTML(url)</span><br><span class="line">    result = handleHTML(html)</span><br><span class="line">    writeResultIntoDatabase(result)</span><br></pre></td></tr></table></figure>
 <p>我们可以清楚的看到，整个爬虫代码由三个层面组成。我们首先获取网站的 <code>html</code> 文档，接着，我们对获得的文档进行分析并得到我们想要的结果。最后，我们将结果写入数据库。<br />
 这样做的好处是，一旦其中的一个模块出了问题，我们只需要单独修复那个模块就可以了。我们可以在错误栈上清楚地看到到底是哪一步出了错。<br />
 如果你只用一个函数完成整个功能，那你可能会得到一个几英里长的<s>随机数生成器</s>。<br />
@@ -425,14 +425,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> 总述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%85%83%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text"> 一些程序设计的基本元素</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E6%8D%A2%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text"> 代换模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC"><span class="nav-number">2.2.</span> <span class="nav-text"> 关于代码风格</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B%E4%B8%8E%E4%BA%A7%E7%94%9F%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text"> 过程与产生的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E9%80%92%E5%BD%92"><span class="nav-number">3.1.</span> <span class="nav-text"> 线性递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E8%BF%AD%E4%BB%A3"><span class="nav-number">3.2.</span> <span class="nav-text"> 线性迭代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E5%BD%A2%E9%80%92%E5%BD%92"><span class="nav-number">3.3.</span> <span class="nav-text"> 树形递归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E5%81%9A%E6%8A%BD%E8%B1%A1"><span class="nav-number">4.</span> <span class="nav-text"> 用高阶函数做抽象</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总述"><span class="nav-number">1.</span> <span class="nav-text"> 总述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些程序设计的基本元素"><span class="nav-number">2.</span> <span class="nav-text"> 一些程序设计的基本元素</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代换模型"><span class="nav-number">2.1.</span> <span class="nav-text"> 代换模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于代码风格"><span class="nav-number">2.2.</span> <span class="nav-text"> 关于代码风格</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过程与产生的计算"><span class="nav-number">3.</span> <span class="nav-text"> 过程与产生的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性递归"><span class="nav-number">3.1.</span> <span class="nav-text"> 线性递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性迭代"><span class="nav-number">3.2.</span> <span class="nav-text"> 线性迭代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树形递归"><span class="nav-number">3.3.</span> <span class="nav-text"> 树形递归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用高阶函数做抽象"><span class="nav-number">4.</span> <span class="nav-text"> 用高阶函数做抽象</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="ShroXd"
-      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
   <p class="site-author-name" itemprop="name">ShroXd</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -495,7 +495,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">ShroXd</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
         

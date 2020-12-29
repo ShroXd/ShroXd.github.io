@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.bebopser.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","width":265,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="本文是 Scalability for Dummies 的翻译。文中提及的具体技术可能过时，但思想依然很值得参考   克隆 最近有人问我，需要做点什么才能让 Web 服务器具有可伸缩性。我的回答很长，并且其他人可能会对这个主题感兴趣。所以写了这篇文章放在 Blog 里，并将其划分为几个主题，以确保容易阅读。祝您阅读愉快，欢迎评论， 提供可伸缩 Web 服务的公共服务器通常都隐藏在负载均衡器之后。">
@@ -196,7 +196,7 @@
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/08/19/Scalability/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
       <meta itemprop="name" content="ShroXd">
       <meta itemprop="description" content="">
     </span>
@@ -247,7 +247,7 @@
 
       
         <blockquote>
-<p>本文是 <a target="_blank" rel="noopener" href="https://www.lecloud.net/tagged/scalability/chrono">Scalability for Dummies</a> 的翻译。文中提及的具体技术可能过时，但思想依然很值得参考</p>
+<p>本文是 <a href="https://www.lecloud.net/tagged/scalability/chrono" target="_blank" rel="noopener">Scalability for Dummies</a> 的翻译。文中提及的具体技术可能过时，但思想依然很值得参考</p>
 </blockquote>
 <h2 id="克隆"><a class="markdownIt-Anchor" href="#克隆"></a> 克隆</h2>
 <p>最近有人问我，需要做点什么才能让 Web 服务器具有可伸缩性。我的回答很长，并且其他人可能会对这个主题感兴趣。所以写了这篇文章放在 Blog 里，并将其划分为几个主题，以确保容易阅读。祝您阅读愉快，欢迎评论，</p>
@@ -297,7 +297,7 @@
 <p>再次回到面包店的例子。不幸的是，有些时候用户可能会有一些特殊的要求，比如他们可能想要一个上面写有 “Happy Birthday, Steve!” 字样的生日蛋糕。面包店不可能预先想到客户的这种需求，所以只有当客户到面包店提出这种需求之后才能开始工作，并且告诉客户第二天再来取蛋糕。这在 Web 服务中就意味着异步的处理任务。</p>
 <p>下面是一个典型的工作流：</p>
 <p>一个用户访问了你的网站，并且发出了一个计算密集型的请求，这可能需要花费几分钟的时间才能处理完成。所以你的网站前端应该将任务填充进任务队列，并且在前端立即提示用户：您的请求已经在处理中了，请先看看网站的其他内容。处理程序经常检查工作队列，以发现新推入的工作。如果有新工作，处理程序就会进行这项工作，在几分钟后完成这项工作之后，就会发出信号，表示已经完成了这项工作。前端会经常检查是否接收到了工作完成的信号，一旦发现工作已经完成，就会通知用户。我明白，这是一个非常简单的例子。</p>
-<p>现在如果你想更深入的了解技术细节，我建议你阅读一下 <a target="_blank" rel="noopener" href="https://t.umblr.com/redirect?z=http%3A%2F%2Fwww.rabbitmq.com%2F&amp;t=YzFlZGZhMTBjODdmZWZhYzdmZjNmM2VlZDU4YjQ0YmUxZDkzNWM1NixqbHhiaDBWZQ%3D%3D&amp;b=t%3AeE4iDilbUfNhGIklAbjWYQ&amp;p=https%3A%2F%2Fwww.lecloud.net%2Fpost%2F9699762917%2Fscalability-for-dummies-part-4-asynchronism&amp;m=1&amp;ts=1597805914">RabbitMQ 的前三个教程</a>。RabbitMQ 是帮助实现异步处理的众多系统之一。你也可以使用 ActiveMQ 或者更简单的 Redis list。这里面最核心的思想就是拥有一个可以处理的任务队列。异步化看起来很复杂，但绝对值得你花费时间去学习，并且自己实现。后端几乎可以无限扩展，并且前端也更加现代化，你的用户也会有更加流畅的体验。</p>
+<p>现在如果你想更深入的了解技术细节，我建议你阅读一下 <a href="https://t.umblr.com/redirect?z=http%3A%2F%2Fwww.rabbitmq.com%2F&amp;t=YzFlZGZhMTBjODdmZWZhYzdmZjNmM2VlZDU4YjQ0YmUxZDkzNWM1NixqbHhiaDBWZQ%3D%3D&amp;b=t%3AeE4iDilbUfNhGIklAbjWYQ&amp;p=https%3A%2F%2Fwww.lecloud.net%2Fpost%2F9699762917%2Fscalability-for-dummies-part-4-asynchronism&amp;m=1&amp;ts=1597805914" target="_blank" rel="noopener">RabbitMQ 的前三个教程</a>。RabbitMQ 是帮助实现异步处理的众多系统之一。你也可以使用 ActiveMQ 或者更简单的 Redis list。这里面最核心的思想就是拥有一个可以处理的任务队列。异步化看起来很复杂，但绝对值得你花费时间去学习，并且自己实现。后端几乎可以无限扩展，并且前端也更加现代化，你的用户也会有更加流畅的体验。</p>
 <p>如果你总是做一些耗时的工作，那么请尝试使用异步。</p>
 
     </div>
@@ -386,14 +386,14 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%8B%E9%9A%86"><span class="nav-number">1.</span> <span class="nav-text"> 克隆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.</span> <span class="nav-text"> 数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">3.</span> <span class="nav-text"> 缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2"><span class="nav-number">3.1.</span> <span class="nav-text"> 1 - 缓存数据库查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BC%93%E5%AD%98%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.2.</span> <span class="nav-text"> 2 - 缓存对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5"><span class="nav-number">4.</span> <span class="nav-text"> 异步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80"><span class="nav-number">4.1.</span> <span class="nav-text"> 方法一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="nav-number">4.2.</span> <span class="nav-text"> 方法二</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#克隆"><span class="nav-number">1.</span> <span class="nav-text"> 克隆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">2.</span> <span class="nav-text"> 数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存"><span class="nav-number">3.</span> <span class="nav-text"> 缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-缓存数据库查询"><span class="nav-number">3.1.</span> <span class="nav-text"> 1 - 缓存数据库查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-缓存对象"><span class="nav-number">3.2.</span> <span class="nav-text"> 2 - 缓存对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步"><span class="nav-number">4.</span> <span class="nav-text"> 异步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一"><span class="nav-number">4.1.</span> <span class="nav-text"> 方法一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二"><span class="nav-number">4.2.</span> <span class="nav-text"> 方法二</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="ShroXd"
-      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-03-09-bxgaD3.png">
+      src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
   <p class="site-author-name" itemprop="name">ShroXd</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -456,7 +456,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">ShroXd</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
   </div>
 
         
