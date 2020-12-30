@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Space Cowboy</title>
+  <icon>http://www.bebopser.com/icon.png</icon>
+  <subtitle>生死去来 棚头傀儡 一线断时 落落磊磊</subtitle>
+  <link href="http://www.bebopser.com/atom.xml" rel="self"/>
+  
+  <link href="http://www.bebopser.com/"/>
+  <updated>2020-12-29T07:08:46.281Z</updated>
+  <id>http://www.bebopser.com/</id>
+  
+  <author>
+    <name>ShroXd</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>好耶！是 BST</title>
+    <link href="http://www.bebopser.com/2020/12/29/BST1/"/>
+    <id>http://www.bebopser.com/2020/12/29/BST1/</id>
+    <published>2020-12-29T02:58:36.000Z</published>
+    <updated>2020-12-29T07:08:46.281Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;关于-bst&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#关于-bst&quot;&gt;&lt;/a&gt; 关于 BST&lt;/h1&gt;
+&lt;p&gt;BST 算是 leetcode 关于树的考察的一个重点了。不过这并不意味着它是一个可以广泛运用的数据结构。主要原因就在于其查找、插入、删除操作的时间复杂度均与树高度成正比，换句话说，就是 &lt;code&gt;O(logn)&lt;/code&gt; 。这意味着在很多情况下，时间消耗都比较大。所以我们会转而使用平衡树。比如红黑树，B+，B-等等（不过这些还没学会，就不说了&lt;/p&gt;
+&lt;p&gt;回到 BST，它有一个重要的特性，就是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;左低右高：若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值&lt;/li&gt;
+&lt;li&gt;左右子树也均为 BST&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这也就意味着，它中序遍历的结果是一个递增数列。&lt;/p&gt;
+&lt;p&gt;另外还有两个关于 BST 的概念。这两个概念是依附于 BST 本身的性质而提出的，并不是独立的概念。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;前驱节点(predecessor)：比当前节点小的最大节点&lt;/li&gt;
+&lt;li&gt;后继节点(successor)：比当前节点大的最小节点&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="数据结构与算法" scheme="http://www.bebopser.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="BST" scheme="http://www.bebopser.com/tags/BST/"/>
+    
+    <category term="中序遍历" scheme="http://www.bebopser.com/tags/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/"/>
+    
+    <category term="前驱节点" scheme="http://www.bebopser.com/tags/%E5%89%8D%E9%A9%B1%E8%8A%82%E7%82%B9/"/>
+    
+    <category term="后继节点" scheme="http://www.bebopser.com/tags/%E5%90%8E%E7%BB%A7%E8%8A%82%E7%82%B9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue3 源码阅读笔记（五）—— diff 算法解析</title>
+    <link href="http://www.bebopser.com/2020/12/20/vue3source5/"/>
+    <id>http://www.bebopser.com/2020/12/20/vue3source5/</id>
+    <published>2020-12-20T03:20:44.000Z</published>
+    <updated>2020-12-28T14:29:45.738Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;sketch&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#sketch&quot;&gt;&lt;/a&gt; Sketch&lt;/h1&gt;
+&lt;p&gt;If you have watched the &lt;a href=&quot;https://www.youtube.com/watch?v=Vp5ANvd88x0&amp;amp;t=48s&amp;amp;ab_channel=VuejsAmsterdam&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Vue3 Live Release video&lt;/a&gt;, you will know the Vue core team rewrote the diff algorithm.&lt;br /&gt;
+The new diff algorithm refers to the &lt;a href=&quot;https://github.com/localvoid/ivi&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ivi&lt;/a&gt; and &lt;a href=&quot;https://github.com/infernojs/inferno&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;inferno&lt;/a&gt;, whitch make virtual nodes diff quicker. You can visit &lt;a href=&quot;https://krausest.github.io/js-framework-benchmark/current.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;this test result&lt;/a&gt; to check the accurate data.&lt;/p&gt;
+&lt;p&gt;As a whole, the algorithm can divide into three parts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;patch the repetitive prefix &amp;amp; suffix nodes&lt;/li&gt;
+&lt;li&gt;sync the old &amp;amp; new virtual nodes lengths&lt;/li&gt;
+&lt;li&gt;diff subsequence of the same length&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Next, we will explain the algorithm with the source code of Vue3.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="源码阅读" scheme="http://www.bebopser.com/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="diff" scheme="http://www.bebopser.com/tags/diff/"/>
+    
+    <category term="最长递增子序列" scheme="http://www.bebopser.com/tags/%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue3 源码阅读笔记（四）—— 模板编译器的设计，从 AST 类型说起</title>
+    <link href="http://www.bebopser.com/2020/11/12/vue3source4/"/>
+    <id>http://www.bebopser.com/2020/11/12/vue3source4/</id>
+    <published>2020-11-12T03:32:41.000Z</published>
+    <updated>2020-12-28T14:35:05.141Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;注意这里讨论的模板编译器源码是 Vue3 的。另外的，我并不会粘贴完整的代码，而只是基于当前讨论的主题来选取一些关键的代码句子。你可以比对着真正的源码来阅读。毕竟源码才是最好的课本。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;简述&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#简述&quot;&gt;&lt;/a&gt; 简述&lt;/h1&gt;
+&lt;p&gt;Vue 的模板编译器算是除响应式系统之外的，另一个核心系统了。得益于模板编译器的支持，我们可以在写代码时使用诸如 &lt;code&gt;v-if&lt;/code&gt;，&lt;code&gt;v-slot&lt;/code&gt; 等方便的 api。&lt;br /&gt;
+尽管名称中带有“编译器”三个字，但它相较于一些现代语言编译器来说，还是十分简单的。但总的来说，还是一样的，分为下面几个步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;parse&lt;/li&gt;
+&lt;li&gt;transform&lt;/li&gt;
+&lt;li&gt;code generate&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你提前阅读过 Vue3 的模板编译器语法，你会发现代码量很大。但再复杂的系统，也往往都是从几个简单的核心概念一步步构建起来的。只要找到了这几个核心概念，理清楚它们解决了什么问题，又是如何相互协作的，再去一条条的考虑具体边界情况，就能很容易的搞清楚整个系统了。&lt;/p&gt;
+&lt;p&gt;建议你使用官方的 &lt;a href=&quot;https://vue-next-template-explorer.netlify.app&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;模板调试工具&lt;/a&gt; 来查看一下不同模板实际产出的 AST。如果你不了解 AST，那么你可以查看 &lt;a href=&quot;https://en.wikipedia.org/wiki/Abstract_syntax_tree&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;维基百科的解释&lt;/a&gt;。&lt;br /&gt;
+不过你需要注意的是，调试工具输出的 AST 是 transform 之后的产物，在这个过程中会对原先通过 parser 产出的树做一些优化处理，这主要是为最后一步 code generate 做准备。&lt;br /&gt;
+如果你觉得这样看比较难受，那么你可以下载 &lt;code&gt;vue-next&lt;/code&gt; 的源码，直接调试或自己编写测试用例。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="源码阅读" scheme="http://www.bebopser.com/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="递归下降" scheme="http://www.bebopser.com/tags/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D/"/>
+    
+    <category term="TypeScript" scheme="http://www.bebopser.com/tags/TypeScript/"/>
+    
+    <category term="类型" scheme="http://www.bebopser.com/tags/%E7%B1%BB%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用膜隔离应用程序的子组件</title>
+    <link href="http://www.bebopser.com/2020/10/26/membranes1/"/>
+    <id>http://www.bebopser.com/2020/10/26/membranes1/</id>
+    <published>2020-10-26T06:01:26.000Z</published>
+    <updated>2020-12-28T14:33:53.973Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文翻译自 &lt;a href=&quot;https://tvcutsem.github.io/membranes&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Isolating application sub-components with membranes&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;膜是一种防御式的编程模式，被运用在一个应用程序的子组件之间。这种模式适用于内存安全的编程语言。&lt;/p&gt;
+&lt;p&gt;这种模式被提出已经很久了，但却并不广为人知。这篇文章的目的就是讲清楚膜编程背后的思想。因为我关于 膜 的很多经验都是建立于 &lt;code&gt;Web&lt;/code&gt; 平台的，所以我会主要从 &lt;code&gt;Javascript&lt;/code&gt; 和 &lt;code&gt;Web&lt;/code&gt; 平台的用例来解释。值得注意的是，膜 模式并不是仅仅针对于 Web 编程提出的概念，它是一个可以广泛应用的模式。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;历史&lt;/strong&gt;: 膜的概念来源于对 &lt;a href=&quot;https://en.wikipedia.org/wiki/Capability-based_security&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Capability-secure Systems&lt;/a&gt; 的研究。最早可追溯至功能安全操作系统，例如 &lt;a href=&quot;http://cap-lore.com/CapTheory/KK/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;KeyKOS&lt;/a&gt;。 以及功能安全语言，例如 &lt;a href=&quot;http://www.erights.org/history/joule/index.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Joule&lt;/a&gt; 和 &lt;a href=&quot;http://www.erights.org/index.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;E&lt;/a&gt;。本文对膜的介绍主要基于 &lt;code&gt;Mark S&lt;/code&gt; 中的描述。Miller 的 &lt;a href=&quot;http://erights.org/talks/thesis/index.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;博士论文&lt;/a&gt;。膜后来被独立地发明，并被广泛应用于函数式编程社区去实现高阶函数的契约。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="翻译" scheme="http://www.bebopser.com/categories/%E7%BF%BB%E8%AF%91/"/>
+    
+    
+    <category term="membranes" scheme="http://www.bebopser.com/tags/membranes/"/>
+    
+    <category term="proxy" scheme="http://www.bebopser.com/tags/proxy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>好耶！是 Webpack（二）———— 代码分割</title>
+    <link href="http://www.bebopser.com/2020/10/18/webpack2/"/>
+    <id>http://www.bebopser.com/2020/10/18/webpack2/</id>
+    <published>2020-10-18T09:37:08.000Z</published>
+    <updated>2020-12-28T14:35:20.419Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;为什么要进行代码分割&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#为什么要进行代码分割&quot;&gt;&lt;/a&gt; 为什么要进行代码分割&lt;/h1&gt;
+&lt;p&gt;事实上，尽管 &lt;code&gt;Webpack&lt;/code&gt; 的功能是打包，但将所有文件都打包到一个文件下并不是一个好的选择。过大的打包文件会让加载变慢，导致用户感受到的 &lt;code&gt;白屏时间&lt;/code&gt; 更长。&lt;br /&gt;
+但如果直接加载开发环境的代码，过于零碎的模块同样会使加载变慢。这主要是因为目前主流的 &lt;code&gt;HTTP 1.1&lt;/code&gt; 对同一个域名下的并行请求有所限制。另外，过多请求的请求头也会占用流量和带宽。&lt;/p&gt;
+&lt;p&gt;总而言之，代码的颗粒度并没有一个确切的值。你需要根据业务本身来作出决定。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="code-split" scheme="http://www.bebopser.com/tags/code-split/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>好耶！是 Webpack（一）———— 基础概念</title>
+    <link href="http://www.bebopser.com/2020/10/18/webpack1/"/>
+    <id>http://www.bebopser.com/2020/10/18/webpack1/</id>
+    <published>2020-10-18T08:23:05.000Z</published>
+    <updated>2020-12-28T14:35:14.333Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;简述&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#简述&quot;&gt;&lt;/a&gt; 简述&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Webpack&lt;/code&gt; 是什么？官网是这样介绍的：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本质上，webpack 是一个现代 JavaScript 应用程序的静态模块打包工具。当 webpack 处理应用程序时，它会在内部构建一个 依赖图(dependency graph)，此依赖图会映射项目所需的每个模块，并生成一个或多个 bundle。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;只要你从事前端开发，就不可能绕过 &lt;code&gt;Webpack&lt;/code&gt; 这个工具。这篇文章基于 &lt;code&gt;Webpack4&lt;/code&gt;，总结其核心概念及常规用法。&lt;/p&gt;
+&lt;h1 id=&quot;核心概念&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#核心概念&quot;&gt;&lt;/a&gt; 核心概念&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Webpack&lt;/code&gt; 的核心概念分为四个：&lt;code&gt;entry&lt;/code&gt;、&lt;code&gt;output&lt;/code&gt;、&lt;code&gt;loader&lt;/code&gt; 和 &lt;code&gt;plugin&lt;/code&gt;。&lt;br /&gt;
+理解这些概念是更好的使用 &lt;code&gt;Webpack&lt;/code&gt; 的保证。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="entry" scheme="http://www.bebopser.com/tags/entry/"/>
+    
+    <category term="output" scheme="http://www.bebopser.com/tags/output/"/>
+    
+    <category term="loader" scheme="http://www.bebopser.com/tags/loader/"/>
+    
+    <category term="plugin" scheme="http://www.bebopser.com/tags/plugin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue3 源码阅读笔记（三）—— 响应式？不过是数据劫持罢了</title>
+    <link href="http://www.bebopser.com/2020/10/16/vue3source3/"/>
+    <id>http://www.bebopser.com/2020/10/16/vue3source3/</id>
+    <published>2020-10-16T01:34:58.000Z</published>
+    <updated>2020-12-28T14:35:01.532Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;简述&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#简述&quot;&gt;&lt;/a&gt; 简述&lt;/h1&gt;
+&lt;p&gt;事实上，响应式并不是 &lt;code&gt;Vue3&lt;/code&gt; 的新概念，它是一个核心概念。在实际代码中，响应式系统经常与组件化相提并论。更进一步的说，组件化赋予了开发者模块化代码的能力，而响应式系统则让开发者可以通过数据控制组件的呈现方式。&lt;/p&gt;
+&lt;p&gt;不过这东西从本质上来讲，其实就是劫持数据的变化，在数据变化后自动的执行一些副作用函数。&lt;/p&gt;
+&lt;p&gt;如果你大致的了解过这个东西，你大概会知道，&lt;code&gt;Vue2&lt;/code&gt; 和 &lt;code&gt;Vue3&lt;/code&gt; 的响应式系统实现有些略微不同。&lt;br /&gt;
+从表象上来说，&lt;code&gt;Vue2&lt;/code&gt; 的响应式系统是黑盒。&lt;code&gt;Vue2&lt;/code&gt; 承包了一切工作，你只需要将数据定义在诸如 &lt;code&gt;data&lt;/code&gt;、&lt;code&gt;props&lt;/code&gt;、&lt;code&gt;computed&lt;/code&gt; 等选项中就行。而 &lt;code&gt;Vue3&lt;/code&gt; 则是把这个决定权交给了开发者。由开发者来决定究竟哪些数据应该是响应式的。&lt;br /&gt;
+从实现上来说，&lt;code&gt;Vue2&lt;/code&gt; 使用 &lt;code&gt;Object.defineproperty&lt;/code&gt; 来实现数据劫持，而 &lt;code&gt;Vue3&lt;/code&gt; 则使用了 &lt;code&gt;proxy&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;从逻辑上讲，其实二者是相同的，都是为了实现核心的数据劫持。&lt;br /&gt;
+不过 &lt;code&gt;Vue&lt;/code&gt; 毕竟是一个投入到实际生产中使用的框架，仅仅完成理论上的实现当然是不行的。从 &lt;code&gt;Object.defineproperty&lt;/code&gt; 到 &lt;code&gt;proxy&lt;/code&gt; 的切换实际上也表现出了一些技术上的选择。&lt;/p&gt;
+&lt;p&gt;简单来说，因为 &lt;code&gt;Vue2&lt;/code&gt; 对响应式数据黑盒化的设计，在框架初始化的时候，会递归遍历所有数据，然后使用 &lt;code&gt;Object.defineproperty&lt;/code&gt; 来做劫持。这是一个解决方案，但并不够好。因为首先会付出很多性能消耗，其次，并不是每一条数据都需要变成响应式的。递归消耗的性能支出是否合算，全看开发者的具体实现方式。另外，&lt;code&gt;Object.defineproperty&lt;/code&gt; 也不能监听到对象属性的新增与删除。&lt;br /&gt;
+所以 &lt;code&gt;Vue3&lt;/code&gt; 使用了 &lt;code&gt;proxy&lt;/code&gt; 和显式的 &lt;code&gt;reactice API&lt;/code&gt;。这样不仅可以让开发者自行决定哪些数据需要变成响应式的，还能减少劫持时的数据消耗。&lt;/p&gt;
+&lt;p&gt;除此之外，在具体实现中，&lt;code&gt;Vue3&lt;/code&gt; 也做了一些调整来优化性能。更具体的东西，来直接看源码吧。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="源码阅读" scheme="http://www.bebopser.com/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="proxy" scheme="http://www.bebopser.com/tags/proxy/"/>
+    
+    <category term="reactive" scheme="http://www.bebopser.com/tags/reactive/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue3 源码阅读笔记（二）—— 响应式系统之前，是创建与渲染</title>
+    <link href="http://www.bebopser.com/2020/10/14/vue3source2/"/>
+    <id>http://www.bebopser.com/2020/10/14/vue3source2/</id>
+    <published>2020-10-14T07:49:15.000Z</published>
+    <updated>2020-12-28T14:34:57.310Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;一些说明&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#一些说明&quot;&gt;&lt;/a&gt; 一些说明&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;这篇文章并不是专注于介绍响应式 API 的文章，所以如果你想搞清楚新的 API 该怎么用，那么你应当关注官方的 &lt;a href=&quot;https://v3.vuejs.org/guide/migration/introduction.html#overview&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Migration Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;为了更明确的说明一些问题，我可能会删减许多代码。但这些代码并非是不必要的，只是对于我们要阐述的主题来说，它们是毫无必要的&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;从-createapp-开始&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#从-createapp-开始&quot;&gt;&lt;/a&gt; 从 CreateApp 开始&lt;/h1&gt;
+&lt;p&gt;在这一节，我们会介绍 &lt;code&gt;Vue.js&lt;/code&gt; 的入口函数 &lt;code&gt;createApp&lt;/code&gt;，以及这之后的一整套渲染过程。阅读这一部分的内容有助于你理解响应式系统在整个 &lt;code&gt;Vue.js&lt;/code&gt; 中扮演了怎样的角色。&lt;/p&gt;
+&lt;p&gt;当你使用 &lt;code&gt;Vue3&lt;/code&gt; 写一个组件时，你可能会这样做：&lt;/p&gt;
+&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; vm = createApp(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// ...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;).mount(&lt;span class=&quot;string&quot;&gt;&quot;#app&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="源码阅读" scheme="http://www.bebopser.com/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="event loop" scheme="http://www.bebopser.com/tags/event-loop/"/>
+    
+    <category term="Currying" scheme="http://www.bebopser.com/tags/Currying/"/>
+    
+    <category term="track" scheme="http://www.bebopser.com/tags/track/"/>
+    
+    <category term="trigger" scheme="http://www.bebopser.com/tags/trigger/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue3 源码阅读笔记（一）—— 搭建环境</title>
+    <link href="http://www.bebopser.com/2020/10/04/vue3source1/"/>
+    <id>http://www.bebopser.com/2020/10/04/vue3source1/</id>
+    <published>2020-10-04T02:32:11.000Z</published>
+    <updated>2020-12-28T14:34:47.955Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;工欲善其事必先利其器，在阅读源码前，首先要做的一步就是搭建调试源码的环境。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;从 &lt;code&gt;Github&lt;/code&gt; 下载源码：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git clone git@github.com:vuejs&amp;#x2F;vue-next.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;使用 &lt;code&gt;Webstrom&lt;/code&gt; 打开项目，安装依赖&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yarn install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;配置项目运行&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;你可以参考我的配置，但请注意将一些个性化设置配置成你自己的。&lt;br /&gt;
+注意 &lt;code&gt;Arguments&lt;/code&gt; 一栏的参数 &lt;code&gt;-s&lt;/code&gt;。这个参数会生成 &lt;code&gt;source map&lt;/code&gt; 来帮助你调试源码。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-10-04-whgKh1.png&quot; alt=&quot;Vue3 源码运行配置&quot; /&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="源码阅读" scheme="http://www.bebopser.com/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="调试" scheme="http://www.bebopser.com/tags/%E8%B0%83%E8%AF%95/"/>
+    
+    <category term="sourcemap" scheme="http://www.bebopser.com/tags/sourcemap/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Tree Shaking</title>
+    <link href="http://www.bebopser.com/2020/09/29/treeShaking/"/>
+    <id>http://www.bebopser.com/2020/09/29/treeShaking/</id>
+    <published>2020-09-29T12:31:53.000Z</published>
+    <updated>2020-12-28T14:34:35.280Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;关于-treeshaking&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#关于-treeshaking&quot;&gt;&lt;/a&gt; 关于 Treeshaking&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;tree shaking&lt;/code&gt; 指的是移除 &lt;code&gt;JavaScript&lt;/code&gt; 上下文中的的未引用代码（dead-code）。这个术语和概念最先是 ES2015 打包工具 &lt;code&gt;rollup&lt;/code&gt; 发展的。&lt;/p&gt;
+&lt;p&gt;事实上，消除无用代码并不是一个新的概念。这种技术被广泛运用于传统的编程语言编译器中，编译器会判断代码是否影响功能，并移除那些无用的代码，这个技术被称为 &lt;code&gt;DCE (dead code elimination)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;从先后来讲，&lt;code&gt;tree shaking&lt;/code&gt; 是 &lt;code&gt;DCE&lt;/code&gt; 的一种新的实现。不过和传统的 DCE 不一样的是，&lt;code&gt;tree shaking&lt;/code&gt; 更关注于消除没有用到的代码，而 DCE 则关注那些不可能执行的代码，由编译器将 dead code 从 AST 上删除。&lt;br /&gt;
+另一方面，在大多数情况下，&lt;code&gt;JavaScript&lt;/code&gt; 都是通过网络加载的。众所周知，网络速度可是一个变化多端的东西。所以如果能缩短代码的加载时间，那么这对网络应用性能和用户体验的提升都是极大的。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="核心概念" scheme="http://www.bebopser.com/categories/%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/"/>
+    
+    
+    <category term="module" scheme="http://www.bebopser.com/tags/module/"/>
+    
+    <category term="优化" scheme="http://www.bebopser.com/tags/%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nodejs（二）—— Stream</title>
+    <link href="http://www.bebopser.com/2020/09/29/NodejsStream/"/>
+    <id>http://www.bebopser.com/2020/09/29/NodejsStream/</id>
+    <published>2020-09-29T02:07:03.000Z</published>
+    <updated>2020-12-28T14:34:06.633Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是 &lt;a href=&quot;https://www.freecodecamp.org/news/node-js-streams-everything-you-need-to-know-c9141306be93/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Node.js Streams: Everything you need to know&lt;/a&gt; 一文的笔记&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;流是 Nodejs 中最棒的，同时也是最被人误解的想法。&lt;br /&gt;
+—— Dominic Tarr&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果想要学习 &lt;code&gt;Nodejs&lt;/code&gt;，那么 &lt;em&gt;流&lt;/em&gt; 这个概念就是无法绕过的重点。在 &lt;code&gt;Nodejs&lt;/code&gt; 中，很多内建模块都实现了流接口。例如常见的 &lt;code&gt;request&lt;/code&gt;、&lt;code&gt;zlib&lt;/code&gt; 等。&lt;br /&gt;
+那么，&lt;em&gt;流&lt;/em&gt; 到底是什么呢？&lt;br /&gt;
+简单来说，流是一组数据的集合。但在使用它时，程序并不会一次性的将其载入内存中使用，而是逐端使用数据。显然，这种数据类型有助于处理大体积数据，或是从外部来源逐段发来的数据。对于后者，一个常见的例子就是处理 &lt;code&gt;WebStocket&lt;/code&gt; 接口的时候。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="stream" scheme="http://www.bebopser.com/tags/stream/"/>
+    
+    <category term="pipe" scheme="http://www.bebopser.com/tags/pipe/"/>
+    
+    <category term="事件" scheme="http://www.bebopser.com/tags/%E4%BA%8B%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nodejs（一）—— Buffer</title>
+    <link href="http://www.bebopser.com/2020/09/29/NodejsBuffer/"/>
+    <id>http://www.bebopser.com/2020/09/29/NodejsBuffer/</id>
+    <published>2020-09-29T01:54:41.000Z</published>
+    <updated>2020-12-28T14:34:02.495Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;参考：&lt;a href=&quot;http://www.semlinker.com/node-buffer/#Node-js-Buffer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;深入学习 Node.js Buffer&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;关于-buffer&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#关于-buffer&quot;&gt;&lt;/a&gt; 关于 Buffer&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Buffer&lt;/code&gt; 是 &lt;code&gt;Node.js&lt;/code&gt; 的核心模块，它使得开发者可以在 &lt;code&gt;TCP&lt;/code&gt; 流或是文件系统操作等场景中处理二进制数据。&lt;br /&gt;
+&lt;code&gt;Buffer&lt;/code&gt; 的大小是固定的，且无法调整。它在 &lt;code&gt;V8&lt;/code&gt; 堆外分配物理内存。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;V8 是一个由 Google 开发的开源 JavaScript 引擎，用于 Google Chrome 及 Chromium 中。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;常见的应用是在 &lt;code&gt;流&lt;/code&gt; 中使用。流是一组数据的集合。在一般情况下，流的生产者和消费者的速度是不一致的，所以我们需要 &lt;code&gt;Buffer&lt;/code&gt; 来缓存数据。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="buffer" scheme="http://www.bebopser.com/tags/buffer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SwiftUI 中的属性包装器</title>
+    <link href="http://www.bebopser.com/2020/08/30/state/"/>
+    <id>http://www.bebopser.com/2020/08/30/state/</id>
+    <published>2020-08-30T03:08:05.000Z</published>
+    <updated>2020-12-28T14:34:24.033Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文翻译自 &lt;a href=&quot;https://levelup.gitconnected.com/state-vs-stateobject-vs-observedobject-vs-environmentobject-in-swiftui-81e2913d63f9&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SwiftUI: @State vs @StateObject vs @ObservedObject vs @EnvironmentObject&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;SwiftUI&lt;/code&gt; 开发者们需要做的第一个决定就是，应该选择哪个有效的属性包装器来存储数据。特别是在 IOS 14 中，&lt;a href=&quot;https://developer.apple.com/documentation/swiftui/app&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;整个应用的生命周期&lt;/a&gt; 都可以使用 &lt;code&gt;SwiftUI&lt;/code&gt; 来开发，用正确的方式存储应用的数据是确保应用正常运行，避免 bug 的前提。&lt;/p&gt;
+&lt;p&gt;在使用 &lt;code&gt;SwiftUI&lt;/code&gt; 制作 app 时，一个坑就是 &lt;code&gt;@State&lt;/code&gt;，&lt;code&gt;@StateObject&lt;/code&gt;，&lt;code&gt;@ObservedObject&lt;/code&gt;，&lt;code&gt;@EnvironmentObject&lt;/code&gt; 这几个属性包装器从表面上来看，都是能够运行的。应用程序会被正常编译，甚至还能得到你想要的行为，即使你用错了属性包装器。&lt;s&gt;又不是不能用&lt;/s&gt;&lt;/p&gt;
+&lt;p&gt;但是，假如用错了，你可能会发现当你更新数据时，UI 却不会随之正常更新。&lt;/p&gt;
+&lt;p&gt;那么在这篇文章里，我们就来解决这些问题。我们先从 &lt;code&gt;@State&lt;/code&gt; 开始。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
+    
+    <category term="SwiftUI" scheme="http://www.bebopser.com/tags/SwiftUI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>响应式编程与Combine（四）</title>
+    <link href="http://www.bebopser.com/2020/08/29/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine4/"/>
+    <id>http://www.bebopser.com/2020/08/29/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine4/</id>
+    <published>2020-08-29T08:15:14.000Z</published>
+    <updated>2020-12-28T14:35:53.508Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文翻译自 &lt;a href=&quot;https://www.vadimbulavin.com/error-handling-in-swift-combine-framework/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Error Handling in Swift Combine Framework&lt;/a&gt;，稍作修改&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;错误处理策略&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#错误处理策略&quot;&gt;&lt;/a&gt; 错误处理策略&lt;/h1&gt;
+&lt;p&gt;在计算机编程中，错误是不可避免的。我们不可能要求一段程序永远不出错，但我们需要一些手段来让程序可以尽快的从错误中恢复过来。让我们看看在 &lt;code&gt;Combine&lt;/code&gt; 框架中该怎么处理。&lt;/p&gt;
+&lt;h2 id=&quot;终止-app&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#终止-app&quot;&gt;&lt;/a&gt; 终止 APP&lt;/h2&gt;
+&lt;p&gt;最直接的错误处理就是不处理错误。当然了，我们不可能将这样的代码直接交付给客户。不过在开发过程中，这个策略是很有用的。我们希望在开发中应用越早崩溃越好，这样我们才能发现代码中的错误。&lt;br /&gt;
+另外，这里还有两个不需要担心错误处理的场景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在编写实验代码时&lt;/li&gt;
+&lt;li&gt;在教授或者学习时&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;Combine&lt;/code&gt; 为这个目的提供了 &lt;code&gt;assertNoFailure(_ : file : line :)&lt;/code&gt; 方法。它会在前一个 &lt;code&gt;Publisher&lt;/code&gt; 发出错误前停止 app，通知打印调试信息帮助你解决问题。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果你确定在你的流中不会出现出错，你可以把发布者的 &lt;code&gt;Failure&lt;/code&gt; 类型设置为 &lt;code&gt;Never&lt;/code&gt;。它在语法上禁止错误，它比 &lt;code&gt;assertNoFailure(_ : file : line :)&lt;/code&gt; 安全得多，后者可能会使你的 app 崩溃&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="异步" scheme="http://www.bebopser.com/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+    <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
+    
+    <category term="响应式编程" scheme="http://www.bebopser.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="combine" scheme="http://www.bebopser.com/tags/combine/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>响应式编程与Combine（三）</title>
+    <link href="http://www.bebopser.com/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine3/"/>
+    <id>http://www.bebopser.com/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine3/</id>
+    <published>2020-08-28T06:59:56.000Z</published>
+    <updated>2020-12-28T14:35:46.701Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;这篇文章基本翻译自 &lt;a href=&quot;https://www.vadimbulavin.com/swift-combine-framework-tutorial-getting-started/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Swift Combine Framework Tutorial: Getting Started&lt;/a&gt;，删除了一些重复的内容&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;combine-的使用&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#combine-的使用&quot;&gt;&lt;/a&gt; Combine 的使用&lt;/h1&gt;
+&lt;p&gt;前面两篇文章已经系统的介绍了 &lt;code&gt;Combine&lt;/code&gt; 框架的主要组件。在这篇文章中，我们将会介绍一下它们的基本用法。如何将各种内建组件组合起来形成一套逻辑链。&lt;/p&gt;
+&lt;h1 id=&quot;publisher-与-subscriber-的连接&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#publisher-与-subscriber-的连接&quot;&gt;&lt;/a&gt; Publisher 与 Subscriber 的连接&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Combine&lt;/code&gt; 有两个内建的 &lt;code&gt;Subscriber&lt;/code&gt;：&lt;code&gt;Subscribers.Sink&lt;/code&gt; 和 &lt;code&gt;Subscribers.Assign&lt;/code&gt;。你可以通过调用 &lt;code&gt;Publisher&lt;/code&gt; 上任何一个方法来连接它们：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sink(receiveCompletion: receiveValue:)&lt;/code&gt; 在闭包中处理新元素或是完成事件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;assign(to: on:)&lt;/code&gt; 将新元素写入属性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; publisher = &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;publisher.sink(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    receiveCompletion: &amp;#123; &lt;span class=&quot;number&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;finished&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    receiveValue: &amp;#123; value &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(value)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol&gt;
+&lt;li&gt;创建一个 &lt;code&gt;Just&lt;/code&gt; 发布者，仅发送一个值，然后完成。&lt;code&gt;Combine&lt;/code&gt; 有一堆内建的 Publisher，包括 &lt;code&gt;Just&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;连接到 &lt;code&gt;Subscribers.Sink&lt;/code&gt; 订阅者&lt;/li&gt;
+&lt;/ol&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="异步" scheme="http://www.bebopser.com/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+    <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
+    
+    <category term="响应式编程" scheme="http://www.bebopser.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="combine" scheme="http://www.bebopser.com/tags/combine/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>响应式编程与Combine（二）</title>
+    <link href="http://www.bebopser.com/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine2/"/>
+    <id>http://www.bebopser.com/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine2/</id>
+    <published>2020-08-28T01:28:17.000Z</published>
+    <updated>2020-12-28T14:35:39.502Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文翻译自 &lt;a href=&quot;https://www.vadimbulavin.com/understanding-schedulers-in-swift-combine-framework/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Understanding Schedulers in Swift Combine Framework&lt;/a&gt; 。你可以阅读原文或者是原作者的 Combine 框架系列以了解更多内容。&lt;br /&gt;
+另外的，上一篇文章介绍了 &lt;code&gt;Publisher&lt;/code&gt;，&lt;code&gt;Subscriber&lt;/code&gt;，&lt;code&gt;Subject&lt;/code&gt;。这篇关于 &lt;code&gt;Scheduler&lt;/code&gt; 的文章算是一个补充。在日常的开发中，真实的 &lt;code&gt;Publisher&lt;/code&gt; 需要借助 &lt;code&gt;Scheduler&lt;/code&gt; 基于时序进行产出——译者注&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;现在，我们已经了解了 &lt;code&gt;Combine&lt;/code&gt; 框架的 &lt;a href=&quot;https://www.vadimbulavin.com/swift-combine-framework-tutorial-getting-started/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;全景&lt;/a&gt;。现在是时候学习 &lt;code&gt;scheduler&lt;/code&gt; 的知识了。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;Combine&lt;/code&gt; 里内置了哪些 &lt;code&gt;Scheduler&lt;/code&gt;？&lt;/li&gt;
+&lt;li&gt;怎么开关 &lt;code&gt;Scheduler&lt;/code&gt;？&lt;/li&gt;
+&lt;li&gt;如何使用 &lt;code&gt;Combine&lt;/code&gt; 来执行异步工作？&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;receive(on:)&lt;/code&gt; 和 &lt;code&gt;subscribe(on:)&lt;/code&gt; 的区别是什么？&lt;/li&gt;
+&lt;/ol&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="异步" scheme="http://www.bebopser.com/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+    <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
+    
+    <category term="响应式编程" scheme="http://www.bebopser.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="combine" scheme="http://www.bebopser.com/tags/combine/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>响应式编程与Combine（一）</title>
+    <link href="http://www.bebopser.com/2020/08/27/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine/"/>
+    <id>http://www.bebopser.com/2020/08/27/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine/</id>
+    <published>2020-08-27T08:13:17.000Z</published>
+    <updated>2020-12-28T14:35:35.610Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;响应式编程&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#响应式编程&quot;&gt;&lt;/a&gt; 响应式编程&lt;/h1&gt;
+&lt;p&gt;借用维基百科的定义：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在计算中，响应式编程或反应式编程（英语：Reactive programming）是一种面向数据流和变化传播的声明式编程范式。这意味着可以在编程语言中很方便地表达静态或动态的数据流，而相关的计算模型会自动将变化的值通过数据流进行传播。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;从定义中可以看出，响应式编程的核心就是：数据流和数据流的变化。&lt;br /&gt;
+数据流自不必说，很多实际的应用场景都会产生数据流。如果仅限于 &lt;code&gt;IOS&lt;/code&gt; 客户端开发的话，网络请求就是一个常见的应用场景了。很多语言都给出了自己的响应式编程的解决方案，但本篇文章只谈谈苹果给出的解决方案——&lt;code&gt;Combine&lt;/code&gt; 框架。&lt;/p&gt;
+&lt;p&gt;另外的，基于响应式编程的特点，我们很容易想到可以把函数式编程与响应式编程结合起来。而函数式编程的核心就是“模糊数据与过程的界限”。函数式编程的这一特点可以让我们更加清楚的处理数据流，明确其输入和输出。&lt;/p&gt;
+&lt;p&gt;而这一套范式可以用来很轻松的解决异步编程的种种问题。而提到异步编程，对于前端开发的程序员来说应该不会陌生。在过去，前端工程师依赖于 &lt;code&gt;闭包回调&lt;/code&gt; 这一方案来解决异步编程的问题。简单来说，就是在调用需要耗时的方法时，同时提供一个回调函数来处理方法的结果。先不说这样很容易导致回调地狱的问题，当多个异步函数同时工作的时候，你很难搞清楚在任一情况下数据到底变成了什么样子，而这也就是大多数 bug 的来源。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="异步" scheme="http://www.bebopser.com/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+    <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
+    
+    <category term="响应式编程" scheme="http://www.bebopser.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="combine" scheme="http://www.bebopser.com/tags/combine/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从计算的本质来讨论递归</title>
+    <link href="http://www.bebopser.com/2020/08/25/%E4%BB%8E%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%9D%A5%E8%AE%A8%E8%AE%BA%E9%80%92%E5%BD%92/"/>
+    <id>http://www.bebopser.com/2020/08/25/%E4%BB%8E%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%9D%A5%E8%AE%A8%E8%AE%BA%E9%80%92%E5%BD%92/</id>
+    <published>2020-08-25T08:48:31.000Z</published>
+    <updated>2020-12-28T14:35:24.872Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文的核心思想来自于 SICP 第一章与第二章的内容，你可以同时阅读以深刻理解&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;关于递归&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#关于递归&quot;&gt;&lt;/a&gt; 关于递归&lt;/h1&gt;
+&lt;p&gt;事实上，递归一直是一个很难懂但却应用广泛的概念。例如在树的深度优先遍历中，我们就经常使用递归来简化代码。&lt;br /&gt;
+在维基百科中，关于递归的&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E9%80%92%E5%BD%92&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;定义&lt;/a&gt;是这样的：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;递归（英语：Recursion），又译为递回，在数学与计算机科学中，是指在函数的定义中使用函数自身的方法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在很多关于递归的文章中，都趋向于从这三个方面来解释递归。或者说。教授读者从这三个方面来理解递归：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;明确递归函数的作用&lt;/li&gt;
+&lt;li&gt;寻找递归结束的条件&lt;/li&gt;
+&lt;li&gt;寻找函数的等价关系式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但这种理解本质上是用常规的迭代思维来理解递归过程，自然很容易导致对递归相关的题目或者工程场景的代码，一看就会，一做就废。&lt;/p&gt;
+&lt;p&gt;事实上，理解递归的核心要点是，要理解下面这句话：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;即，递归是一个 &lt;strong&gt;推迟执行&lt;/strong&gt; 的计算过程&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="数据结构与算法" scheme="http://www.bebopser.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="栈" scheme="http://www.bebopser.com/tags/%E6%A0%88/"/>
+    
+    <category term="递归" scheme="http://www.bebopser.com/tags/%E9%80%92%E5%BD%92/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从合并排序数组谈谈指针遍历</title>
+    <link href="http://www.bebopser.com/2020/08/22/doublepointer/"/>
+    <id>http://www.bebopser.com/2020/08/22/doublepointer/</id>
+    <published>2020-08-22T04:09:42.000Z</published>
+    <updated>2020-12-28T14:32:31.891Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;leetcode-原题&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#leetcode-原题&quot;&gt;&lt;/a&gt; leetcode 原题&lt;/h1&gt;
+&lt;p&gt;你可以在&lt;a href=&quot;https://leetcode-cn.com/problems/sorted-merge-lcci/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt;找到原题。&lt;br /&gt;
+给定两个排序后的数组，其中一个数组末端有足够的空间容纳另一个数组，同时给出两个数组的元素数量。将两个数组合并并排序。&lt;/p&gt;
+&lt;p&gt;一个很容易想到的思路就是 &lt;strong&gt;双指针遍历&lt;/strong&gt;。&lt;br /&gt;
+也就是说，我们可以创建一个缓存的新数组 &lt;code&gt;res&lt;/code&gt;，然后同时遍历两个给定数组。可能有以下几种情况：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A 的元素比 B 的大 —— 将 B 的元素推入 res&lt;/li&gt;
+&lt;li&gt;B 的元素比 A 的大 —— 将 A 的元素推入 res&lt;/li&gt;
+&lt;li&gt;A 的元素遍历完了 —— 直接将 B 的元素推入 res&lt;/li&gt;
+&lt;li&gt;B 的元素遍历完了 —— 直接将 A 的元素推入 res&lt;/li&gt;
+&lt;/ol&gt;</summary>
+    
+    
+    
+    <category term="数据结构与算法" scheme="http://www.bebopser.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="双指针" scheme="http://www.bebopser.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从反转链表谈谈递归</title>
+    <link href="http://www.bebopser.com/2020/08/21/reverseList/"/>
+    <id>http://www.bebopser.com/2020/08/21/reverseList/</id>
+    <published>2020-08-21T10:46:25.000Z</published>
+    <updated>2020-12-28T14:34:15.758Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;反转链表&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#反转链表&quot;&gt;&lt;/a&gt; 反转链表&lt;/h1&gt;
+&lt;p&gt;关于反转链表的题目已经是老生常谈了。主要的解法有双指针迭代和递归两种。这里仅仅谈谈递归。&lt;br /&gt;
+你可以在 &lt;a href=&quot;https://leetcode-cn.com/problems/reverse-linked-list/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt; 找到原题。&lt;/p&gt;
+&lt;p&gt;下面是题解：&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Solution&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;reverseList&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(self, head: ListNode)&lt;/span&gt; -&amp;gt; ListNode:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; head &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; head.next &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; head&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        next_node = self.reverseList(head.next)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        head.next.next = head&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        head.next = &lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; next_node&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="数据结构与算法" scheme="http://www.bebopser.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="链表" scheme="http://www.bebopser.com/tags/%E9%93%BE%E8%A1%A8/"/>
+    
+    <category term="递归" scheme="http://www.bebopser.com/tags/%E9%80%92%E5%BD%92/"/>
+    
+  </entry>
+  
+</feed>
