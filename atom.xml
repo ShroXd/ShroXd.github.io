@@ -6,7 +6,7 @@
   <link href="http://www.bebopser.com/atom.xml" rel="self"/>
   
   <link href="http://www.bebopser.com/"/>
-  <updated>2020-12-29T07:08:46.281Z</updated>
+  <updated>2021-01-13T07:47:21.363Z</updated>
   <id>http://www.bebopser.com/</id>
   
   <author>
@@ -15,6 +15,67 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浏览器与 Event Loop</title>
+    <link href="http://www.bebopser.com/2021/01/13/browserEventLoop/"/>
+    <id>http://www.bebopser.com/2021/01/13/browserEventLoop/</id>
+    <published>2021-01-13T02:34:33.000Z</published>
+    <updated>2021-01-13T07:47:21.363Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;引子&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#引子&quot;&gt;&lt;/a&gt; 引子&lt;/h1&gt;
+&lt;p&gt;如果你使用 &lt;code&gt;JavaScript&lt;/code&gt; 或 &lt;code&gt;TypeScript&lt;/code&gt; 开发，那你就不能不去了解运行它们的环境。我们可以笼统的将运行环境区分为浏览器和 &lt;code&gt;Node.js&lt;/code&gt;。在这篇文章，我们的讨论范围仅限于浏览器中。&lt;/p&gt;
+&lt;p&gt;一个在展开讨论前的必要信息是：&lt;code&gt;JavaScript&lt;/code&gt; 是一个单线程语言。这意味着在任何时候，都只能有一个主线程来处理任务。事实上这个设计不能怪 Brendan Eich，&lt;code&gt;JavaScript&lt;/code&gt; 语言的设计者。他当年捣鼓这个东西的时候，也没有想到互联网能发展成今天这个样子。&lt;/p&gt;
+&lt;p&gt;如果我们考虑单线程这件事，我们会意识到，这个设计会带来灾难性的后果。比如用户在网站上发起了一个网络请求，这个网络请求所需要的时间可能长达几秒，在这期间，整个网站的渲染线程是被挂起的，从用户的角度来看，网站就像卡住了。这种浏览体验可能是所有用户都不愿意见到的。&lt;/p&gt;
+&lt;p&gt;说到这，你可能会想：不对啊，我平常上网怎么没遇到过这种情况？的确没有，这就要归功于 &lt;code&gt;Event Loop&lt;/code&gt; 了。&lt;br /&gt;
+简单来说，&lt;code&gt;Event Loop&lt;/code&gt; 这个设计，使得浏览器可以将 &lt;code&gt;JavaScript&lt;/code&gt; 代码中 &lt;strong&gt;同步&lt;/strong&gt; 和 &lt;strong&gt;异步&lt;/strong&gt; 任务区分开。这种设计是有重大意义的。这使得浏览器可以在处理诸如网络请求这种高延时工作的时候，依然可以为用户提供流畅的渲染体验。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="核心概念" scheme="http://www.bebopser.com/categories/%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/"/>
+    
+    
+    <category term="browser" scheme="http://www.bebopser.com/tags/browser/"/>
+    
+    <category term="task" scheme="http://www.bebopser.com/tags/task/"/>
+    
+    <category term="micro task" scheme="http://www.bebopser.com/tags/micro-task/"/>
+    
+    <category term="event loop" scheme="http://www.bebopser.com/tags/event-loop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>二叉树的遍历</title>
+    <link href="http://www.bebopser.com/2021/01/02/%E4%BA%8C%E5%8F%89%E6%A0%911/"/>
+    <id>http://www.bebopser.com/2021/01/02/%E4%BA%8C%E5%8F%89%E6%A0%911/</id>
+    <published>2021-01-02T08:06:34.000Z</published>
+    <updated>2021-01-04T14:22:52.277Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;简述&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#简述&quot;&gt;&lt;/a&gt; 简述&lt;/h1&gt;
+&lt;p&gt;二叉树的遍历是解 leetcode 树类型题目的基础。搞清楚每一种遍历的细节和复杂度是解题的关键。&lt;br /&gt;
+leetcode</summary>
+        
+      
+    
+    
+    
+    <category term="数据结构与算法" scheme="http://www.bebopser.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="二叉树" scheme="http://www.bebopser.com/tags/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
+    
+    <category term="递归" scheme="http://www.bebopser.com/tags/%E9%80%92%E5%BD%92/"/>
+    
+    <category term="迭代" scheme="http://www.bebopser.com/tags/%E8%BF%AD%E4%BB%A3/"/>
+    
+  </entry>
   
   <entry>
     <title>好耶！是 BST</title>
@@ -595,60 +656,6 @@ The new diff algorithm refers to the &lt;a href=&quot;https://github.com/localvo
     
     
     <category term="栈" scheme="http://www.bebopser.com/tags/%E6%A0%88/"/>
-    
-    <category term="递归" scheme="http://www.bebopser.com/tags/%E9%80%92%E5%BD%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>从合并排序数组谈谈指针遍历</title>
-    <link href="http://www.bebopser.com/2020/08/22/doublepointer/"/>
-    <id>http://www.bebopser.com/2020/08/22/doublepointer/</id>
-    <published>2020-08-22T04:09:42.000Z</published>
-    <updated>2020-12-28T14:32:31.891Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;leetcode-原题&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#leetcode-原题&quot;&gt;&lt;/a&gt; leetcode 原题&lt;/h1&gt;
-&lt;p&gt;你可以在&lt;a href=&quot;https://leetcode-cn.com/problems/sorted-merge-lcci/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt;找到原题。&lt;br /&gt;
-给定两个排序后的数组，其中一个数组末端有足够的空间容纳另一个数组，同时给出两个数组的元素数量。将两个数组合并并排序。&lt;/p&gt;
-&lt;p&gt;一个很容易想到的思路就是 &lt;strong&gt;双指针遍历&lt;/strong&gt;。&lt;br /&gt;
-也就是说，我们可以创建一个缓存的新数组 &lt;code&gt;res&lt;/code&gt;，然后同时遍历两个给定数组。可能有以下几种情况：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;A 的元素比 B 的大 —— 将 B 的元素推入 res&lt;/li&gt;
-&lt;li&gt;B 的元素比 A 的大 —— 将 A 的元素推入 res&lt;/li&gt;
-&lt;li&gt;A 的元素遍历完了 —— 直接将 B 的元素推入 res&lt;/li&gt;
-&lt;li&gt;B 的元素遍历完了 —— 直接将 A 的元素推入 res&lt;/li&gt;
-&lt;/ol&gt;</summary>
-    
-    
-    
-    <category term="数据结构与算法" scheme="http://www.bebopser.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="双指针" scheme="http://www.bebopser.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>从反转链表谈谈递归</title>
-    <link href="http://www.bebopser.com/2020/08/21/reverseList/"/>
-    <id>http://www.bebopser.com/2020/08/21/reverseList/</id>
-    <published>2020-08-21T10:46:25.000Z</published>
-    <updated>2020-12-28T14:34:15.758Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;反转链表&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#反转链表&quot;&gt;&lt;/a&gt; 反转链表&lt;/h1&gt;
-&lt;p&gt;关于反转链表的题目已经是老生常谈了。主要的解法有双指针迭代和递归两种。这里仅仅谈谈递归。&lt;br /&gt;
-你可以在 &lt;a href=&quot;https://leetcode-cn.com/problems/reverse-linked-list/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt; 找到原题。&lt;/p&gt;
-&lt;p&gt;下面是题解：&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Solution&lt;/span&gt;:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;reverseList&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(self, head: ListNode)&lt;/span&gt; -&amp;gt; ListNode:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; head &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;or&lt;/span&gt; head.next &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt;:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; head&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        next_node = self.reverseList(head.next)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        head.next.next = head&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        head.next = &lt;span class=&quot;literal&quot;&gt;None&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; next_node&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    <category term="数据结构与算法" scheme="http://www.bebopser.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="链表" scheme="http://www.bebopser.com/tags/%E9%93%BE%E8%A1%A8/"/>
     
     <category term="递归" scheme="http://www.bebopser.com/tags/%E9%80%92%E5%BD%92/"/>
     

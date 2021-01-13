@@ -185,6 +185,190 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/06/22/treeHandle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/22/treeHandle/" class="post-title-link" itemprop="url">树的常规操作——从树的基本概念说起</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-22 09:27:56" itemprop="dateCreated datePublished" datetime="2020-06-22T09:27:56+08:00">2020-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:34:31" itemprop="dateModified" datetime="2020-12-28T22:34:31+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="关于树"><a class="markdownIt-Anchor" href="#关于树"></a> 关于树</h1>
+<p>树是一种用来表示层次结构数据的数据类型。<br />
+<strong>定义</strong>：一棵树 t 是一个非空的有限元素的集合，其中一个元素为根 root ，其他的元素（如果有的话）组成 t 的子树 subtree 。</p>
+<p>一棵树的 <strong>高度</strong> 或 <strong>深度</strong> 是树中级的个数。<br />
+一个元素的 <strong>度</strong> 是指其孩子的个数。</p>
+<h2 id="二叉树"><a class="markdownIt-Anchor" href="#二叉树"></a> 二叉树</h2>
+<p><strong>定义</strong>：一颗 <strong>二叉树</strong> t 是有限个元素的集合（可以为空）。当二叉树非空时，其中有一个元素称为 <strong>根</strong>，余下的元素（如果有的话）被划分为两棵二叉树，分别称为 t 的左子树和右子树。<br />
+<strong>特性 1</strong>：一颗二叉树有 n 个元素（n&gt;0），它有 n-1 条边。<br />
+<strong>特性 2</strong>：一颗二叉树高度为 h（h&gt;=0），则其最少有 h 个元素，最多有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>h</mi></msubsup><msup><mn>2</mn><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><mn>2</mn><mi>h</mi></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sum_{i=1}^{h} 2^{i-1} = 2^h - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2887179999999998em;vertical-align:-0.29971000000000003em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9890079999999999em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.2029em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">h</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29971000000000003em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.824664em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.932438em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">h</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 个元素<br />
+<strong>特性 3</strong>：一颗二叉树有 n 个元素（n&gt;0），它的最大高度为 n，最小高度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mrow><mo fence="true">∣</mo><mi>log</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo fence="true">∣</mo></mrow><mspace linebreak="newline"></mspace></mrow><annotation encoding="application/x-tex">\left|\log(n+1)\right|\\</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">∣</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose delimcenter" style="top:0em;">∣</span></span></span><span class="mspace newline"></span></span></span> （向上取整）</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/22/treeHandle/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/06/05/processAbstraction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/05/processAbstraction/" class="post-title-link" itemprop="url">SICP笔记——构造过程抽象</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-05 14:03:11" itemprop="dateCreated datePublished" datetime="2020-06-05T14:03:11+08:00">2020-06-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:34:11" itemprop="dateModified" datetime="2020-12-28T22:34:11+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>本文是 《计算机程序的构造与解释》 这本书的笔记</p>
+</blockquote>
+<h1 id="总述"><a class="markdownIt-Anchor" href="#总述"></a> 总述</h1>
+<p>理解复杂事物的关键是：避免不必要的观察、计算和思考。而这也正是构造复杂软件所必须的。通过一些软件设计技术，我们可以很好的将整体拆分为细小的、具有独立功能的、可描述的模块。而在这一行为中，<strong>抽象</strong> 就是必不可少的魔法。为了理解这一行为，我们在这里引用原书：</p>
+<blockquote>
+<p>心智的活动，除了尽力产生各种简单的认识之外，主要表现在如下三个方面：</p>
+<ol>
+<li>将若干简单认识 <strong>组合</strong> 为一个复合认识，由此产出各种复杂的认识</li>
+<li>将两个认识放在一起对照，不管它们如何简单或者复杂，在这样做时并不将它们合二为一。由此得到有关他们的 <strong>相互关系</strong> 的认识。</li>
+<li>将有关认识与那些在实际中和它们同在的所有其他认识 <strong>隔离开</strong>，这就是抽象。<br />
+所有具有普遍性的认识都是这样得到的。</li>
+</ol>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/05/processAbstraction/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/05/26/virtualCPU/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -904,187 +1088,10 @@ UNIX 系统提供了相关的 API，来轻松的完成这些任务：<code>fork(
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/17/JavaScript%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
-      <meta itemprop="name" content="ShroXd">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Space Cowboy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/17/JavaScript%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA/" class="post-title-link" itemprop="url">JavaScript的面向对象（二）——谈谈对象的创建</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-17 17:29:48" itemprop="dateCreated datePublished" datetime="2020-03-17T17:29:48+08:00">2020-03-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-28 22:33:19" itemprop="dateModified" datetime="2020-12-28T22:33:19+08:00">2020-12-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>如果你对 <code>JavaScript</code> 那奇特的对象还不甚了解的话，推荐你读一下 <a href="%5Bhttps://www.bebopser.com/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/%5D(https://www.bebopser.com/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/)">这篇文章</a>。</p>
-</blockquote>
-<p>事实上，在第一部分里的字面量写法就是一种创建单个对象的方式。但这种写法意味着你无法封装创建对象的逻辑，会有很多的重复代码出现。为了解决这个问题，我们提出了 <code>工厂模式</code> 来创建对象。</p>
-<h1 id="工厂模式"><a class="markdownIt-Anchor" href="#工厂模式"></a> 工厂模式</h1>
-<hr />
-<p>简单来说，就是使用函数来封装创建对象的细节，比如有以下 <code>工厂函数</code> ：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">  p.name = name;</span><br><span class="line">  o.age = age;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = createPerson(<span class="string">"Spike"</span>, <span class="number">24</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = createPerson(<span class="string">"Hesea"</span>, <span class="number">26</span>);</span><br></pre></td></tr></table></figure>
-<p>尽管这个模式可以解决重复创建对象所带来的的重复代码的问题，但你并不能知道由此创建出来的对象类型。所以我们就得借助一种常用的模式——<code>构造函数模式</code></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/17/JavaScript%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
-      <meta itemprop="name" content="ShroXd">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Space Cowboy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">JavaScript的面向对象（一）——先说说对象</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-17 09:47:57" itemprop="dateCreated datePublished" datetime="2020-03-17T09:47:57+08:00">2020-03-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-28 22:33:36" itemprop="dateModified" datetime="2020-12-28T22:33:36+08:00">2020-12-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h1>
-<hr />
-<p>对于面向对象的语言来说，定义一个类，并且基于这个类创建一个实例。这种做法对于 <code>Python</code> 程序员来说已经是司空见惯的事情了。但是在 <code>ES6</code> 之前，<code>JavaScript</code> 是没有类这个概念的。也因为这个关系，<code>JavaScript</code> 中对象的概念也和其他语言中的不太像。</p>
-<p>根据 <code>ECMA-262</code> 的定义，对象是：<strong>无序属性的集合，其属性可以包含基本值、对象或者函数</strong>。</p>
-<p>事实上，你可以将其理解为散列表。</p>
-<p>另一方面，也由于 <code>类</code> 这个概念的缺失，所以如果一个 <code>JavaScript</code> 程序员需要创建一个实例对象，那么他就不得不求助于构造函数：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Point</span>(<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.x = x;</span><br><span class="line">  <span class="keyword">this</span>.y = y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// Point &#123; x: 1, y: 2&#125;</span></span><br></pre></td></tr></table></figure>
-<p>这种写法会让其他传统面向对象语言的程序员感到困惑。幸运的是，这个问题在 <code>ES6</code> 中已经解决了，不过这部分内容放在新的文章中介绍。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1152,7 +1159,7 @@ UNIX 系统提供了相关的 API，来轻松的完成这些任务：<code>fork(
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1165,7 +1172,7 @@ UNIX 系统提供了相关的 API，来轻松的完成这些任务：<code>fork(
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-count">107</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1206,7 +1213,7 @@ UNIX 系统提供了相关的 API，来轻松的完成这些任务：<code>fork(
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

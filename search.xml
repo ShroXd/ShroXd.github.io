@@ -4,6 +4,66 @@
   
     
     <entry>
+      <title>浏览器与 Event Loop</title>
+      <link href="/2021/01/13/browserEventLoop/"/>
+      <url>/2021/01/13/browserEventLoop/</url>
+      
+        <content type="html"><![CDATA[<h1 id="引子"><a class="markdownIt-Anchor" href="#引子"></a> 引子</h1><p>如果你使用 <code>JavaScript</code> 或 <code>TypeScript</code> 开发，那你就不能不去了解运行它们的环境。我们可以笼统的将运行环境区分为浏览器和 <code>Node.js</code>。在这篇文章，我们的讨论范围仅限于浏览器中。</p><p>一个在展开讨论前的必要信息是：<code>JavaScript</code> 是一个单线程语言。这意味着在任何时候，都只能有一个主线程来处理任务。事实上这个设计不能怪 Brendan Eich，<code>JavaScript</code> 语言的设计者。他当年捣鼓这个东西的时候，也没有想到互联网能发展成今天这个样子。</p><p>如果我们考虑单线程这件事，我们会意识到，这个设计会带来灾难性的后果。比如用户在网站上发起了一个网络请求，这个网络请求所需要的时间可能长达几秒，在这期间，整个网站的渲染线程是被挂起的，从用户的角度来看，网站就像卡住了。这种浏览体验可能是所有用户都不愿意见到的。</p><p>说到这，你可能会想：不对啊，我平常上网怎么没遇到过这种情况？的确没有，这就要归功于 <code>Event Loop</code> 了。<br />简单来说，<code>Event Loop</code> 这个设计，使得浏览器可以将 <code>JavaScript</code> 代码中 <strong>同步</strong> 和 <strong>异步</strong> 任务区分开。这种设计是有重大意义的。这使得浏览器可以在处理诸如网络请求这种高延时工作的时候，依然可以为用户提供流畅的渲染体验。</p><a id="more"></a><h1 id="消息队列"><a class="markdownIt-Anchor" href="#消息队列"></a> 消息队列</h1><p>在谈论 <code>Event Loop</code> 的具体内容之前，我想先谈论一下 <code>Message Queue</code> 这个主题。为什么要谈论这个看起来毫不相关的主题？这是因为 <code>Event Loop</code> 的设计思想和 <code>Message Queue</code> 是一致的。</p><p>在生活中，我们会遇到很多事情。这些事情并不是都需要立刻处理的，而是具有优先级关系的。而在计算机的处理中，这种思想也指导我们必须将各种任务区分开，按照不同的优先级处理。</p><p>具体到浏览器中，一些诸如渲染等工作，必须是要立刻处理的。按照术语来说，就是所谓的 <strong>同步</strong> 任务。当用户点击按钮后，他当然想立即看到反馈。在大多数时候，我们会呈现一个按钮被按下的动画，告诉用户，你的确是按下了这个按钮。而另外的一些工作，比如网络请求，就不一定要立即呈现结果了。网络速度经常是一个很玄学的事情，我们可以保证服务器的反应速度，但却无法控制用户端的网速。所以如果在发出网络请求后，整个浏览器都卡在那里等待请求的返回结果，用户显然不买账。所以我们可以将其区分为 <strong>异步</strong> 任务，进行特殊处理。</p><p><code>消息队列</code> 实际上就是这种思想的具体实现。直白点说，<code>消息队列</code> 实际上就是一个 <code>TODO 清单</code>。我们将一些耗时短、立即处理的任务，放在主线程处理。而将一些耗时长、需要等待结果的任务放在这份 <code>TODO 清单</code> 中，等到有结果时再处理。</p><p>那么，我们如何去处理那些被等待的任务？答案就是——<code>回调函数</code>。当异步任务等待完成时，浏览器可以去调用这些回调函数，从而完成对异步任务的整体处理。</p><h1 id="javascript-引擎的设计"><a class="markdownIt-Anchor" href="#javascript-引擎的设计"></a> JavaScript 引擎的设计</h1><p>我们使用如下这张图来展示整个 <code>JavaScript</code> 引擎的设计，这幅图参考了 <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank" rel="noopener">JSConf 2014</a> 上的演讲。你可以去看一下这个视频，它对 <code>Event Loop</code> 做了非常清晰的解释，除了没有提到 <code>micro task</code> 这个主题。</p><p><img src="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2021-01-13-PYoP5C.png" alt="JavaScript 运行时" /></p><p>引擎会将变量存储在 <code>heap</code> 中。而当代码执行时，引擎会根据方法的调用，生成与其对应的 <code>context</code>。这个上下文中存储着一些方法执行所需要的信息，比如参数变量、上层作用域、this 对象等。同时，方法会被压入执行栈，即图中的 <code>stack</code> 中。方法自执行栈顶部开始执行。若方法调用了新的方法，那么就将那个新方法压入执行栈。若方法执行完毕，那么就将其弹出执行栈。</p><blockquote><p>在实际代码中，引擎会根据变量的不同类型，将其存储于 <code>stack</code> 或 <code>heap</code> 的数据结构中。但这部分不是我们讨论的主题。</p></blockquote><p>那么，我们如何处理异步任务呢？很简单，我们会调用 <code>Webapis</code>，这些需要等待的任务将由浏览器进行管理。一旦任务完成，就将这些任务的回调函数推入 <code>Task Queue</code>。依据异步任务的不同，我们选择性的将其推入 <code>Task</code> 或是 <code>Micro Task</code> 队列。</p><p>具体来说，你可以这样区分它们：</p><ul><li>Task: setInterval()、setTimeout()</li><li>Micro Task: new Promise()、new MutaionObserver()</li></ul><p>当然了，这两个队列肯定不是为了好玩才取两个名字的，它们之间有执行逻辑的区别。<br />具体来说，当执行完某个宏任务且执行栈为空时，引擎会优先从 <code>Micro Task</code> 中取出一个任务执行，并直到执行完 <code>Micro Task</code> 队列中的所有任务。如果在执行某个微任务时，又加入了新的微任务，那么引擎也会尽职尽责的将队列里的所有 <code>Micro Task</code> 执行完。<br />如果完成了上面的工作，或是 <code>Micro Task</code> 中不存在任何待处理任务的话，引擎会去 <code>Task</code> 队列中取出一个任务，压入执行栈开始执行。</p><p>这个问题在 <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide/In_depth" target="_blank" rel="noopener">MDN Web Docs</a> 中也被阐述过：</p><p>The difference between the task queue and the microtask queue is simple but very important:</p><ul><li>When executing tasks from the task queue, the runtime executes each task that is in the queue at the moment a new iteration of the event loop begins. Tasks added to the queue after the iteration begins will not run until the next iteration.</li><li>Each time a task exits, and the execution context stack is empty, each microtask in the microtask queue is executed, one after another. The difference is that execution of microtasks continues until the queue is empty—even if new ones are scheduled in the interim. In other words, microtasks can enqueue new microtasks and those new microtasks will execute before the next task begins to run, and before the end of the current event loop iteration.</li></ul><h1 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h1><p>总的来说，<code>Event Loop</code> 的实质就是一个消息队列管理。基于这个设计，<code>JavaScript</code> 这种单线程语言得到了无阻塞的能力。<br />其次，基于不同的异步任务，我们区分了 <code>Task</code> 与 <code>Micro Task</code> 两种回调队列。它们的调用策略也是不同的。</p><blockquote><p>也许在其他地方，<code>Task</code> 会被称为 <code>Macro Task</code>。</p></blockquote><h1 id="补充资料"><a class="markdownIt-Anchor" href="#补充资料"></a> 补充资料</h1><p>也许你可以读一下这些资料，以便加深理解。</p><ol><li><a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank" rel="noopener">What is the event loop anyway? | Phillip Roberts | JSConf EU</a></li><li><a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="noopener">Tasks, microtasks, queues and schedules</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide/In_depth" target="_blank" rel="noopener">In depth: Microtasks and the JavaScript runtime environment</a></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 核心概念 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> browser </tag>
+            
+            <tag> task </tag>
+            
+            <tag> micro task </tag>
+            
+            <tag> event loop </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>二叉树的遍历</title>
+      <link href="/2021/01/02/%E4%BA%8C%E5%8F%89%E6%A0%911/"/>
+      <url>/2021/01/02/%E4%BA%8C%E5%8F%89%E6%A0%911/</url>
+      
+        <content type="html"><![CDATA[<h1 id="简述"><a class="markdownIt-Anchor" href="#简述"></a> 简述</h1><p>二叉树的遍历是解 leetcode 树类型题目的基础。搞清楚每一种遍历的细节和复杂度是解题的关键。<br />leetcode 上有很多相关的题目，但题解却经常只关注唯一的一道题。比如后序遍历就是利用稍微修改后的前序遍历倒置解出的，思路很巧妙，但是这种方法不具有普适性，无法解答其他与后序遍历相关的题目。<br />所以在这里完全总结一下二叉树遍历的问题，以便不仅仅可以写出题目，更重要的是在实际应用，比如模板解析中应用这些思路。<br />尽管对于二叉树来说，分为前中后序三种深度优先遍历和广度优先遍历四种。但实际上三种深度优先遍历不过是改变了访问子树根节点的时机，所以事实上可以认为是同一种遍历方式。</p><h1 id="beforeeach"><a class="markdownIt-Anchor" href="#beforeeach"></a> BeforeEach</h1><p>我们约定树节点的数据类型如下，后不再赘述：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, val=<span class="number">0</span>, left=None, right=None)</span>:</span></span><br><span class="line">        self.val = val</span><br><span class="line">        self.left = left</span><br><span class="line">        self.right = right</span><br></pre></td></tr></table></figure><h1 id="前序遍历"><a class="markdownIt-Anchor" href="#前序遍历"></a> 前序遍历</h1><p>前序遍历是深度优先遍历，顺序是根节点 -&gt; 左子树 -&gt; 右子树。<br />所以你可以看到，这种方式是先处理子树根节点，再缓存左子树，最后处理右子树。</p><h2 id="递归"><a class="markdownIt-Anchor" href="#递归"></a> 递归</h2><p>对于树遍历的处理，天然的可以使用递归来处理。因为处理根和子树的逻辑是一样的，区别仅仅是我们需要根据不同的情况，来改变遍历（缓存）顺序。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">preorderTraversal</span><span class="params">(root: TreeNode)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">visit</span><span class="params">(node)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> node: <span class="keyword">return</span></span><br><span class="line">        res.append(node.val)</span><br><span class="line">        visit(node.left)</span><br><span class="line">        visit(node.right)</span><br><span class="line"></span><br><span class="line">    res = []</span><br><span class="line">    preorder(root)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure><p>二叉树中的每一个节点都被访问了，所以时间复杂度为 O(n)<br />递归过程中有栈的空间开销，对于二叉树，平均空间复杂度为 O(logn)，最差情况下树呈现链状，空间复杂度为 O(n)</p><h1 id="迭代"><a class="markdownIt-Anchor" href="#迭代"></a> 迭代</h1><p>递归实质上是代码自身通过函数调用栈隐式的维护了待处理节点的栈。所以我们也可以自己维护这个栈。你可以直接使用 <code>list</code> 来模拟栈，不过 <code>collections</code> 模块有个 <code>deque</code> 实现了头尾添加删除相同的速度，所以你也可以使用这个模块。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">preorderTraversal</span><span class="params">(root: TreeNode)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> root: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    stack = [root]</span><br><span class="line">    res = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> stack:</span><br><span class="line">        cur = stack.pop()</span><br><span class="line">        res.append(cur.val)</span><br><span class="line">        <span class="keyword">if</span> res.right:</span><br><span class="line">            stack.append(res.right)</span><br><span class="line">        <span class="keyword">if</span> res.left:</span><br><span class="line">            stack.append(res.left)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure><p>你应该注意到了，我们在向栈内添加子树的时候，是先添加右子树，后添加左子树。这主要是因为模拟的栈和递归隐式处理的调用栈是不同的。<br />递归时，我们不仅可以处理当前节点，还能缓存未处理节点的所有信息，这个信息不仅仅包含其本身的数据，还有对其要做的操作。换句话说，递归时我们并不知道接下来的处理路线。<br />而迭代时，我们是实际上是要借用栈这个数据结构来模拟出一个树的节点遍历顺序。而处理的顺序是从栈顶弹出，所以我们这里先压入左子树，再压入右子树。换句话说，迭代时我们知道将要处理的节点清单。</p><p>更进一步的，为什么我们不能使用队列？<br />因为树的遍历有一个特点，就是在深度优先遍历中，我们不能遇到什么节点就处理好什么节点。换句话说，我们会缓存一些待处理的节点，而这些待处理节点的处理时机则是先遇到的后处理，即先进后出，符合栈的逻辑。</p><p>时间复杂度与空间复杂度的分析同递归。原因是我们在这里也是模拟的递归调用栈。</p><h1 id="morris-遍历"><a class="markdownIt-Anchor" href="#morris-遍历"></a> Morris 遍历</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构与算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 二叉树 </tag>
+            
+            <tag> 递归 </tag>
+            
+            <tag> 迭代 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>好耶！是 BST</title>
       <link href="/2020/12/29/BST1/"/>
       <url>/2020/12/29/BST1/</url>
@@ -1168,11 +1228,11 @@
       
         <tags>
             
-            <tag> 闭包 </tag>
+            <tag> 变量对象 </tag>
             
             <tag> 作用域链 </tag>
             
-            <tag> 变量对象 </tag>
+            <tag> 闭包 </tag>
             
             <tag> 活动对象 </tag>
             
@@ -1224,11 +1284,11 @@
       
         <tags>
             
-            <tag> 作用域链 </tag>
+            <tag> 执行上下文 </tag>
             
             <tag> 变量对象 </tag>
             
-            <tag> 执行上下文 </tag>
+            <tag> 作用域链 </tag>
             
             <tag> this </tag>
             
@@ -1311,13 +1371,13 @@
       
         <tags>
             
+            <tag> 模块 </tag>
+            
             <tag> ES6 </tag>
             
             <tag> CommonJS </tag>
             
             <tag> Node.js </tag>
-            
-            <tag> 模块 </tag>
             
         </tags>
       

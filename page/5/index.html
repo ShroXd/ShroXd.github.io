@@ -185,6 +185,183 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/17/JavaScript%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/17/JavaScript%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA/" class="post-title-link" itemprop="url">JavaScript的面向对象（二）——谈谈对象的创建</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-17 17:29:48" itemprop="dateCreated datePublished" datetime="2020-03-17T17:29:48+08:00">2020-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:33:19" itemprop="dateModified" datetime="2020-12-28T22:33:19+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>如果你对 <code>JavaScript</code> 那奇特的对象还不甚了解的话，推荐你读一下 <a href="%5Bhttps://www.bebopser.com/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/%5D(https://www.bebopser.com/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/)">这篇文章</a>。</p>
+</blockquote>
+<p>事实上，在第一部分里的字面量写法就是一种创建单个对象的方式。但这种写法意味着你无法封装创建对象的逻辑，会有很多的重复代码出现。为了解决这个问题，我们提出了 <code>工厂模式</code> 来创建对象。</p>
+<h1 id="工厂模式"><a class="markdownIt-Anchor" href="#工厂模式"></a> 工厂模式</h1>
+<hr />
+<p>简单来说，就是使用函数来封装创建对象的细节，比如有以下 <code>工厂函数</code> ：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">  p.name = name;</span><br><span class="line">  o.age = age;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = createPerson(<span class="string">"Spike"</span>, <span class="number">24</span>);</span><br><span class="line"><span class="keyword">var</span> person2 = createPerson(<span class="string">"Hesea"</span>, <span class="number">26</span>);</span><br></pre></td></tr></table></figure>
+<p>尽管这个模式可以解决重复创建对象所带来的的重复代码的问题，但你并不能知道由此创建出来的对象类型。所以我们就得借助一种常用的模式——<code>构造函数模式</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/17/JavaScript%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">JavaScript的面向对象（一）——先说说对象</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-17 09:47:57" itemprop="dateCreated datePublished" datetime="2020-03-17T09:47:57+08:00">2020-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-28 22:33:36" itemprop="dateModified" datetime="2020-12-28T22:33:36+08:00">2020-12-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h1>
+<hr />
+<p>对于面向对象的语言来说，定义一个类，并且基于这个类创建一个实例。这种做法对于 <code>Python</code> 程序员来说已经是司空见惯的事情了。但是在 <code>ES6</code> 之前，<code>JavaScript</code> 是没有类这个概念的。也因为这个关系，<code>JavaScript</code> 中对象的概念也和其他语言中的不太像。</p>
+<p>根据 <code>ECMA-262</code> 的定义，对象是：<strong>无序属性的集合，其属性可以包含基本值、对象或者函数</strong>。</p>
+<p>事实上，你可以将其理解为散列表。</p>
+<p>另一方面，也由于 <code>类</code> 这个概念的缺失，所以如果一个 <code>JavaScript</code> 程序员需要创建一个实例对象，那么他就不得不求助于构造函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Point</span>(<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.x = x;</span><br><span class="line">  <span class="keyword">this</span>.y = y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> Point(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// Point &#123; x: 1, y: 2&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这种写法会让其他传统面向对象语言的程序员感到困惑。幸运的是，这个问题在 <code>ES6</code> 中已经解决了，不过这部分内容放在新的文章中介绍。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/17/JavaScript%E7%9A%84%E5%AF%B9%E8%B1%A1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/15/%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -899,178 +1076,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
-      <meta itemprop="name" content="ShroXd">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Space Cowboy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/" class="post-title-link" itemprop="url">闭包与装饰器——从变量的作用域说起</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-07 17:02:12" itemprop="dateCreated datePublished" datetime="2020-03-07T17:02:12+08:00">2020-03-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-28 22:36:23" itemprop="dateModified" datetime="2020-12-28T22:36:23+08:00">2020-12-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="变量与变量的作用域"><a class="markdownIt-Anchor" href="#变量与变量的作用域"></a> 变量与变量的作用域</h1>
-<hr />
-<p>计算机语言中的变量（Variable）这一概念来源于数学，它是一个存储地址的映射。这个存储地址中通常包含了一段数据或一些抽象信息。你可以使用变量名来方便的引用存储值。</p>
-<p>提到变量，就不得不提到 <code>作用域</code> 这个概念了。</p>
-<p>实际上，作用域指的是一段计算机程序。在这段程序代码中，变量名与存储地址的映射关系一直保持有效。换句话说，作用域决定了当前程序是否能够访问到某个变量的值。</p>
-<p>作用域的解析规则在不同的编程语言中都可能不相同。</p>
-<p>作用域分为 <code>静态作用域</code> 和 <code>动态作用域</code> 。前者也叫做 <code>词法作用域</code> 。下面分析一下这两种作用域的区别。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/07/%E9%97%AD%E5%8C%85%E4%B8%8E%E8%A3%85%E9%A5%B0%E5%99%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/01/17/%E5%BD%93%E6%88%91%E4%BB%AC%E8%B0%88%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%97%B6%E5%80%99-%E6%88%91%E4%BB%AC%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
-      <meta itemprop="name" content="ShroXd">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Space Cowboy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/17/%E5%BD%93%E6%88%91%E4%BB%AC%E8%B0%88%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%97%B6%E5%80%99-%E6%88%91%E4%BB%AC%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%88/" class="post-title-link" itemprop="url">当我们谈跨域的时候,我们谈些什么</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-01-17 17:50:36" itemprop="dateCreated datePublished" datetime="2020-01-17T17:50:36+08:00">2020-01-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-28 22:35:58" itemprop="dateModified" datetime="2020-12-28T22:35:58+08:00">2020-12-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/" itemprop="url" rel="index"><span itemprop="name">核心概念</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>跨域，和Vue配置</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/01/17/%E5%BD%93%E6%88%91%E4%BB%AC%E8%B0%88%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%97%B6%E5%80%99-%E6%88%91%E4%BB%AC%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%88/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1138,7 +1147,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1151,7 +1160,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-count">107</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1192,7 +1201,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
