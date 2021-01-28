@@ -6,7 +6,7 @@
   <link href="http://www.bebopser.com/atom.xml" rel="self"/>
   
   <link href="http://www.bebopser.com/"/>
-  <updated>2021-01-13T07:47:21.363Z</updated>
+  <updated>2021-01-28T04:21:18.665Z</updated>
   <id>http://www.bebopser.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue3 源码阅读笔记（六）—— nextTick 与调度器</title>
+    <link href="http://www.bebopser.com/2021/01/22/vue3source6/"/>
+    <id>http://www.bebopser.com/2021/01/22/vue3source6/</id>
+    <published>2021-01-22T08:26:27.000Z</published>
+    <updated>2021-01-28T04:21:18.665Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;简述&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#简述&quot;&gt;&lt;/a&gt; 简述&lt;/h1&gt;
+&lt;p&gt;尽管我们可以从逻辑上简单的将 &lt;code&gt;Vue&lt;/code&gt; 的实现拆分为：响应式系统和渲染器。因为现代前端框架所关注的问题就是如何同步 &lt;code&gt;state&lt;/code&gt; 与 &lt;code&gt;UI&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;但在实际工程中，&lt;code&gt;UI&lt;/code&gt; 的渲染并不是一次性的。根据数据的变化，它是会随之不断变化的。从理论上来说，我们可以对数据的变化应收尽收。也就是说，只要 &lt;code&gt;state&lt;/code&gt; 发生了变化，我们就去更新 &lt;code&gt;UI&lt;/code&gt;。这种&lt;s&gt;罗永浩式&lt;/s&gt;不管不顾的做法尽管也不是不能用，但却会大大降低渲染更新的速度。所以我们就需要一种机制，来控制渲染。&lt;/p&gt;
+&lt;p&gt;任何逻辑只要足够通用、足够复杂，就有价值抽象出来单独研究。&lt;/p&gt;
+&lt;p&gt;另外的，调度器与调度策略是一个很复杂的问题。在操作系统设计中，你可能看到过很多精妙的设计与研究。这里我们并不打算过于深入这个主题，而是恰到好处的阐述，来完成我们的工程目标。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="源码阅读" scheme="http://www.bebopser.com/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
+    
+    
+    <category term="event loop" scheme="http://www.bebopser.com/tags/event-loop/"/>
+    
+    <category term="promise" scheme="http://www.bebopser.com/tags/promise/"/>
+    
+  </entry>
   
   <entry>
     <title>浏览器与 Event Loop</title>
@@ -618,46 +643,6 @@ The new diff algorithm refers to the &lt;a href=&quot;https://github.com/localvo
     <category term="响应式编程" scheme="http://www.bebopser.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
     
     <category term="combine" scheme="http://www.bebopser.com/tags/combine/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>从计算的本质来讨论递归</title>
-    <link href="http://www.bebopser.com/2020/08/25/%E4%BB%8E%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%9D%A5%E8%AE%A8%E8%AE%BA%E9%80%92%E5%BD%92/"/>
-    <id>http://www.bebopser.com/2020/08/25/%E4%BB%8E%E8%AE%A1%E7%AE%97%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%9D%A5%E8%AE%A8%E8%AE%BA%E9%80%92%E5%BD%92/</id>
-    <published>2020-08-25T08:48:31.000Z</published>
-    <updated>2020-12-28T14:35:24.872Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文的核心思想来自于 SICP 第一章与第二章的内容，你可以同时阅读以深刻理解&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;关于递归&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#关于递归&quot;&gt;&lt;/a&gt; 关于递归&lt;/h1&gt;
-&lt;p&gt;事实上，递归一直是一个很难懂但却应用广泛的概念。例如在树的深度优先遍历中，我们就经常使用递归来简化代码。&lt;br /&gt;
-在维基百科中，关于递归的&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E9%80%92%E5%BD%92&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;定义&lt;/a&gt;是这样的：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;递归（英语：Recursion），又译为递回，在数学与计算机科学中，是指在函数的定义中使用函数自身的方法。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;在很多关于递归的文章中，都趋向于从这三个方面来解释递归。或者说。教授读者从这三个方面来理解递归：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;明确递归函数的作用&lt;/li&gt;
-&lt;li&gt;寻找递归结束的条件&lt;/li&gt;
-&lt;li&gt;寻找函数的等价关系式&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;但这种理解本质上是用常规的迭代思维来理解递归过程，自然很容易导致对递归相关的题目或者工程场景的代码，一看就会，一做就废。&lt;/p&gt;
-&lt;p&gt;事实上，理解递归的核心要点是，要理解下面这句话：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;即，递归是一个 &lt;strong&gt;推迟执行&lt;/strong&gt; 的计算过程&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="数据结构与算法" scheme="http://www.bebopser.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="栈" scheme="http://www.bebopser.com/tags/%E6%A0%88/"/>
-    
-    <category term="递归" scheme="http://www.bebopser.com/tags/%E9%80%92%E5%BD%92/"/>
     
   </entry>
   

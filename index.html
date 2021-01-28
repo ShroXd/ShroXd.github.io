@@ -274,6 +274,91 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2021/01/22/vue3source6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
+      <meta itemprop="name" content="ShroXd">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Space Cowboy">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/22/vue3source6/" class="post-title-link" itemprop="url">Vue3 源码阅读笔记（六）—— nextTick 与调度器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-22 16:26:27" itemprop="dateCreated datePublished" datetime="2021-01-22T16:26:27+08:00">2021-01-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-28 12:21:18" itemprop="dateModified" datetime="2021-01-28T12:21:18+08:00">2021-01-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">源码阅读</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="简述"><a class="markdownIt-Anchor" href="#简述"></a> 简述</h1>
+<p>尽管我们可以从逻辑上简单的将 <code>Vue</code> 的实现拆分为：响应式系统和渲染器。因为现代前端框架所关注的问题就是如何同步 <code>state</code> 与 <code>UI</code>。</p>
+<p>但在实际工程中，<code>UI</code> 的渲染并不是一次性的。根据数据的变化，它是会随之不断变化的。从理论上来说，我们可以对数据的变化应收尽收。也就是说，只要 <code>state</code> 发生了变化，我们就去更新 <code>UI</code>。这种<s>罗永浩式</s>不管不顾的做法尽管也不是不能用，但却会大大降低渲染更新的速度。所以我们就需要一种机制，来控制渲染。</p>
+<p>任何逻辑只要足够通用、足够复杂，就有价值抽象出来单独研究。</p>
+<p>另外的，调度器与调度策略是一个很复杂的问题。在操作系统设计中，你可能看到过很多精妙的设计与研究。这里我们并不打算过于深入这个主题，而是恰到好处的阐述，来完成我们的工程目标。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/22/vue3source6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2021/01/13/browserEventLoop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -980,97 +1065,6 @@ The new diff algorithm refers to the <a href="https://github.com/localvoid/ivi" 
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.bebopser.com/2020/10/16/vue3source3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://bebopfzj.oss-cn-hangzhou.aliyuncs.com/uPic/2020-12-29-mRBWDE.JPG">
-      <meta itemprop="name" content="ShroXd">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Space Cowboy">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/16/vue3source3/" class="post-title-link" itemprop="url">Vue3 源码阅读笔记（三）—— 响应式？不过是数据劫持罢了</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-10-16 09:34:58" itemprop="dateCreated datePublished" datetime="2020-10-16T09:34:58+08:00">2020-10-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-28 22:35:01" itemprop="dateModified" datetime="2020-12-28T22:35:01+08:00">2020-12-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">源码阅读</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="简述"><a class="markdownIt-Anchor" href="#简述"></a> 简述</h1>
-<p>事实上，响应式并不是 <code>Vue3</code> 的新概念，它是一个核心概念。在实际代码中，响应式系统经常与组件化相提并论。更进一步的说，组件化赋予了开发者模块化代码的能力，而响应式系统则让开发者可以通过数据控制组件的呈现方式。</p>
-<p>不过这东西从本质上来讲，其实就是劫持数据的变化，在数据变化后自动的执行一些副作用函数。</p>
-<p>如果你大致的了解过这个东西，你大概会知道，<code>Vue2</code> 和 <code>Vue3</code> 的响应式系统实现有些略微不同。<br />
-从表象上来说，<code>Vue2</code> 的响应式系统是黑盒。<code>Vue2</code> 承包了一切工作，你只需要将数据定义在诸如 <code>data</code>、<code>props</code>、<code>computed</code> 等选项中就行。而 <code>Vue3</code> 则是把这个决定权交给了开发者。由开发者来决定究竟哪些数据应该是响应式的。<br />
-从实现上来说，<code>Vue2</code> 使用 <code>Object.defineproperty</code> 来实现数据劫持，而 <code>Vue3</code> 则使用了 <code>proxy</code> 。</p>
-<p>从逻辑上讲，其实二者是相同的，都是为了实现核心的数据劫持。<br />
-不过 <code>Vue</code> 毕竟是一个投入到实际生产中使用的框架，仅仅完成理论上的实现当然是不行的。从 <code>Object.defineproperty</code> 到 <code>proxy</code> 的切换实际上也表现出了一些技术上的选择。</p>
-<p>简单来说，因为 <code>Vue2</code> 对响应式数据黑盒化的设计，在框架初始化的时候，会递归遍历所有数据，然后使用 <code>Object.defineproperty</code> 来做劫持。这是一个解决方案，但并不够好。因为首先会付出很多性能消耗，其次，并不是每一条数据都需要变成响应式的。递归消耗的性能支出是否合算，全看开发者的具体实现方式。另外，<code>Object.defineproperty</code> 也不能监听到对象属性的新增与删除。<br />
-所以 <code>Vue3</code> 使用了 <code>proxy</code> 和显式的 <code>reactice API</code>。这样不仅可以让开发者自行决定哪些数据需要变成响应式的，还能减少劫持时的数据消耗。</p>
-<p>除此之外，在具体实现中，<code>Vue3</code> 也做了一些调整来优化性能。更具体的东西，来直接看源码吧。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/16/vue3source3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1142,7 +1136,7 @@ The new diff algorithm refers to the <a href="https://github.com/localvoid/ivi" 
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1155,7 +1149,7 @@ The new diff algorithm refers to the <a href="https://github.com/localvoid/ivi" 
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">107</span>
+        <span class="site-state-item-count">108</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
