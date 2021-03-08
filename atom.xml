@@ -6,7 +6,7 @@
   <link href="http://www.bebopser.com/atom.xml" rel="self"/>
   
   <link href="http://www.bebopser.com/"/>
-  <updated>2021-01-28T04:21:18.665Z</updated>
+  <updated>2021-03-05T07:16:36.824Z</updated>
   <id>http://www.bebopser.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TypeScript 性能手册</title>
+    <link href="http://www.bebopser.com/2021/03/04/TypescriptPerformance/"/>
+    <id>http://www.bebopser.com/2021/03/04/TypescriptPerformance/</id>
+    <published>2021-03-04T03:36:30.000Z</published>
+    <updated>2021-03-05T07:16:36.824Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是对 &lt;a href=&quot;https://github.com/microsoft/TypeScript/wiki/Performance#filing-an-issue&quot; target=&quot;_blank&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="翻译" scheme="http://www.bebopser.com/categories/%E7%BF%BB%E8%AF%91/"/>
+    
+    
+    <category term="TypeScript" scheme="http://www.bebopser.com/tags/TypeScript/"/>
+    
+    <category term="performance" scheme="http://www.bebopser.com/tags/performance/"/>
+    
+  </entry>
   
   <entry>
     <title>Vue3 源码阅读笔记（六）—— nextTick 与调度器</title>
@@ -198,9 +226,9 @@ The new diff algorithm refers to the &lt;a href=&quot;https://github.com/localvo
     <category term="源码阅读" scheme="http://www.bebopser.com/categories/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/"/>
     
     
-    <category term="递归下降" scheme="http://www.bebopser.com/tags/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D/"/>
-    
     <category term="TypeScript" scheme="http://www.bebopser.com/tags/TypeScript/"/>
+    
+    <category term="递归下降" scheme="http://www.bebopser.com/tags/%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D/"/>
     
     <category term="类型" scheme="http://www.bebopser.com/tags/%E7%B1%BB%E5%9E%8B/"/>
     
@@ -597,39 +625,6 @@ The new diff algorithm refers to the &lt;a href=&quot;https://github.com/localvo
 &lt;li&gt;如何使用 &lt;code&gt;Combine&lt;/code&gt; 来执行异步工作？&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;receive(on:)&lt;/code&gt; 和 &lt;code&gt;subscribe(on:)&lt;/code&gt; 的区别是什么？&lt;/li&gt;
 &lt;/ol&gt;</summary>
-    
-    
-    
-    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
-    
-    
-    <category term="异步" scheme="http://www.bebopser.com/tags/%E5%BC%82%E6%AD%A5/"/>
-    
-    <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
-    
-    <category term="响应式编程" scheme="http://www.bebopser.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="combine" scheme="http://www.bebopser.com/tags/combine/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>响应式编程与Combine（一）</title>
-    <link href="http://www.bebopser.com/2020/08/27/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine/"/>
-    <id>http://www.bebopser.com/2020/08/27/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine/</id>
-    <published>2020-08-27T08:13:17.000Z</published>
-    <updated>2020-12-28T14:35:35.610Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;响应式编程&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#响应式编程&quot;&gt;&lt;/a&gt; 响应式编程&lt;/h1&gt;
-&lt;p&gt;借用维基百科的定义：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;在计算中，响应式编程或反应式编程（英语：Reactive programming）是一种面向数据流和变化传播的声明式编程范式。这意味着可以在编程语言中很方便地表达静态或动态的数据流，而相关的计算模型会自动将变化的值通过数据流进行传播。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;从定义中可以看出，响应式编程的核心就是：数据流和数据流的变化。&lt;br /&gt;
-数据流自不必说，很多实际的应用场景都会产生数据流。如果仅限于 &lt;code&gt;IOS&lt;/code&gt; 客户端开发的话，网络请求就是一个常见的应用场景了。很多语言都给出了自己的响应式编程的解决方案，但本篇文章只谈谈苹果给出的解决方案——&lt;code&gt;Combine&lt;/code&gt; 框架。&lt;/p&gt;
-&lt;p&gt;另外的，基于响应式编程的特点，我们很容易想到可以把函数式编程与响应式编程结合起来。而函数式编程的核心就是“模糊数据与过程的界限”。函数式编程的这一特点可以让我们更加清楚的处理数据流，明确其输入和输出。&lt;/p&gt;
-&lt;p&gt;而这一套范式可以用来很轻松的解决异步编程的种种问题。而提到异步编程，对于前端开发的程序员来说应该不会陌生。在过去，前端工程师依赖于 &lt;code&gt;闭包回调&lt;/code&gt; 这一方案来解决异步编程的问题。简单来说，就是在调用需要耗时的方法时，同时提供一个回调函数来处理方法的结果。先不说这样很容易导致回调地狱的问题，当多个异步函数同时工作的时候，你很难搞清楚在任一情况下数据到底变成了什么样子，而这也就是大多数 bug 的来源。&lt;/p&gt;</summary>
     
     
     
