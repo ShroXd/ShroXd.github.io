@@ -6,7 +6,7 @@
   <link href="http://www.bebopser.com/atom.xml" rel="self"/>
   
   <link href="http://www.bebopser.com/"/>
-  <updated>2021-04-14T14:46:01.193Z</updated>
+  <updated>2021-04-18T13:39:44.827Z</updated>
   <id>http://www.bebopser.com/</id>
   
   <author>
@@ -17,41 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>站会常用表达</title>
-    <link href="http://www.bebopser.com/2021/04/14/expressStandUp/"/>
-    <id>http://www.bebopser.com/2021/04/14/expressStandUp/</id>
-    <published>2021-04-14T12:41:55.000Z</published>
-    <updated>2021-04-14T14:46:01.193Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;简述&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#简述&quot;&gt;&lt;/a&gt; 简述&lt;/h1&gt;
-&lt;p&gt;站会时所可能用到的表达方式主要有两个方面：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;与其他人对接工作&lt;/li&gt;
-&lt;li&gt;主持站会&lt;br /&gt;
-其中，以情况</summary>
-        
-      
-    
-    
-    
-    <category term="英语" scheme="http://www.bebopser.com/categories/%E8%8B%B1%E8%AF%AD/"/>
-    
-    
-    <category term="Stand Up" scheme="http://www.bebopser.com/tags/Stand-Up/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>React 学习笔记</title>
+    <title>React 学习笔记（一）</title>
     <link href="http://www.bebopser.com/2021/04/08/ReactNote1/"/>
     <id>http://www.bebopser.com/2021/04/08/ReactNote1/</id>
     <published>2021-04-08T02:44:53.000Z</published>
-    <updated>2021-04-14T14:41:42.262Z</updated>
+    <updated>2021-04-18T13:39:44.827Z</updated>
     
     
       
@@ -609,6 +579,46 @@ The new diff algorithm refers to the &lt;a href=&quot;https://github.com/localvo
 &lt;blockquote&gt;
 &lt;p&gt;如果你确定在你的流中不会出现出错，你可以把发布者的 &lt;code&gt;Failure&lt;/code&gt; 类型设置为 &lt;code&gt;Never&lt;/code&gt;。它在语法上禁止错误，它比 &lt;code&gt;assertNoFailure(_ : file : line :)&lt;/code&gt; 安全得多，后者可能会使你的 app 崩溃&lt;/p&gt;
 &lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="异步" scheme="http://www.bebopser.com/tags/%E5%BC%82%E6%AD%A5/"/>
+    
+    <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
+    
+    <category term="响应式编程" scheme="http://www.bebopser.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="combine" scheme="http://www.bebopser.com/tags/combine/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>响应式编程与Combine（三）</title>
+    <link href="http://www.bebopser.com/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine3/"/>
+    <id>http://www.bebopser.com/2020/08/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine3/</id>
+    <published>2020-08-28T06:59:56.000Z</published>
+    <updated>2020-12-28T14:35:46.701Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;这篇文章基本翻译自 &lt;a href=&quot;https://www.vadimbulavin.com/swift-combine-framework-tutorial-getting-started/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Swift Combine Framework Tutorial: Getting Started&lt;/a&gt;，删除了一些重复的内容&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;combine-的使用&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#combine-的使用&quot;&gt;&lt;/a&gt; Combine 的使用&lt;/h1&gt;
+&lt;p&gt;前面两篇文章已经系统的介绍了 &lt;code&gt;Combine&lt;/code&gt; 框架的主要组件。在这篇文章中，我们将会介绍一下它们的基本用法。如何将各种内建组件组合起来形成一套逻辑链。&lt;/p&gt;
+&lt;h1 id=&quot;publisher-与-subscriber-的连接&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#publisher-与-subscriber-的连接&quot;&gt;&lt;/a&gt; Publisher 与 Subscriber 的连接&lt;/h1&gt;
+&lt;p&gt;&lt;code&gt;Combine&lt;/code&gt; 有两个内建的 &lt;code&gt;Subscriber&lt;/code&gt;：&lt;code&gt;Subscribers.Sink&lt;/code&gt; 和 &lt;code&gt;Subscribers.Assign&lt;/code&gt;。你可以通过调用 &lt;code&gt;Publisher&lt;/code&gt; 上任何一个方法来连接它们：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sink(receiveCompletion: receiveValue:)&lt;/code&gt; 在闭包中处理新元素或是完成事件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;assign(to: on:)&lt;/code&gt; 将新元素写入属性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight swift&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;let&lt;/span&gt; publisher = &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;publisher.sink(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    receiveCompletion: &amp;#123; &lt;span class=&quot;number&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;finished&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    receiveValue: &amp;#123; value &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(value)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol&gt;
+&lt;li&gt;创建一个 &lt;code&gt;Just&lt;/code&gt; 发布者，仅发送一个值，然后完成。&lt;code&gt;Combine&lt;/code&gt; 有一堆内建的 Publisher，包括 &lt;code&gt;Just&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;连接到 &lt;code&gt;Subscribers.Sink&lt;/code&gt; 订阅者&lt;/li&gt;
+&lt;/ol&gt;</summary>
     
     
     
