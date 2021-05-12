@@ -6,7 +6,7 @@
   <link href="http://www.bebopser.com/atom.xml" rel="self"/>
   
   <link href="http://www.bebopser.com/"/>
-  <updated>2021-04-27T07:23:18.306Z</updated>
+  <updated>2021-05-12T13:00:26.383Z</updated>
   <id>http://www.bebopser.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>当我们谈论前端测试时，我们谈些什么</title>
+    <link href="http://www.bebopser.com/2021/05/11/FrontendTest/"/>
+    <id>http://www.bebopser.com/2021/05/11/FrontendTest/</id>
+    <published>2021-05-11T12:41:31.000Z</published>
+    <updated>2021-05-12T13:00:26.383Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;测试以及前端测试&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#测试以及前端测试&quot;&gt;&lt;/a&gt; 测试，以及前端测试&lt;/h1&gt;
+&lt;p&gt;一般地说，测试的目的是为了保证代码如 &lt;strong&gt;预期&lt;/strong&gt; 那样运行。&lt;br</summary>
+        
+      
+    
+    
+    
+    <category term="核心概念" scheme="http://www.bebopser.com/categories/%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5/"/>
+    
+    
+    <category term="frontend" scheme="http://www.bebopser.com/tags/frontend/"/>
+    
+    <category term="test" scheme="http://www.bebopser.com/tags/test/"/>
+    
+  </entry>
   
   <entry>
     <title>React 学习笔记（二）</title>
@@ -582,46 +610,6 @@ The new diff algorithm refers to the &lt;a href=&quot;https://github.com/localvo
     <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
     
     <category term="SwiftUI" scheme="http://www.bebopser.com/tags/SwiftUI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>响应式编程与Combine（四）</title>
-    <link href="http://www.bebopser.com/2020/08/29/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine4/"/>
-    <id>http://www.bebopser.com/2020/08/29/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%B8%8ECombine4/</id>
-    <published>2020-08-29T08:15:14.000Z</published>
-    <updated>2020-12-28T14:35:53.508Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文翻译自 &lt;a href=&quot;https://www.vadimbulavin.com/error-handling-in-swift-combine-framework/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Error Handling in Swift Combine Framework&lt;/a&gt;，稍作修改&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;错误处理策略&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#错误处理策略&quot;&gt;&lt;/a&gt; 错误处理策略&lt;/h1&gt;
-&lt;p&gt;在计算机编程中，错误是不可避免的。我们不可能要求一段程序永远不出错，但我们需要一些手段来让程序可以尽快的从错误中恢复过来。让我们看看在 &lt;code&gt;Combine&lt;/code&gt; 框架中该怎么处理。&lt;/p&gt;
-&lt;h2 id=&quot;终止-app&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#终止-app&quot;&gt;&lt;/a&gt; 终止 APP&lt;/h2&gt;
-&lt;p&gt;最直接的错误处理就是不处理错误。当然了，我们不可能将这样的代码直接交付给客户。不过在开发过程中，这个策略是很有用的。我们希望在开发中应用越早崩溃越好，这样我们才能发现代码中的错误。&lt;br /&gt;
-另外，这里还有两个不需要担心错误处理的场景：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;在编写实验代码时&lt;/li&gt;
-&lt;li&gt;在教授或者学习时&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;Combine&lt;/code&gt; 为这个目的提供了 &lt;code&gt;assertNoFailure(_ : file : line :)&lt;/code&gt; 方法。它会在前一个 &lt;code&gt;Publisher&lt;/code&gt; 发出错误前停止 app，通知打印调试信息帮助你解决问题。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;如果你确定在你的流中不会出现出错，你可以把发布者的 &lt;code&gt;Failure&lt;/code&gt; 类型设置为 &lt;code&gt;Never&lt;/code&gt;。它在语法上禁止错误，它比 &lt;code&gt;assertNoFailure(_ : file : line :)&lt;/code&gt; 安全得多，后者可能会使你的 app 崩溃&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
-    
-    
-    <category term="异步" scheme="http://www.bebopser.com/tags/%E5%BC%82%E6%AD%A5/"/>
-    
-    <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
-    
-    <category term="响应式编程" scheme="http://www.bebopser.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-    <category term="combine" scheme="http://www.bebopser.com/tags/combine/"/>
     
   </entry>
   
