@@ -6,7 +6,7 @@
   <link href="http://www.bebopser.com/atom.xml" rel="self"/>
   
   <link href="http://www.bebopser.com/"/>
-  <updated>2021-05-12T13:00:26.383Z</updated>
+  <updated>2021-05-18T12:45:32.802Z</updated>
   <id>http://www.bebopser.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Styled Component</title>
+    <link href="http://www.bebopser.com/2021/05/16/styledcomponent/"/>
+    <id>http://www.bebopser.com/2021/05/16/styledcomponent/</id>
+    <published>2021-05-16T02:27:01.000Z</published>
+    <updated>2021-05-18T12:45:32.802Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;难以隔离的-css&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#难以隔离的-css&quot;&gt;&lt;/a&gt; 难以隔离的 CSS&lt;/h1&gt;
+&lt;p&gt;你可能已经知道了，CSS 样式的应用是基于选择器的。例如如下代码：&lt;/p&gt;
+&lt;figure</summary>
+        
+      
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="CSS in JS" scheme="http://www.bebopser.com/tags/CSS-in-JS/"/>
+    
+    <category term="Styled-Component" scheme="http://www.bebopser.com/tags/Styled-Component/"/>
+    
+  </entry>
   
   <entry>
     <title>当我们谈论前端测试时，我们谈些什么</title>
@@ -583,33 +612,6 @@ The new diff algorithm refers to the &lt;a href=&quot;https://github.com/localvo
     
     
     <category term="buffer" scheme="http://www.bebopser.com/tags/buffer/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SwiftUI 中的属性包装器</title>
-    <link href="http://www.bebopser.com/2020/08/30/state/"/>
-    <id>http://www.bebopser.com/2020/08/30/state/</id>
-    <published>2020-08-30T03:08:05.000Z</published>
-    <updated>2020-12-28T14:34:24.033Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文翻译自 &lt;a href=&quot;https://levelup.gitconnected.com/state-vs-stateobject-vs-observedobject-vs-environmentobject-in-swiftui-81e2913d63f9&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SwiftUI: @State vs @StateObject vs @ObservedObject vs @EnvironmentObject&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;code&gt;SwiftUI&lt;/code&gt; 开发者们需要做的第一个决定就是，应该选择哪个有效的属性包装器来存储数据。特别是在 IOS 14 中，&lt;a href=&quot;https://developer.apple.com/documentation/swiftui/app&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;整个应用的生命周期&lt;/a&gt; 都可以使用 &lt;code&gt;SwiftUI&lt;/code&gt; 来开发，用正确的方式存储应用的数据是确保应用正常运行，避免 bug 的前提。&lt;/p&gt;
-&lt;p&gt;在使用 &lt;code&gt;SwiftUI&lt;/code&gt; 制作 app 时，一个坑就是 &lt;code&gt;@State&lt;/code&gt;，&lt;code&gt;@StateObject&lt;/code&gt;，&lt;code&gt;@ObservedObject&lt;/code&gt;，&lt;code&gt;@EnvironmentObject&lt;/code&gt; 这几个属性包装器从表面上来看，都是能够运行的。应用程序会被正常编译，甚至还能得到你想要的行为，即使你用错了属性包装器。&lt;s&gt;又不是不能用&lt;/s&gt;&lt;/p&gt;
-&lt;p&gt;但是，假如用错了，你可能会发现当你更新数据时，UI 却不会随之正常更新。&lt;/p&gt;
-&lt;p&gt;那么在这篇文章里，我们就来解决这些问题。我们先从 &lt;code&gt;@State&lt;/code&gt; 开始。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
-    
-    
-    <category term="IOS" scheme="http://www.bebopser.com/tags/IOS/"/>
-    
-    <category term="SwiftUI" scheme="http://www.bebopser.com/tags/SwiftUI/"/>
     
   </entry>
   
