@@ -6,7 +6,7 @@
   <link href="http://www.bebopser.com/atom.xml" rel="self"/>
   
   <link href="http://www.bebopser.com/"/>
-  <updated>2021-05-18T12:45:32.802Z</updated>
+  <updated>2021-06-23T12:04:53.532Z</updated>
   <id>http://www.bebopser.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Fiber 协调算法</title>
+    <link href="http://www.bebopser.com/2021/06/21/fiberTree/"/>
+    <id>http://www.bebopser.com/2021/06/21/fiberTree/</id>
+    <published>2021-06-21T13:22:54.000Z</published>
+    <updated>2021-06-23T12:04:53.532Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;组件树与树的递归遍历&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#组件树与树的递归遍历&quot;&gt;&lt;/a&gt; 组件树与树的递归遍历&lt;/h1&gt;
+&lt;p&gt;在传统的 React 处理中，组件是以树的形式存在的，这是很符合直觉的。例如对于这样的一段</summary>
+        
+      
+    
+    
+    
+    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+    <category term="react" scheme="http://www.bebopser.com/tags/react/"/>
+    
+    <category term="fiber" scheme="http://www.bebopser.com/tags/fiber/"/>
+    
+  </entry>
   
   <entry>
     <title>Styled Component</title>
@@ -584,34 +612,6 @@ The new diff algorithm refers to the &lt;a href=&quot;https://github.com/localvo
     <category term="pipe" scheme="http://www.bebopser.com/tags/pipe/"/>
     
     <category term="事件" scheme="http://www.bebopser.com/tags/%E4%BA%8B%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nodejs（一）—— Buffer</title>
-    <link href="http://www.bebopser.com/2020/09/29/NodejsBuffer/"/>
-    <id>http://www.bebopser.com/2020/09/29/NodejsBuffer/</id>
-    <published>2020-09-29T01:54:41.000Z</published>
-    <updated>2020-12-28T14:34:02.495Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;参考：&lt;a href=&quot;http://www.semlinker.com/node-buffer/#Node-js-Buffer&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;深入学习 Node.js Buffer&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;关于-buffer&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#关于-buffer&quot;&gt;&lt;/a&gt; 关于 Buffer&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;Buffer&lt;/code&gt; 是 &lt;code&gt;Node.js&lt;/code&gt; 的核心模块，它使得开发者可以在 &lt;code&gt;TCP&lt;/code&gt; 流或是文件系统操作等场景中处理二进制数据。&lt;br /&gt;
-&lt;code&gt;Buffer&lt;/code&gt; 的大小是固定的，且无法调整。它在 &lt;code&gt;V8&lt;/code&gt; 堆外分配物理内存。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;V8 是一个由 Google 开发的开源 JavaScript 引擎，用于 Google Chrome 及 Chromium 中。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;常见的应用是在 &lt;code&gt;流&lt;/code&gt; 中使用。流是一组数据的集合。在一般情况下，流的生产者和消费者的速度是不一致的，所以我们需要 &lt;code&gt;Buffer&lt;/code&gt; 来缓存数据。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="框架" scheme="http://www.bebopser.com/categories/%E6%A1%86%E6%9E%B6/"/>
-    
-    
-    <category term="buffer" scheme="http://www.bebopser.com/tags/buffer/"/>
     
   </entry>
   
